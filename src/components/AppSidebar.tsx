@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sidebar,
   SidebarContent,
@@ -26,14 +27,14 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 
-const mainNav = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "My Chamas", url: "/chamas", icon: Users },
-  { title: "Contributions", url: "/contributions", icon: HandCoins },
-  { title: "Loans", url: "/loans", icon: Landmark },
-  { title: "Wallet", url: "/wallet", icon: Wallet },
-  { title: "Investments", url: "/investments", icon: TrendingUp },
-  { title: "Reports", url: "/reports", icon: BarChart3 },
+const allNav = [
+  { title: "Dashboard", url: "/", icon: LayoutDashboard, roles: ["admin", "treasurer", "member"] },
+  { title: "My Chamas", url: "/chamas", icon: Users, roles: ["admin", "treasurer", "member"] },
+  { title: "Contributions", url: "/contributions", icon: HandCoins, roles: ["admin", "treasurer", "member"] },
+  { title: "Loans", url: "/loans", icon: Landmark, roles: ["admin", "treasurer", "member"] },
+  { title: "Wallet", url: "/wallet", icon: Wallet, roles: ["admin", "treasurer"] },
+  { title: "Investments", url: "/investments", icon: TrendingUp, roles: ["admin"] },
+  { title: "Reports", url: "/reports", icon: BarChart3, roles: ["admin", "treasurer"] },
 ];
 
 const secondaryNav = [
@@ -45,9 +46,25 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const location = useLocation();
+  const { role, profile, signOut } = useAuth();
 
   const isActive = (path: string) =>
     path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+
+  const visibleNav = allNav.filter(
+    (item) => role && item.roles.includes(role)
+  );
+
+  const initials = profile?.full_name
+    ? profile.full_name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "??";
+
+  const roleBadge = role ? role.charAt(0).toUpperCase() + role.slice(1) : "";
 
   return (
     <Sidebar collapsible="icon" className="border-r-0">
@@ -74,7 +91,7 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainNav.map((item) => (
+              {visibleNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
@@ -129,18 +146,21 @@ export function AppSidebar() {
       <SidebarFooter className="p-3">
         <div className="flex items-center gap-3 rounded-lg p-2">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-sm font-semibold text-sidebar-primary">
-            AW
+            {initials}
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-sidebar-foreground truncate">
-                Amina Wanjiku
+                {profile?.full_name || "Loading..."}
               </p>
-              <p className="text-xs text-sidebar-foreground/50 truncate">Admin</p>
+              <p className="text-xs text-sidebar-foreground/50 truncate">{roleBadge}</p>
             </div>
           )}
           {!collapsed && (
-            <button className="text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors">
+            <button
+              onClick={signOut}
+              className="text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors"
+            >
               <LogOut className="h-4 w-4" />
             </button>
           )}
