@@ -28,18 +28,18 @@ import {
 } from "@/components/ui/sidebar";
 
 const allNav = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard, roles: ["admin", "treasurer", "member"] },
-  { title: "My Chamas", url: "/chamas", icon: Users, roles: ["admin", "treasurer", "member"] },
-  { title: "Contributions", url: "/contributions", icon: HandCoins, roles: ["admin", "treasurer", "member"] },
-  { title: "Loans", url: "/loans", icon: Landmark, roles: ["admin", "treasurer", "member"] },
-  { title: "Wallet", url: "/wallet", icon: Wallet, roles: ["admin", "treasurer"] },
-  { title: "Investments", url: "/investments", icon: TrendingUp, roles: ["admin"] },
-  { title: "Reports", url: "/reports", icon: BarChart3, roles: ["admin", "treasurer"] },
+  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard, roles: ["admin", "treasurer", "member"] },
+  { title: "My Chamas", url: "/dashboard/chamas", icon: Users, roles: ["admin", "treasurer", "member"] },
+  { title: "Contributions", url: "/dashboard/contributions", icon: HandCoins, roles: ["admin", "treasurer", "member"] },
+  { title: "Loans", url: "/dashboard/loans", icon: Landmark, roles: ["admin", "treasurer", "member"] },
+  { title: "Wallet", url: "/dashboard/wallet", icon: Wallet, roles: ["admin", "treasurer"] },
+  { title: "Investments", url: "/dashboard/investments", icon: TrendingUp, roles: ["admin"] },
+  { title: "Reports", url: "/dashboard/reports", icon: BarChart3, roles: ["admin", "treasurer"] },
 ];
 
 const secondaryNav = [
-  { title: "Notifications", url: "/notifications", icon: Bell },
-  { title: "Settings", url: "/settings", icon: Settings },
+  { title: "Notifications", url: "/dashboard/notifications", icon: Bell },
+  { title: "Settings", url: "/dashboard/settings", icon: Settings },
 ];
 
 export function AppSidebar() {
@@ -49,7 +49,7 @@ export function AppSidebar() {
   const { role, profile, signOut } = useAuth();
 
   const isActive = (path: string) =>
-    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+    path === "/dashboard" ? location.pathname === "/dashboard" : location.pathname.startsWith(path);
 
   const visibleNav = allNav.filter(
     (item) => role && item.roles.includes(role)
@@ -100,7 +100,7 @@ export function AppSidebar() {
                   >
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === "/dashboard"}
                       className="transition-colors duration-150"
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                     >

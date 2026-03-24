@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { DashboardLayout } from "@/components/DashboardLayout";
 import AuthPage from "./pages/Auth";
+import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Chamas from "./pages/Chamas";
 import Contributions from "./pages/Contributions";
@@ -28,19 +29,20 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/" element={<Landing />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route
-              path="/*"
+              path="/dashboard/*"
               element={
                 <ProtectedRoute>
                   <DashboardLayout>
                     <Routes>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/chamas" element={<Chamas />} />
-                      <Route path="/contributions" element={<Contributions />} />
-                      <Route path="/loans" element={<Loans />} />
+                      <Route index element={<Dashboard />} />
+                      <Route path="chamas" element={<Chamas />} />
+                      <Route path="contributions" element={<Contributions />} />
+                      <Route path="loans" element={<Loans />} />
                       <Route
-                        path="/wallet"
+                        path="wallet"
                         element={
                           <ProtectedRoute requiredRole="treasurer">
                             <WalletPage />
@@ -48,7 +50,7 @@ const App = () => (
                         }
                       />
                       <Route
-                        path="/investments"
+                        path="investments"
                         element={
                           <ProtectedRoute requiredRole="admin">
                             <Investments />
@@ -56,15 +58,15 @@ const App = () => (
                         }
                       />
                       <Route
-                        path="/reports"
+                        path="reports"
                         element={
                           <ProtectedRoute requiredRole="treasurer">
                             <Reports />
                           </ProtectedRoute>
                         }
                       />
-                      <Route path="/notifications" element={<Notifications />} />
-                      <Route path="/settings" element={<SettingsPage />} />
+                      <Route path="notifications" element={<Notifications />} />
+                      <Route path="settings" element={<SettingsPage />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </DashboardLayout>
