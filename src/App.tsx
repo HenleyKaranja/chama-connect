@@ -17,6 +17,7 @@ import Investments from "./pages/Investments";
 import Reports from "./pages/Reports";
 import Notifications from "./pages/Notifications";
 import SettingsPage from "./pages/Settings";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
