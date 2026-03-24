@@ -100,7 +100,7 @@ export function AppSidebar() {
                   >
                     <NavLink
                       to={item.url}
-                      end={item.url === "/"}
+                      end={item.url === "/dashboard"}
                       className="transition-colors duration-150"
                       activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                     >
