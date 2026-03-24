@@ -49,7 +49,7 @@ export function AppSidebar() {
   const { role, profile, signOut } = useAuth();
 
   const isActive = (path: string) =>
-    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+    path === "/dashboard" ? location.pathname === "/dashboard" : location.pathname.startsWith(path);
 
   const visibleNav = allNav.filter(
     (item) => role && item.roles.includes(role)
