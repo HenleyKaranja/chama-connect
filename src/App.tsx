@@ -66,6 +66,14 @@ const App = () => (
                           </ProtectedRoute>
                         }
                       />
+                      <Route
+                        path="admin"
+                        element={
+                          <ProtectedRoute requiredRole="admin">
+                            <AdminDashboard />
+                          </ProtectedRoute>
+                        }
+                      />
                       <Route path="notifications" element={<Notifications />} />
                       <Route path="settings" element={<SettingsPage />} />
                       <Route path="*" element={<NotFound />} />
