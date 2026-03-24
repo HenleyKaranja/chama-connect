@@ -9,6 +9,7 @@ import {
   Settings,
   LogOut,
   Landmark,
+  ShieldCheck,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
@@ -35,6 +36,7 @@ const allNav = [
   { title: "Wallet", url: "/dashboard/wallet", icon: Wallet, roles: ["admin", "treasurer"] },
   { title: "Investments", url: "/dashboard/investments", icon: TrendingUp, roles: ["admin"] },
   { title: "Reports", url: "/dashboard/reports", icon: BarChart3, roles: ["admin", "treasurer"] },
+  { title: "Admin Panel", url: "/dashboard/admin", icon: ShieldCheck, roles: ["admin"] },
 ];
 
 const secondaryNav = [

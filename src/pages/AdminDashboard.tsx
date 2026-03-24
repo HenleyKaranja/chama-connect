@@ -1,0 +1,48 @@
+import { useState } from "react";
+import { AnimatedPage } from "@/components/AnimatedPage";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AdminOverview } from "@/components/admin/AdminOverview";
+import { MemberApprovals } from "@/components/admin/MemberApprovals";
+import { AllMembers } from "@/components/admin/AllMembers";
+import { ProjectsManager } from "@/components/admin/ProjectsManager";
+import { AdminCharts } from "@/components/admin/AdminCharts";
+import { MerryGoRound } from "@/components/admin/MerryGoRound";
+import { AdminReports } from "@/components/admin/AdminReports";
+import { SystemSettings } from "@/components/admin/SystemSettings";
+
+export default function AdminDashboard() {
+  const [activeTab, setActiveTab] = useState("overview");
+
+  return (
+    <AnimatedPage>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Admin Dashboard</h1>
+          <p className="text-muted-foreground mt-1">Manage members, projects, finances and system settings.</p>
+        </div>
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/50 p-1">
+            <TabsTrigger value="overview" className="text-xs">Overview</TabsTrigger>
+            <TabsTrigger value="approvals" className="text-xs">Approvals</TabsTrigger>
+            <TabsTrigger value="members" className="text-xs">Members</TabsTrigger>
+            <TabsTrigger value="projects" className="text-xs">Projects</TabsTrigger>
+            <TabsTrigger value="analytics" className="text-xs">Analytics</TabsTrigger>
+            <TabsTrigger value="merry-go-round" className="text-xs">Merry-Go-Round</TabsTrigger>
+            <TabsTrigger value="reports" className="text-xs">Reports</TabsTrigger>
+            <TabsTrigger value="settings" className="text-xs">Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview"><AdminOverview /></TabsContent>
+          <TabsContent value="approvals"><MemberApprovals /></TabsContent>
+          <TabsContent value="members"><AllMembers /></TabsContent>
+          <TabsContent value="projects"><ProjectsManager /></TabsContent>
+          <TabsContent value="analytics"><AdminCharts /></TabsContent>
+          <TabsContent value="merry-go-round"><MerryGoRound /></TabsContent>
+          <TabsContent value="reports"><AdminReports /></TabsContent>
+          <TabsContent value="settings"><SystemSettings /></TabsContent>
+        </Tabs>
+      </div>
+    </AnimatedPage>
+  );
+}

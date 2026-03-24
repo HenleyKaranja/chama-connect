@@ -17,6 +17,7 @@ import Investments from "./pages/Investments";
 import Reports from "./pages/Reports";
 import Notifications from "./pages/Notifications";
 import SettingsPage from "./pages/Settings";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -62,6 +63,14 @@ const App = () => (
                         element={
                           <ProtectedRoute requiredRole="treasurer">
                             <Reports />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="admin"
+                        element={
+                          <ProtectedRoute requiredRole="admin">
+                            <AdminDashboard />
                           </ProtectedRoute>
                         }
                       />
