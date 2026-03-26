@@ -1,25 +1,80 @@
+import { useState } from "react";
 import { AnimatedPage } from "@/components/AnimatedPage";
 import { motion } from "framer-motion";
-import { HandCoins, CheckCircle2, Clock, AlertCircle, Filter } from "lucide-react";
+import { HandCoins, CheckCircle2, Clock, AlertCircle, Filter, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/StatCard";
-
-const contributions = [
-  { id: 1, chama: "Umoja Savings Circle", amount: "KES 5,000", date: "Mar 22, 2026", status: "Paid", method: "M-Pesa" },
-  { id: 2, chama: "Maendeleo Investment", amount: "KES 3,000", date: "Mar 20, 2026", status: "Paid", method: "M-Pesa" },
-  { id: 3, chama: "Harambee Women's Group", amount: "KES 2,000", date: "Mar 18, 2026", status: "Paid", method: "Bank" },
-  { id: 4, chama: "Umoja Savings Circle", amount: "KES 5,000", date: "Feb 22, 2026", status: "Paid", method: "M-Pesa" },
-  { id: 5, chama: "Maendeleo Investment", amount: "KES 3,000", date: "Feb 20, 2026", status: "Late", method: "M-Pesa" },
-  { id: 6, chama: "Harambee Women's Group", amount: "KES 2,000", date: "Mar 28, 2026", status: "Pending", method: "—" },
-];
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "sonner";
+import { format } from "date-fns";
 
 const statusConfig = {
-  Paid: { color: "text-success bg-success/10", icon: CheckCircle2 },
-  Pending: { color: "text-warning bg-warning/10", icon: Clock },
-  Late: { color: "text-destructive bg-destructive/10", icon: AlertCircle },
+  paid: { color: "text-success bg-success/10", icon: CheckCircle2, label: "Paid" },
+  pending: { color: "text-warning bg-warning/10", icon: Clock, label: "Pending" },
+  late: { color: "text-destructive bg-destructive/10", icon: AlertCircle, label: "Late" },
 };
 
 export default function Contributions() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [chamaId, setChamaId] = useState("");
+  const [method, setMethod] = useState("mpesa");
+
+  const { data: chamas } = useQuery({
+    queryKey: ["chamas"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("chamas").select("id, name");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: contributions, isLoading } = useQuery({
+    queryKey: ["contributions", user?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("contributions")
+        .select("*, chamas(name)")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.from("contributions").insert({
+        user_id: user!.id,
+        chama_id: chamaId,
+        amount: parseFloat(amount),
+        payment_method: method,
+        status: "pending",
+      });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contributions"] });
+      toast.success("Contribution submitted successfully");
+      setOpen(false);
+      setAmount("");
+      setChamaId("");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  const totalContributed = contributions?.filter(c => c.status === "paid").reduce((sum, c) => sum + Number(c.amount), 0) ?? 0;
+  const pendingAmount = contributions?.filter(c => c.status === "pending").reduce((sum, c) => sum + Number(c.amount), 0) ?? 0;
+  const thisMonthPaid = contributions?.filter(c => c.status === "paid" && new Date(c.created_at).getMonth() === new Date().getMonth()).length ?? 0;
+
   return (
     <AnimatedPage>
       <div className="space-y-6">
@@ -28,16 +83,56 @@ export default function Contributions() {
             <h1 className="text-2xl font-bold tracking-tight">Contributions</h1>
             <p className="text-muted-foreground mt-1">Track your chama contributions</p>
           </div>
-          <Button size="sm">
-            <HandCoins className="h-4 w-4 mr-2" />
-            Make Payment
-          </Button>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button size="sm">
+                <HandCoins className="h-4 w-4 mr-2" />
+                Make Payment
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Make a Contribution</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4 pt-2">
+                <div>
+                  <Label>Chama</Label>
+                  <Select value={chamaId} onValueChange={setChamaId}>
+                    <SelectTrigger><SelectValue placeholder="Select chama" /></SelectTrigger>
+                    <SelectContent>
+                      {chamas?.map(c => (
+                        <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>Amount (KES)</Label>
+                  <Input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="5000" />
+                </div>
+                <div>
+                  <Label>Payment Method</Label>
+                  <Select value={method} onValueChange={setMethod}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="mpesa">M-Pesa</SelectItem>
+                      <SelectItem value="bank">Bank Transfer</SelectItem>
+                      <SelectItem value="cash">Cash</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button onClick={() => createMutation.mutate()} disabled={!chamaId || !amount || createMutation.isPending} className="w-full">
+                  {createMutation.isPending ? "Submitting..." : "Submit Payment"}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <StatCard title="Total Contributed" value="KES 128,000" change="This year" icon={HandCoins} index={0} />
-          <StatCard title="This Month" value="KES 10,000" change="2 of 3 paid" changeType="positive" icon={CheckCircle2} index={1} />
-          <StatCard title="Pending" value="KES 2,000" change="Due Mar 28" changeType="neutral" icon={Clock} index={2} />
+          <StatCard title="Total Contributed" value={`KES ${totalContributed.toLocaleString()}`} change="All time" icon={HandCoins} index={0} />
+          <StatCard title="This Month" value={`${thisMonthPaid} paid`} change="Contributions" changeType="positive" icon={CheckCircle2} index={1} />
+          <StatCard title="Pending" value={`KES ${pendingAmount.toLocaleString()}`} change="Awaiting confirmation" changeType="neutral" icon={Clock} index={2} />
         </div>
 
         <motion.div
@@ -48,9 +143,6 @@ export default function Contributions() {
         >
           <div className="flex items-center justify-between p-4 border-b">
             <h3 className="text-sm font-semibold">Payment History</h3>
-            <Button variant="ghost" size="sm" className="text-xs">
-              <Filter className="h-3 w-3 mr-1" /> Filter
-            </Button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -64,24 +156,30 @@ export default function Contributions() {
                 </tr>
               </thead>
               <tbody>
-                {contributions.map((c) => {
-                  const config = statusConfig[c.status as keyof typeof statusConfig];
-                  const StatusIcon = config.icon;
-                  return (
-                    <tr key={c.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
-                      <td className="p-3 text-sm font-medium">{c.chama}</td>
-                      <td className="p-3 text-sm tabular-nums font-semibold">{c.amount}</td>
-                      <td className="p-3 text-sm text-muted-foreground">{c.date}</td>
-                      <td className="p-3 text-sm text-muted-foreground">{c.method}</td>
-                      <td className="p-3">
-                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${config.color}`}>
-                          <StatusIcon className="h-3 w-3" />
-                          {c.status}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {isLoading ? (
+                  <tr><td colSpan={5} className="p-8 text-center text-muted-foreground">Loading...</td></tr>
+                ) : contributions?.length === 0 ? (
+                  <tr><td colSpan={5} className="p-8 text-center text-muted-foreground">No contributions yet. Make your first payment!</td></tr>
+                ) : (
+                  contributions?.map((c) => {
+                    const config = statusConfig[c.status as keyof typeof statusConfig] ?? statusConfig.pending;
+                    const StatusIcon = config.icon;
+                    return (
+                      <tr key={c.id} className="border-b last:border-0 hover:bg-muted/30 transition-colors">
+                        <td className="p-3 text-sm font-medium">{(c as any).chamas?.name ?? "—"}</td>
+                        <td className="p-3 text-sm tabular-nums font-semibold">KES {Number(c.amount).toLocaleString()}</td>
+                        <td className="p-3 text-sm text-muted-foreground">{format(new Date(c.created_at), "MMM d, yyyy")}</td>
+                        <td className="p-3 text-sm text-muted-foreground capitalize">{c.payment_method ?? "—"}</td>
+                        <td className="p-3">
+                          <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-1 rounded-full ${config.color}`}>
+                            <StatusIcon className="h-3 w-3" />
+                            {config.label}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>
