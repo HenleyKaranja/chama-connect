@@ -15,26 +15,34 @@ export function AdminOverview() {
 
   useEffect(() => {
     async function fetchStats() {
-      const { count: totalMembers } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true });
+      const [
+        { count: totalMembers },
+        { count: pendingApprovals },
+        { count: activeProjects },
+        { data: contributions },
+        { data: loans },
+      ] = await Promise.all([
+        supabase.from("profiles").select("*", { count: "exact", head: true }),
+        supabase.from("profiles").select("*", { count: "exact", head: true }).eq("is_approved", false),
+        supabase.from("projects").select("*", { count: "exact", head: true }).eq("status", "active"),
+        supabase.from("contributions").select("amount, status"),
+        supabase.from("loans").select("amount, status, repaid_amount"),
+      ]);
 
-      const { count: pendingApprovals } = await supabase
-        .from("profiles")
-        .select("*", { count: "exact", head: true })
-        .eq("is_approved", false);
-
-      const { count: activeProjects } = await supabase
-        .from("projects")
-        .select("*", { count: "exact", head: true })
-        .eq("status", "active");
+      const totalSavings = contributions?.filter(c => c.status === "paid").reduce((s, c) => s + Number(c.amount), 0) ?? 0;
+      const totalLoansIssued = loans?.filter(l => l.status === "active" || l.status === "completed").reduce((s, l) => s + Number(l.amount), 0) ?? 0;
+      const activeLoans = loans?.filter(l => l.status === "active") ?? [];
+      const defaultedLoans = loans?.filter(l => l.status === "defaulted") ?? [];
+      const defaultRate = activeLoans.length + defaultedLoans.length > 0
+        ? (defaultedLoans.length / (activeLoans.length + defaultedLoans.length)) * 100
+        : 0;
 
       setStats({
         totalMembers: totalMembers || 0,
         pendingApprovals: pendingApprovals || 0,
-        totalSavings: 1250000,
-        totalLoans: 480000,
-        defaultRate: 3.2,
+        totalSavings,
+        totalLoans: totalLoansIssued,
+        defaultRate: Math.round(defaultRate * 10) / 10,
         activeProjects: activeProjects || 0,
       });
     }
@@ -43,54 +51,12 @@ export function AdminOverview() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <StatCard
-        title="Total Members"
-        value={stats.totalMembers.toString()}
-        change={`${stats.pendingApprovals} pending approval`}
-        changeType={stats.pendingApprovals > 0 ? "negative" : "positive"}
-        icon={Users}
-        index={0}
-      />
-      <StatCard
-        title="Group Savings"
-        value={`KES ${stats.totalSavings.toLocaleString()}`}
-        change="+8.4% this month"
-        changeType="positive"
-        icon={Wallet}
-        index={1}
-      />
-      <StatCard
-        title="Total Loans Issued"
-        value={`KES ${stats.totalLoans.toLocaleString()}`}
-        change="12 active loans"
-        changeType="neutral"
-        icon={Landmark}
-        index={2}
-      />
-      <StatCard
-        title="Default Rate"
-        value={`${stats.defaultRate}%`}
-        change="Below 5% target"
-        changeType="positive"
-        icon={AlertTriangle}
-        index={3}
-      />
-      <StatCard
-        title="Active Projects"
-        value={stats.activeProjects.toString()}
-        change="View all projects"
-        changeType="neutral"
-        icon={TrendingUp}
-        index={4}
-      />
-      <StatCard
-        title="Approved Members"
-        value={(stats.totalMembers - stats.pendingApprovals).toString()}
-        change="All verified"
-        changeType="positive"
-        icon={CheckCircle}
-        index={5}
-      />
+      <StatCard title="Total Members" value={stats.totalMembers.toString()} change={`${stats.pendingApprovals} pending approval`} changeType={stats.pendingApprovals > 0 ? "negative" : "positive"} icon={Users} index={0} />
+      <StatCard title="Group Savings" value={`KES ${stats.totalSavings.toLocaleString()}`} change="From contributions" changeType="positive" icon={Wallet} index={1} />
+      <StatCard title="Total Loans Issued" value={`KES ${stats.totalLoans.toLocaleString()}`} change={`${stats.activeProjects} active projects`} changeType="neutral" icon={Landmark} index={2} />
+      <StatCard title="Default Rate" value={`${stats.defaultRate}%`} change={stats.defaultRate < 5 ? "Below 5% target" : "Above target"} changeType={stats.defaultRate < 5 ? "positive" : "negative"} icon={AlertTriangle} index={3} />
+      <StatCard title="Active Projects" value={stats.activeProjects.toString()} change="View all projects" changeType="neutral" icon={TrendingUp} index={4} />
+      <StatCard title="Approved Members" value={(stats.totalMembers - stats.pendingApprovals).toString()} change="All verified" changeType="positive" icon={CheckCircle} index={5} />
     </div>
   );
 }
