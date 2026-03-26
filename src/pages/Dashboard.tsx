@@ -1,8 +1,11 @@
+import { useEffect, useState } from "react";
 import { Wallet, Users, HandCoins, TrendingUp, Landmark, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { AnimatedPage } from "@/components/AnimatedPage";
 import { StatCard } from "@/components/StatCard";
 import { motion } from "framer-motion";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 const contributionData = [
   { month: "Aug", amount: 45000 },
@@ -26,13 +29,15 @@ const loanData = [
   { month: "Mar", disbursed: 40000, repaid: 45000 },
 ];
 
-const recentTransactions = [
-  { id: 1, member: "Grace Muthoni", type: "Contribution", amount: "+KES 5,000", date: "Today", avatar: "GM" },
-  { id: 2, member: "Peter Ochieng", type: "Loan Repayment", amount: "+KES 12,000", date: "Today", avatar: "PO" },
-  { id: 3, member: "Faith Akinyi", type: "Loan Disbursed", amount: "-KES 25,000", date: "Yesterday", avatar: "FA" },
-  { id: 4, member: "James Kamau", type: "Contribution", amount: "+KES 5,000", date: "Yesterday", avatar: "JK" },
-  { id: 5, member: "Mary Njeri", type: "Contribution", amount: "+KES 5,000", date: "Mar 20", avatar: "MN" },
-];
+interface RecentTransaction {
+  id: string;
+  member: string;
+  type: string;
+  amount: string;
+  date: string;
+  avatar: string;
+  positive: boolean;
+}
 
 const upcomingEvents = [
   { title: "Monthly contribution due", date: "Mar 28", type: "contribution" },
@@ -41,11 +46,74 @@ const upcomingEvents = [
 ];
 
 export default function Dashboard() {
+  const { user, profile } = useAuth();
+  const [transactions, setTransactions] = useState<RecentTransaction[]>([]);
+
+  useEffect(() => {
+    async function fetchRecentTransactions() {
+      if (!user) return;
+
+      // Fetch recent contributions and loans
+      const [{ data: contributions }, { data: loans }] = await Promise.all([
+        supabase.from("contributions").select("id, user_id, amount, status, created_at, chama_id").order("created_at", { ascending: false }).limit(10),
+        supabase.from("loans").select("id, user_id, amount, status, created_at").order("created_at", { ascending: false }).limit(10),
+      ]);
+
+      // Get user profiles for names
+      const allUserIds = [
+        ...(contributions?.map(c => c.user_id) ?? []),
+        ...(loans?.map(l => l.user_id) ?? []),
+      ];
+      const uniqueIds = [...new Set(allUserIds)];
+      const { data: profiles } = await supabase.from("profiles").select("user_id, full_name").in("user_id", uniqueIds);
+
+      const getName = (uid: string) => profiles?.find(p => p.user_id === uid)?.full_name || "Unknown";
+      const getInitials = (name: string) => name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+
+      const txList: RecentTransaction[] = [];
+
+      contributions?.forEach(c => {
+        const name = getName(c.user_id);
+        txList.push({
+          id: c.id,
+          member: name,
+          type: "Contribution",
+          amount: `+KES ${Number(c.amount).toLocaleString()}`,
+          date: new Date(c.created_at).toLocaleDateString(),
+          avatar: getInitials(name),
+          positive: true,
+        });
+      });
+
+      loans?.forEach(l => {
+        const name = getName(l.user_id);
+        const isRepayment = l.status === "completed";
+        txList.push({
+          id: l.id,
+          member: name,
+          type: isRepayment ? "Loan Repaid" : l.status === "active" ? "Loan Disbursed" : "Loan " + l.status,
+          amount: `${isRepayment ? "+" : "-"}KES ${Number(l.amount).toLocaleString()}`,
+          date: new Date(l.created_at).toLocaleDateString(),
+          avatar: getInitials(name),
+          positive: isRepayment,
+        });
+      });
+
+      // Sort by date and take 10
+      txList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      setTransactions(txList.slice(0, 10));
+    }
+
+    fetchRecentTransactions();
+  }, [user]);
+
+  const firstName = profile?.full_name?.split(" ")[0] || "Member";
+
   return (
     <AnimatedPage>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Habari, Amina 👋</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Habari, {firstName} 👋</h1>
           <p className="text-muted-foreground mt-1">Here's what's happening with your chamas today.</p>
         </div>
 
@@ -123,58 +191,73 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Transactions + Events */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-2 rounded-xl border bg-card p-5 shadow-sm"
-          >
-            <h3 className="text-sm font-semibold mb-4">Recent Transactions</h3>
-            <div className="space-y-3">
-              {recentTransactions.map((tx) => (
-                <div key={tx.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                    {tx.avatar}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{tx.member}</p>
-                    <p className="text-xs text-muted-foreground">{tx.type}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className={`text-sm font-semibold tabular-nums ${tx.amount.startsWith("+") ? "text-success" : "text-destructive"}`}>
+        {/* Recent Transactions Table */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-xl border bg-card shadow-sm overflow-hidden"
+        >
+          <div className="p-5 border-b">
+            <h3 className="text-sm font-semibold">Recent Transactions</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b bg-muted/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Member</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Type</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Amount</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {transactions.length === 0 ? (
+                  <tr><td colSpan={4} className="text-center py-8 text-muted-foreground">No recent transactions</td></tr>
+                ) : transactions.map((tx) => (
+                  <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
+                          {tx.avatar}
+                        </div>
+                        <span className="font-medium">{tx.member}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-muted-foreground">{tx.type}</td>
+                    <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.positive ? "text-primary" : "text-destructive"}`}>
                       {tx.amount}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{tx.date}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                    </td>
+                    <td className="px-4 py-3 text-right text-muted-foreground">{tx.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.56, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-xl border bg-card p-5 shadow-sm"
-          >
-            <h3 className="text-sm font-semibold mb-4">Upcoming</h3>
-            <div className="space-y-3">
-              {upcomingEvents.map((event, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
-                  <div className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${
-                    event.type === "contribution" ? "bg-primary" : event.type === "vote" ? "bg-accent" : "bg-info"
-                  }`} />
-                  <div>
-                    <p className="text-sm font-medium">{event.title}</p>
-                    <p className="text-xs text-muted-foreground">{event.date}</p>
-                  </div>
+        {/* Upcoming Events */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.56, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-xl border bg-card p-5 shadow-sm"
+        >
+          <h3 className="text-sm font-semibold mb-4">Upcoming</h3>
+          <div className="space-y-3">
+            {upcomingEvents.map((event, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/50 transition-colors">
+                <div className={`mt-0.5 h-2 w-2 shrink-0 rounded-full ${
+                  event.type === "contribution" ? "bg-primary" : event.type === "vote" ? "bg-accent" : "bg-info"
+                }`} />
+                <div>
+                  <p className="text-sm font-medium">{event.title}</p>
+                  <p className="text-xs text-muted-foreground">{event.date}</p>
                 </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </AnimatedPage>
   );
