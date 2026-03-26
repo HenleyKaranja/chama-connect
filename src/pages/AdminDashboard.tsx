@@ -3,9 +3,12 @@ import { AnimatedPage } from "@/components/AnimatedPage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AdminOverview } from "@/components/admin/AdminOverview";
 import { MemberApprovals } from "@/components/admin/MemberApprovals";
+import { LoanApprovals } from "@/components/admin/LoanApprovals";
+import { ChamaApprovals } from "@/components/admin/ChamaApprovals";
 import { AllMembers } from "@/components/admin/AllMembers";
 import { ProjectsManager } from "@/components/admin/ProjectsManager";
 import { AdminCharts } from "@/components/admin/AdminCharts";
+import { FinancialInsights } from "@/components/admin/FinancialInsights";
 import { MerryGoRound } from "@/components/admin/MerryGoRound";
 import { AdminReports } from "@/components/admin/AdminReports";
 import { SystemSettings } from "@/components/admin/SystemSettings";
@@ -24,9 +27,12 @@ export default function AdminDashboard() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/50 p-1">
             <TabsTrigger value="overview" className="text-xs">Overview</TabsTrigger>
-            <TabsTrigger value="approvals" className="text-xs">Approvals</TabsTrigger>
+            <TabsTrigger value="approvals" className="text-xs">Member Approvals</TabsTrigger>
+            <TabsTrigger value="loan-approvals" className="text-xs">Loan Approvals</TabsTrigger>
+            <TabsTrigger value="chama-approvals" className="text-xs">Chama Requests</TabsTrigger>
             <TabsTrigger value="members" className="text-xs">Members</TabsTrigger>
             <TabsTrigger value="projects" className="text-xs">Projects</TabsTrigger>
+            <TabsTrigger value="insights" className="text-xs">Financial Insights</TabsTrigger>
             <TabsTrigger value="analytics" className="text-xs">Analytics</TabsTrigger>
             <TabsTrigger value="merry-go-round" className="text-xs">Merry-Go-Round</TabsTrigger>
             <TabsTrigger value="reports" className="text-xs">Reports</TabsTrigger>
@@ -35,8 +41,11 @@ export default function AdminDashboard() {
 
           <TabsContent value="overview"><AdminOverview /></TabsContent>
           <TabsContent value="approvals"><MemberApprovals /></TabsContent>
+          <TabsContent value="loan-approvals"><LoanApprovals /></TabsContent>
+          <TabsContent value="chama-approvals"><ChamaApprovals /></TabsContent>
           <TabsContent value="members"><AllMembers /></TabsContent>
           <TabsContent value="projects"><ProjectsManager /></TabsContent>
+          <TabsContent value="insights"><FinancialInsights /></TabsContent>
           <TabsContent value="analytics"><AdminCharts /></TabsContent>
           <TabsContent value="merry-go-round"><MerryGoRound /></TabsContent>
           <TabsContent value="reports"><AdminReports /></TabsContent>

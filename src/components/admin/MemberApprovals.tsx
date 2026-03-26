@@ -41,6 +41,19 @@ export function MemberApprovals() {
     if (error) {
       toast.error("Failed to approve member");
     } else {
+      // Notify the approved member
+      await supabase.from("notifications").insert({
+        user_id: userId,
+        title: "Account Approved",
+        message: "Your account has been approved. Welcome to the chama!",
+        type: "success",
+      });
+      // Notify all existing members
+      await supabase.rpc("notify_all_members", {
+        _title: "New Member Joined",
+        _message: `${name} has been approved and joined the platform.`,
+        _type: "info",
+      });
       toast.success(`${name} has been approved`);
       fetchPending();
     }
