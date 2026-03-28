@@ -136,6 +136,7 @@ export type Database = {
           due_date: string | null
           id: string
           interest_rate: number
+          rejection_reason: string | null
           repaid_amount: number
           status: string
           updated_at: string
@@ -150,6 +151,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           interest_rate?: number
+          rejection_reason?: string | null
           repaid_amount?: number
           status?: string
           updated_at?: string
@@ -164,6 +166,7 @@ export type Database = {
           due_date?: string | null
           id?: string
           interest_rate?: number
+          rejection_reason?: string | null
           repaid_amount?: number
           status?: string
           updated_at?: string
@@ -220,6 +223,7 @@ export type Database = {
           id: string
           is_approved: boolean
           phone: string | null
+          rejection_reason: string | null
           updated_at: string
           user_id: string
         }
@@ -230,6 +234,7 @@ export type Database = {
           id?: string
           is_approved?: boolean
           phone?: string | null
+          rejection_reason?: string | null
           updated_at?: string
           user_id: string
         }
@@ -240,6 +245,7 @@ export type Database = {
           id?: string
           is_approved?: boolean
           phone?: string | null
+          rejection_reason?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -342,8 +348,10 @@ export type Database = {
           balance: number
           created_at: string
           id: string
+          name: string
           total_contributed: number
           total_withdrawn: number
+          type: string
           updated_at: string
           user_id: string
         }
@@ -351,8 +359,10 @@ export type Database = {
           balance?: number
           created_at?: string
           id?: string
+          name?: string
           total_contributed?: number
           total_withdrawn?: number
+          type?: string
           updated_at?: string
           user_id: string
         }
@@ -360,8 +370,10 @@ export type Database = {
           balance?: number
           created_at?: string
           id?: string
+          name?: string
           total_contributed?: number
           total_withdrawn?: number
+          type?: string
           updated_at?: string
           user_id?: string
         }
