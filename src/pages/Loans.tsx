@@ -41,10 +41,7 @@ export default function Loans() {
   const { data: loans, isLoading } = useQuery({
     queryKey: ["loans", user?.id],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("loans")
-        .select("*, chamas(name)")
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("loans").select("*, chamas(name)").eq("user_id", user!.id).order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },
@@ -53,12 +50,7 @@ export default function Loans() {
 
   const applyMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("loans").insert({
-        user_id: user!.id,
-        chama_id: chamaId,
-        amount: parseFloat(amount),
-        status: "pending",
-      });
+      const { error } = await supabase.from("loans").insert({ user_id: user!.id, chama_id: chamaId, amount: parseFloat(amount), status: "pending" });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -94,9 +86,7 @@ export default function Loans() {
                   <Label>Chama</Label>
                   <Select value={chamaId} onValueChange={setChamaId}>
                     <SelectTrigger><SelectValue placeholder="Select chama" /></SelectTrigger>
-                    <SelectContent>
-                      {chamas?.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
-                    </SelectContent>
+                    <SelectContent>{chamas?.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
                 <div>
@@ -126,30 +116,17 @@ export default function Loans() {
             loans?.map((loan, i) => {
               const repaidPct = Number(loan.amount) > 0 ? Math.round((Number(loan.repaid_amount) / Number(loan.amount)) * 100) : 0;
               return (
-                <motion.div
-                  key={loan.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="rounded-xl border bg-card p-5 shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
+                <motion.div key={loan.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.08, duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="rounded-xl border bg-card p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-                      <Landmark className="h-5 w-5" />
-                    </div>
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary"><Landmark className="h-5 w-5" /></div>
                     <div className="flex-1 min-w-0 space-y-3">
                       <div className="flex items-start justify-between">
                         <div>
                           <p className="font-semibold">{(loan as any).chamas?.name ?? "Chama"}</p>
-                          <p className="text-sm text-muted-foreground">
-                            KES {Number(loan.amount).toLocaleString()} · {loan.interest_rate}% interest
-                          </p>
+                          <p className="text-sm text-muted-foreground">KES {Number(loan.amount).toLocaleString()} · {loan.interest_rate}% interest</p>
                         </div>
-                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${statusColors[loan.status] ?? statusColors.pending}`}>
-                          {loan.status}
-                        </span>
+                        <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${statusColors[loan.status] ?? statusColors.pending}`}>{loan.status}</span>
                       </div>
-
                       {loan.status === "active" && (
                         <div className="space-y-2">
                           <div className="flex justify-between text-xs text-muted-foreground">
@@ -160,27 +137,14 @@ export default function Loans() {
                           {loan.due_date && <p className="text-xs text-muted-foreground">Due: {format(new Date(loan.due_date), "MMM d, yyyy")}</p>}
                         </div>
                       )}
-
-                      {loan.status === "completed" && (
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <CheckCircle2 className="h-3 w-3 text-success" />
-                          Fully repaid · Total: KES {Number(loan.repaid_amount).toLocaleString()}
-                        </p>
-                      )}
-
+                      {loan.status === "completed" && <p className="text-xs text-muted-foreground flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-success" />Fully repaid</p>}
                       {loan.status === "rejected" && (
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <XCircle className="h-3 w-3 text-destructive" />
-                          Application rejected · {format(new Date(loan.created_at), "MMM d, yyyy")}
-                        </p>
+                        <div className="text-xs text-muted-foreground space-y-1">
+                          <p className="flex items-center gap-1"><XCircle className="h-3 w-3 text-destructive" />Rejected · {format(new Date(loan.created_at), "MMM d, yyyy")}</p>
+                          {loan.rejection_reason && <p className="text-destructive/80 italic">Reason: {loan.rejection_reason}</p>}
+                        </div>
                       )}
-
-                      {loan.status === "pending" && (
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Applied {format(new Date(loan.created_at), "MMM d, yyyy")} · Awaiting admin approval
-                        </p>
-                      )}
+                      {loan.status === "pending" && <p className="text-xs text-muted-foreground flex items-center gap-1"><Clock className="h-3 w-3" />Applied {format(new Date(loan.created_at), "MMM d, yyyy")} · Awaiting admin approval</p>}
                     </div>
                   </div>
                 </motion.div>
