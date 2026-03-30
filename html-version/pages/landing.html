@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M-Chama - Grow Together, Save Smarter</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="/" class="nav-brand">
+        <div class="nav-brand-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M2 12h20M21 3l-18 18M3 3l18 18"></path>
+          </svg>
+        </div>
+        <span>M-Chama</span>
+      </a>
+      <div class="nav-links">
+        <a href="auth.html" class="btn btn-ghost btn-sm">Sign In</a>
+        <a href="auth.html?mode=signup" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="background: linear-gradient(135deg, rgba(27, 107, 75, 0.05) 0%, transparent 50%, rgba(217, 157, 92, 0.05) 100%);">
+    <div class="container container-lg" style="padding: 6rem 1.5rem; text-align: center;">
+      <div style="max-width: 50rem; margin: 0 auto;">
+        <!-- Badge -->
+        <div style="display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.625rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(27, 107, 75, 0.2); background-color: rgba(27, 107, 75, 0.1); font-size: 0.75rem; font-weight: 600; color: var(--primary); margin-bottom: 1.5rem;">
+          <span style="width: 0.375rem; height: 0.375rem; border-radius: 50%; background-color: var(--primary); animation: pulse 2s infinite;"></span>
+          Kenya's #1 Chama Platform
+        </div>
+
+        <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;">
+          Grow Together,
+          <span style="background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Save Smarter</span>
+        </h1>
+
+        <p style="font-size: 1.1rem; color: var(--muted-foreground); margin-bottom: 2rem; line-height: 1.6;">
+          M-Chama brings your savings group online. Track contributions, manage loans, invest together, and build wealth — all from one secure platform.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
+          <a href="auth.html?mode=signup" class="btn btn-primary btn-lg" style="gap: 0.5rem;">
+            Start Your Chama
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <a href="auth.html" class="btn btn-outline btn-lg">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section style="padding: 5rem 1.5rem; background-color: var(--muted);">
+    <div class="container container-lg">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="margin-bottom: 1rem;">Powerful Features for Your Chama</h2>
+        <p style="color: var(--muted-foreground); font-size: 1.1rem;">Everything you need to manage, track, and grow your savings group</p>
+      </div>
+
+      <div class="grid grid-cols-3" style="gap: 2rem;">
+        <!-- Feature 1 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(27, 107, 75, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+              <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"></path>
+              <path d="M12 6v6l4 2"></path>
+            </svg>
+          </div>
+          <h3>Group Management</h3>
+          <p style="color: var(--muted-foreground);">Create and manage Chamas with ease. Invite members, assign roles, and track activity.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="9" x2="12" y2="15"></line>
+              <line x1="9" y1="12" x2="15" y2="12"></line>
+            </svg>
+          </div>
+          <h3>Contributions</h3>
+          <p style="color: var(--muted-foreground);">Automate monthly contributions with M-Pesa integration and real-time tracking.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(45, 143, 94, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2">
+              <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"></path>
+              <path d="M8 12l2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3>Digital Wallet</h3>
+          <p style="color: var(--muted-foreground);">Manage group funds transparently with a shared digital wallet and transaction history.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(27, 107, 75, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+              <polyline points="13 2 13 9 20 9"></polyline>
+            </svg>
+          </div>
+          <h3>Investments</h3>
+          <p style="color: var(--muted-foreground);">Pool resources and invest in projects. Track returns and grow your wealth together.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+              <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
+              <polyline points="12 12 20 7.5"></polyline>
+              <polyline points="12 12 12 21"></polyline>
+              <polyline points="12 12 4 7.5"></polyline>
+            </svg>
+          </div>
+          <h3>Reports & Analytics</h3>
+          <p style="color: var(--muted-foreground);">Detailed financial reports, contribution trends, and investment performance dashboards.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;">
+          <div style="width: 3rem; height: 3rem; display: flex; align-items: center; justify-content: center; background-color: rgba(45, 143, 94, 0.1); border-radius: var(--radius);">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h3>Role-Based Access</h3>
+          <p style="color: var(--muted-foreground);">Admin, Treasurer, and Member roles with fine-grained permissions and audit trails.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section style="padding: 5rem 1.5rem;">
+    <div class="container container-lg">
+      <div class="grid grid-cols-4" style="gap: 2rem;">
+        <div class="text-center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">10K+</div>
+          <div style="color: var(--muted-foreground);">Active Members</div>
+        </div>
+        <div class="text-center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">500+</div>
+          <div style="color: var(--muted-foreground);">Chama Groups</div>
+        </div>
+        <div class="text-center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">KSh 50M+</div>
+          <div style="color: var(--muted-foreground);">Funds Managed</div>
+        </div>
+        <div class="text-center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: var(--info); margin-bottom: 0.5rem;">99.9%</div>
+          <div style="color: var(--muted-foreground);">Uptime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section style="padding: 5rem 1.5rem; background: linear-gradient(135deg, var(--primary) 0%, var(--sidebar-accent) 100%); color: white;">
+    <div class="container container-md" style="text-align: center;">
+      <h2 style="color: white; margin-bottom: 1rem;">Ready to Transform Your Chama?</h2>
+      <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 2rem; font-size: 1.1rem;">Join thousands of savings groups already using M-Chama to manage their finances better.</p>
+      <a href="auth.html?mode=signup" class="btn btn-outline btn-lg" style="background-color: white; color: var(--primary); border-color: white;">Begin Your Journey Today</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); background-color: var(--muted);">
+    <div class="container container-lg">
+      <div class="grid grid-cols-4" style="gap: 2rem; margin-bottom: 3rem;">
+        <div>
+          <h4 style="margin-bottom: 1rem;">Product</h4>
+          <ul style="list-style: none;">
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Features</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Pricing</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Security</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 1rem;">Company</h4>
+          <ul style="list-style: none;">
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">About</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Blog</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 1rem;">Resources</h4>
+          <ul style="list-style: none;">
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Documentation</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Support</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="margin-bottom: 1rem;">Legal</h4>
+          <ul style="list-style: none;">
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Privacy</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Terms</a></li>
+            <li><a href="#" style="color: var(--muted-foreground); font-size: 0.9rem;">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--border); padding-top: 2rem; text-align: center; color: var(--muted-foreground); font-size: 0.9rem;">
+        <p>&copy; 2026 M-Chama. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/app.js"></script>
+</body>
+</html>

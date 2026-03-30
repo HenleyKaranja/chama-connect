@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M-Chama - Settings</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+
+  <aside class="sidebar">
+    <div class="sidebar-header"><div class="sidebar-header-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"></path></svg></div><div class="sidebar-title">M-Chama</div></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
+      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
+      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg><span>Contributions</span></a>
+      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
+      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
+      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
+      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
+      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
+      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
+      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
+      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
+      <a href="settings.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
+      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
+      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
+      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
+    </nav>
+  </aside>
+
+  <div class="layout">
+    <div class="layout-main">
+      <div class="layout-content">
+        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 2rem;">Account Settings</h1>
+
+        <div class="grid grid-cols-1" style="gap: 2rem;">
+          <!-- Profile Settings -->
+          <div class="card">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+              <h3 style="font-size: 1rem; font-weight: 600;">Profile Information</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+              <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" value="John Kipchoge" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" value="john.kipchoge@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" value="+254712345678" required>
+              </div>
+              <button class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+
+          <!-- Security Settings -->
+          <div class="card">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+              <h3 style="font-size: 1rem; font-weight: 600;">Security Settings</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Change Password</h4>
+                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Update your password regularly</p>
+                </div>
+                <button class="btn btn-outline" onclick="openChangePasswordModal()">Change</button>
+              </div>
+              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Two-Factor Authentication</h4>
+                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Enable 2FA for enhanced security</p>
+                </div>
+                <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
+                  <input type="checkbox" style="display: none;">
+                  <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); border-radius: 24px; transition: 0.3s;"></span>
+                </label>
+              </div>
+              <div style="padding: 1rem 0; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Session Management</h4>
+                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Manage active sessions</p>
+                </div>
+                <button class="btn btn-outline">View Sessions</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notification Preferences -->
+          <div class="card">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+              <h3 style="font-size: 1rem; font-weight: 600;">Notification Preferences</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 500;">Email Notifications</span>
+                <input type="checkbox" checked>
+              </div>
+              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 500;">SMS Notifications</span>
+                <input type="checkbox" checked>
+              </div>
+              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 500;">Push Notifications</span>
+                <input type="checkbox">
+              </div>
+              <div style="padding: 1rem 0; display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 500;">Marketing Communications</span>
+                <input type="checkbox">
+              </div>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="card" style="border-color: var(--destructive);">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--destructive);">
+              <h3 style="font-size: 1rem; font-weight: 600; color: var(--destructive);">Danger Zone</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+              <div style="padding: 1rem; background-color: rgba(230, 57, 70, 0.05); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <h4 style="font-weight: 600; color: var(--destructive); margin-bottom: 0.25rem;">Delete Account</h4>
+                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">This action cannot be undone</p>
+                </div>
+                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive);" onclick="confirmDelete()">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/app.js"></script>
+  <script>
+    function openChangePasswordModal() {
+      showToast('Change password feature coming soon!', 'info');
+    }
+
+    function confirmDelete() {
+      if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+        showToast('Account deletion has been initiated', 'success');
+      }
+    }
+  </script>
+</body>
+</html>
