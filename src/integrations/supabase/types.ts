@@ -182,6 +182,50 @@ export type Database = {
           },
         ]
       }
+      merry_go_round_cycles: {
+        Row: {
+          amount: number
+          chama_id: string
+          created_at: string
+          cycle_number: number
+          id: string
+          payout_date: string
+          recipient_user_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          chama_id: string
+          created_at?: string
+          cycle_number: number
+          id?: string
+          payout_date: string
+          recipient_user_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          chama_id?: string
+          created_at?: string
+          cycle_number?: number
+          id?: string
+          payout_date?: string
+          recipient_user_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "merry_go_round_cycles_chama_id_fkey"
+            columns: ["chama_id"]
+            isOneToOne: false
+            referencedRelation: "chamas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       notifications: {
         Row: {
           created_at: string
