@@ -40,12 +40,20 @@ const App = () => (
                     <Routes>
                       <Route index element={<Dashboard />} />
                       <Route path="chamas" element={<Chamas />} />
-                      <Route path="contributions" element={<Contributions />} />
-                      <Route path="loans" element={<Loans />} />
+                      <Route path="contributions" element={
+                        <ProtectedRoute requiresChama>
+                          <Contributions />
+                        </ProtectedRoute>
+                      } />
+                      <Route path="loans" element={
+                        <ProtectedRoute requiresChama>
+                          <Loans />
+                        </ProtectedRoute>
+                      } />
                       <Route
                         path="wallet"
                         element={
-                          <ProtectedRoute requiredRole="treasurer">
+                          <ProtectedRoute requiredRole="treasurer" requiresChama>
                             <WalletPage />
                           </ProtectedRoute>
                         }
@@ -53,7 +61,7 @@ const App = () => (
                       <Route
                         path="investments"
                         element={
-                          <ProtectedRoute requiredRole="admin">
+                          <ProtectedRoute requiresChama>
                             <Investments />
                           </ProtectedRoute>
                         }
@@ -61,7 +69,7 @@ const App = () => (
                       <Route
                         path="reports"
                         element={
-                          <ProtectedRoute requiredRole="treasurer">
+                          <ProtectedRoute requiredRole="treasurer" requiresChama>
                             <Reports />
                           </ProtectedRoute>
                         }

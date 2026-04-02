@@ -13,7 +13,10 @@ export default function Investments() {
   const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("projects").select("*").order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("projects")
+        .select("*, chamas(name)")
+        .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },
