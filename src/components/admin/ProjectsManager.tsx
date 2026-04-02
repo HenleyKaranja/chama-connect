@@ -6,9 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 interface Project {
   id: string;
@@ -18,6 +20,7 @@ interface Project {
   current_amount: number;
   status: string;
   created_at: string;
+  chama_id: string | null;
 }
 
 export function ProjectsManager() {
@@ -25,7 +28,15 @@ export function ProjectsManager() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", target_amount: "" });
+  const [form, setForm] = useState({ name: "", description: "", target_amount: "", chama_id: "" });
+
+  const { data: chamas } = useQuery({
+    queryKey: ["chamas"],
+    queryFn: async () => {
+      const { data } = await supabase.from("chamas").select("id, name").order("name");
+      return data ?? [];
+    },
+  });
 
   const fetchProjects = async () => {
     setLoading(true);
@@ -40,8 +51,8 @@ export function ProjectsManager() {
   useEffect(() => { fetchProjects(); }, []);
 
   const handleCreate = async () => {
-    if (!form.name || !form.target_amount) {
-      toast.error("Name and target amount are required");
+    if (!form.name || !form.target_amount || !form.chama_id) {
+      toast.error("Name, chama, and target amount are required");
       return;
     }
 
@@ -50,13 +61,14 @@ export function ProjectsManager() {
       description: form.description || null,
       target_amount: parseFloat(form.target_amount),
       created_by: user?.id,
+      chama_id: form.chama_id,
     });
 
     if (error) {
       toast.error("Failed to create project");
     } else {
       toast.success("Project created successfully");
-      setForm({ name: "", description: "", target_amount: "" });
+      setForm({ name: "", description: "", target_amount: "", chama_id: "" });
       setOpen(false);
       fetchProjects();
     }
@@ -93,6 +105,19 @@ export function ProjectsManager() {
                   placeholder="Describe the project..."
                   rows={3}
                 />
+              </div>
+              <div>
+                <Label>Chama</Label>
+                <Select value={form.chama_id} onValueChange={(v) => setForm({ ...form, chama_id: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a chama" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {chamas?.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label>Target Amount (KES)</Label>
