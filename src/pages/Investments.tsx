@@ -60,6 +60,7 @@ export default function Investments() {
                       <div className="flex items-start justify-between">
                         <div>
                           <p className="font-semibold">{proj.name}</p>
+                          {(proj as any).chamas?.name && <p className="text-xs text-primary font-medium">{(proj as any).chamas.name}</p>}
                           {proj.description && <p className="text-xs text-muted-foreground">{proj.description}</p>}
                         </div>
                         <span className={`text-xs font-medium px-2.5 py-1 rounded-full capitalize ${proj.status === "active" ? "bg-success/10 text-success" : proj.status === "completed" ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"}`}>
