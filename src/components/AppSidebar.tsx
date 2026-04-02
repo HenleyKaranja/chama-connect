@@ -54,9 +54,16 @@ export function AppSidebar() {
   const isActive = (path: string) =>
     path === "/dashboard" ? location.pathname === "/dashboard" : location.pathname.startsWith(path);
 
-  const visibleNav = allNav.filter(
-    (item) => role && item.roles.includes(role)
-  );
+  const { hasChama } = useChamaMembership();
+
+  // Members without chamas can only see Dashboard, Chamas, Notifications, Settings
+  const chamaRequiredPaths = ["/dashboard/contributions", "/dashboard/loans", "/dashboard/wallet", "/dashboard/investments", "/dashboard/reports"];
+  
+  const visibleNav = allNav.filter((item) => {
+    if (!role || !item.roles.includes(role)) return false;
+    if (role !== "admin" && !hasChama && chamaRequiredPaths.includes(item.url)) return false;
+    return true;
+  });
 
   const initials = profile?.full_name
     ? profile.full_name

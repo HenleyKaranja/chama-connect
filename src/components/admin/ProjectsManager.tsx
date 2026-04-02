@@ -68,7 +68,7 @@ export function ProjectsManager() {
       toast.error("Failed to create project");
     } else {
       toast.success("Project created successfully");
-      setForm({ name: "", description: "", target_amount: "" });
+      setForm({ name: "", description: "", target_amount: "", chama_id: "" });
       setOpen(false);
       fetchProjects();
     }
