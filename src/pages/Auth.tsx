@@ -15,6 +15,9 @@ import { Landmark, ArrowLeft, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { formatKenyanNumber } from "@/lib/auth-utils";
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
