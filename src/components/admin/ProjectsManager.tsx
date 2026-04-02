@@ -107,6 +107,19 @@ export function ProjectsManager() {
                 />
               </div>
               <div>
+                <Label>Chama</Label>
+                <Select value={form.chama_id} onValueChange={(v) => setForm({ ...form, chama_id: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a chama" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {chamas?.map((c) => (
+                      <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
                 <Label>Target Amount (KES)</Label>
                 <Input
                   type="number"
