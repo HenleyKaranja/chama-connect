@@ -14,6 +14,7 @@ import {
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useChamaMembership } from "@/hooks/use-chama-membership";
 import {
   Sidebar,
   SidebarContent,
