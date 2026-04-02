@@ -51,8 +51,8 @@ export function ProjectsManager() {
   useEffect(() => { fetchProjects(); }, []);
 
   const handleCreate = async () => {
-    if (!form.name || !form.target_amount) {
-      toast.error("Name and target amount are required");
+    if (!form.name || !form.target_amount || !form.chama_id) {
+      toast.error("Name, chama, and target amount are required");
       return;
     }
 
@@ -61,6 +61,7 @@ export function ProjectsManager() {
       description: form.description || null,
       target_amount: parseFloat(form.target_amount),
       created_by: user?.id,
+      chama_id: form.chama_id,
     });
 
     if (error) {
