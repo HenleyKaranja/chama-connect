@@ -297,6 +297,7 @@ export type Database = {
       }
       projects: {
         Row: {
+          chama_id: string | null
           created_at: string
           created_by: string | null
           current_amount: number
@@ -308,6 +309,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          chama_id?: string | null
           created_at?: string
           created_by?: string | null
           current_amount?: number
@@ -319,6 +321,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          chama_id?: string | null
           created_at?: string
           created_by?: string | null
           current_amount?: number
@@ -329,7 +332,15 @@ export type Database = {
           target_amount?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "projects_chama_id_fkey"
+            columns: ["chama_id"]
+            isOneToOne: false
+            referencedRelation: "chamas"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_roles: {
         Row: {
