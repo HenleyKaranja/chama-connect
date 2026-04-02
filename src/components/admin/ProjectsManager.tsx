@@ -6,9 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, FolderOpen } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import { useQuery } from "@tanstack/react-query";
 
 interface Project {
   id: string;
@@ -18,6 +20,7 @@ interface Project {
   current_amount: number;
   status: string;
   created_at: string;
+  chama_id: string | null;
 }
 
 export function ProjectsManager() {
