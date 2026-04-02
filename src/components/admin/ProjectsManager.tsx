@@ -28,7 +28,15 @@ export function ProjectsManager() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", description: "", target_amount: "" });
+  const [form, setForm] = useState({ name: "", description: "", target_amount: "", chama_id: "" });
+
+  const { data: chamas } = useQuery({
+    queryKey: ["chamas"],
+    queryFn: async () => {
+      const { data } = await supabase.from("chamas").select("id, name").order("name");
+      return data ?? [];
+    },
+  });
 
   const fetchProjects = async () => {
     setLoading(true);
