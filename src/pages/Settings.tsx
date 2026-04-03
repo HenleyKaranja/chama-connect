@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatedPage } from "@/components/AnimatedPage";
 import { motion } from "framer-motion";
-import { User, Shield, Bell as BellIcon } from "lucide-react";
+import { User, Shield, Bell as BellIcon, LogOut, KeyRound, Smartphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 
 export default function SettingsPage() {
   const { user, profile } = useAuth();
+  const navigate = useNavigate();
   const [editOpen, setEditOpen] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState("");
+
+  const authProvider = user?.app_metadata?.provider || "email";
+  const hasPassword = authProvider === "email";
+
   const [passOpen, setPassOpen] = useState(false);
   const [fullName, setFullName] = useState(profile?.full_name ?? "");
   const [phone, setPhone] = useState(profile?.phone ?? "");
@@ -104,23 +111,59 @@ export default function SettingsPage() {
           <div className="flex items-center gap-2 text-sm font-semibold">
             <Shield className="h-4 w-4" /> Security
           </div>
-          <Dialog open={passOpen} onOpenChange={setPassOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm">Change Password</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader><DialogTitle>Change Password</DialogTitle></DialogHeader>
-              <div className="space-y-4 pt-2">
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {hasPassword ? <KeyRound className="h-4 w-4 text-muted-foreground" /> : <Smartphone className="h-4 w-4 text-muted-foreground" />}
                 <div>
-                  <Label>New Password</Label>
-                  <Input type="password" value={newPass} onChange={e => setNewPass(e.target.value)} placeholder="Min 6 characters" />
+                  <p className="text-sm font-medium">Sign-in method</p>
+                  <p className="text-xs text-muted-foreground">{hasPassword ? `Email: ${user?.email}` : `Phone OTP: ${profile?.phone || user?.phone}`}</p>
                 </div>
-                <Button onClick={handleChangePassword} disabled={changingPass} className="w-full">
-                  {changingPass ? "Changing..." : "Update Password"}
-                </Button>
               </div>
-            </DialogContent>
-          </Dialog>
+            </div>
+
+            <Dialog open={passOpen} onOpenChange={setPassOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <KeyRound className="h-3.5 w-3.5" />
+                  {hasPassword ? "Change Password" : "Set Password"}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader><DialogTitle>{hasPassword ? "Change Password" : "Set a Password"}</DialogTitle></DialogHeader>
+                <div className="space-y-4 pt-2">
+                  <p className="text-sm text-muted-foreground">
+                    {hasPassword
+                      ? "Enter a new password for your account."
+                      : "Add a password to sign in with email as an alternative to phone OTP."}
+                  </p>
+                  <div>
+                    <Label>New Password</Label>
+                    <Input type="password" value={newPass} onChange={e => setNewPass(e.target.value)} placeholder="Min 6 characters" />
+                  </div>
+                  <Button onClick={handleChangePassword} disabled={changingPass} className="w-full">
+                    {changingPass ? "Saving..." : "Update Password"}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+            <div className="pt-2 border-t">
+              <Button
+                variant="destructive"
+                size="sm"
+                className="gap-2"
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  navigate("/auth");
+                }}
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Sign Out All Devices
+              </Button>
+            </div>
+          </div>
         </motion.div>
 
         {/* Notifications */}
