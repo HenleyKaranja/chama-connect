@@ -61,7 +61,7 @@ Deno.serve(async (req: Request) => {
       if (!code) return respond({ error: "OTP code is required" }, 400);
 
       console.log(`[verify] Checking OTP for ${phone}`);
-      const res = await fetch(`${verifyBase}/VerificationChecks`, {
+      const res = await fetch(`${verifyBase}/VerificationCheck`, {
         method: "POST",
         headers: { Authorization: twilioAuth, "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({ To: phone, Code: code }),
