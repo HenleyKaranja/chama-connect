@@ -15,9 +15,15 @@ import { Landmark, ArrowLeft, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { formatKenyanNumber } from "@/lib/auth-utils";
+
+// Format phone to E.164 (Kenya)
+const formatPhone = (raw: string) => {
+  let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
+  if (cleaned.startsWith("0")) cleaned = "+254" + cleaned.slice(1);
+  else if (cleaned.startsWith("254")) cleaned = "+" + cleaned;
+  else if (!cleaned.startsWith("+")) cleaned = "+254" + cleaned;
+  return cleaned;
+};
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
@@ -36,19 +42,14 @@ export default function AuthPage() {
     setOtp("");
   }, [searchParams]);
 
-  // Format phone to E.164 (Kenya)
-  const formatPhone = (raw: string) => {
-    let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
-    if (cleaned.startsWith("0")) cleaned = "+254" + cleaned.slice(1);
-    else if (cleaned.startsWith("254")) cleaned = "+" + cleaned;
-    else if (!cleaned.startsWith("+")) cleaned = "+254" + cleaned;
-    return cleaned;
-  };
-
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone.trim()) {
       toast.error("Phone number is required");
+      return;
+    }
+    if (!isLogin && !fullName.trim()) {
+      toast.error("Full name is required");
       return;
     }
     setLoading(true);
@@ -56,23 +57,14 @@ export default function AuthPage() {
     try {
       const formattedPhone = formatPhone(phone);
 
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithOtp({ phone: formattedPhone });
-        if (error) throw error;
-      } else {
-        if (!fullName.trim()) {
-          toast.error("Full name is required");
-          setLoading(false);
-          return;
-        }
-        const { error } = await supabase.auth.signInWithOtp({
-          phone: formattedPhone,
-          options: {
-            data: { full_name: fullName, phone: formattedPhone, role },
-          },
-        });
-        if (error) throw error;
-      }
+      // Send OTP via Twilio Verify edge function
+      const { data, error } = await supabase.functions.invoke("twilio-verify", {
+        body: { action: "send", phone: formattedPhone },
+      });
+
+      if (error) throw new Error(error.message);
+      if (!data?.success) throw new Error(data?.error || "Failed to send OTP");
+
       setOtpSent(true);
       toast.success("OTP sent to your phone!");
     } catch (err: any) {
@@ -92,12 +84,35 @@ export default function AuthPage() {
 
     try {
       const formattedPhone = formatPhone(phone);
-      const { error } = await supabase.auth.verifyOtp({
+
+      // Verify OTP via Twilio Verify edge function
+      const { data, error } = await supabase.functions.invoke("twilio-verify", {
+        body: { action: "verify", phone: formattedPhone, code: otp },
+      });
+
+      if (error) throw new Error(error.message);
+      if (!data?.success) throw new Error("Invalid OTP code. Please try again.");
+
+      // OTP verified — now sign in via Supabase Auth with OTP
+      const { error: authError } = await supabase.auth.signInWithOtp({
+        phone: formattedPhone,
+        options: {
+          data: isLogin
+            ? undefined
+            : { full_name: fullName, phone: formattedPhone, role },
+          shouldCreateUser: !isLogin,
+        },
+      });
+      if (authError) throw authError;
+
+      // Auto-verify with Supabase using the same OTP session
+      const { error: verifyError } = await supabase.auth.verifyOtp({
         phone: formattedPhone,
         token: otp,
         type: "sms",
       });
-      if (error) throw error;
+      if (verifyError) throw verifyError;
+
       toast.success(isLogin ? "Welcome back!" : "Account created successfully!");
       navigate("/dashboard");
     } catch (err: any) {
