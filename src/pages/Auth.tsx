@@ -16,7 +16,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-// Format phone to E.164 (Kenya)
 const formatPhone = (raw: string) => {
   let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
   if (cleaned.startsWith("0")) cleaned = "+254" + cleaned.slice(1);
@@ -44,20 +43,12 @@ export default function AuthPage() {
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone.trim()) {
-      toast.error("Phone number is required");
-      return;
-    }
-    if (!isLogin && !fullName.trim()) {
-      toast.error("Full name is required");
-      return;
-    }
+    if (!phone.trim()) { toast.error("Phone number is required"); return; }
+    if (!isLogin && !fullName.trim()) { toast.error("Full name is required"); return; }
     setLoading(true);
 
     try {
       const formattedPhone = formatPhone(phone);
-
-      // Send OTP via Twilio Verify edge function
       const { data, error } = await supabase.functions.invoke("twilio-verify", {
         body: { action: "send", phone: formattedPhone },
       });
@@ -76,42 +67,34 @@ export default function AuthPage() {
 
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!otp.trim()) {
-      toast.error("Please enter the OTP");
-      return;
-    }
+    if (!otp.trim()) { toast.error("Please enter the OTP"); return; }
     setLoading(true);
 
     try {
       const formattedPhone = formatPhone(phone);
 
-      // Verify OTP via Twilio Verify edge function
+      // Step 1: Verify OTP via Twilio and get session token
       const { data, error } = await supabase.functions.invoke("twilio-verify", {
-        body: { action: "verify", phone: formattedPhone, code: otp },
+        body: {
+          action: "verify",
+          phone: formattedPhone,
+          code: otp,
+          full_name: isLogin ? undefined : fullName,
+          role: isLogin ? undefined : role,
+        },
       });
 
       if (error) throw new Error(error.message);
-      if (!data?.success) throw new Error("Invalid OTP code. Please try again.");
+      if (!data?.success) throw new Error(data?.error || "Verification failed");
 
-      // OTP verified — now sign in via Supabase Auth with OTP
-      const { error: authError } = await supabase.auth.signInWithOtp({
-        phone: formattedPhone,
-        options: {
-          data: isLogin
-            ? undefined
-            : { full_name: fullName, phone: formattedPhone, role },
-          shouldCreateUser: !isLogin,
-        },
-      });
-      if (authError) throw authError;
-
-      // Auto-verify with Supabase using the same OTP session
-      const { error: verifyError } = await supabase.auth.verifyOtp({
-        phone: formattedPhone,
-        token: otp,
-        type: "sms",
-      });
-      if (verifyError) throw verifyError;
+      // Step 2: Exchange the magic link token for a session
+      if (data.token_hash && data.email) {
+        const { error: sessionError } = await supabase.auth.verifyOtp({
+          token_hash: data.token_hash,
+          type: "magiclink",
+        });
+        if (sessionError) throw sessionError;
+      }
 
       toast.success(isLogin ? "Welcome back!" : "Account created successfully!");
       navigate("/dashboard");
@@ -162,7 +145,6 @@ export default function AuthPage() {
                     required={!isLogin}
                   />
                 </div>
-
                 <div className="space-y-2">
                   <Label htmlFor="role">Role</Label>
                   <Select value={role} onValueChange={setRole}>
@@ -206,7 +188,6 @@ export default function AuthPage() {
                 OTP sent to <span className="font-semibold text-foreground">{formatPhone(phone)}</span>
               </p>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="otp">Enter OTP Code</Label>
               <Input
@@ -220,11 +201,9 @@ export default function AuthPage() {
                 autoFocus
               />
             </div>
-
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Verifying..." : "Verify & Sign In"}
             </Button>
-
             <button
               type="button"
               onClick={() => { setOtpSent(false); setOtp(""); }}
