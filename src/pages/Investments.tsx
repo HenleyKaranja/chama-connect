@@ -6,17 +6,26 @@ import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
+import { useChamaMembership } from "@/hooks/use-chama-membership";
 
 export default function Investments() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  const { chamaIds } = useChamaMembership();
 
   const { data: projects, isLoading } = useQuery({
-    queryKey: ["projects"],
+    queryKey: ["projects", chamaIds, role],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("projects")
         .select("*, chamas(name)")
         .order("created_at", { ascending: false });
+
+      // Non-admin members only see their chama's projects
+      if (role !== "admin" && chamaIds.length > 0) {
+        query = query.in("chama_id", chamaIds);
+      }
+
+      const { data, error } = await query;
       if (error) throw error;
       return data;
     },

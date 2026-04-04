@@ -35,7 +35,7 @@ const allNav = [
   { title: "Contributions", url: "/dashboard/contributions", icon: HandCoins, roles: ["admin", "treasurer", "member"] },
   { title: "Loans", url: "/dashboard/loans", icon: Landmark, roles: ["admin", "treasurer", "member"] },
   { title: "Wallet", url: "/dashboard/wallet", icon: Wallet, roles: ["admin", "treasurer"] },
-  { title: "Investments", url: "/dashboard/investments", icon: TrendingUp, roles: ["admin"] },
+  { title: "Investments", url: "/dashboard/investments", icon: TrendingUp, roles: ["admin", "treasurer", "member"] },
   { title: "Reports", url: "/dashboard/reports", icon: BarChart3, roles: ["admin", "treasurer"] },
   { title: "Admin Panel", url: "/dashboard/admin", icon: ShieldCheck, roles: ["admin"] },
 ];
