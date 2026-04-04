@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
-  Landmark,
   Users,
   PiggyBank,
   ShieldCheck,
@@ -12,6 +11,7 @@ import {
   TrendingUp,
   ChevronRight,
 } from "lucide-react";
+import logoImg from "/logo.png";
 
 const features = [
   {
