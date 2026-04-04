@@ -11,6 +11,7 @@ import {
   Landmark,
   ShieldCheck,
 } from "lucide-react";
+import logoImg from "/logo.png";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
