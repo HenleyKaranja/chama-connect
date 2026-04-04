@@ -11,7 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Landmark, ArrowLeft, Phone, Lock, Mail } from "lucide-react";
+import { ArrowLeft, Phone, Lock, Mail } from "lucide-react";
+import logoImg from "/logo.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
