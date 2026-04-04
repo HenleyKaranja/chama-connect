@@ -45,7 +45,7 @@ Deno.serve(async (req: Request) => {
       const res = await fetch(`${verifyBase}/Verifications`, {
         method: "POST",
         headers: { Authorization: twilioAuth, "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ To: phone, Channel: "sms" }),
+        body: new URLSearchParams({ To: phone, Channel: "sms", CustomFriendlyName: "M-Chama" }),
       });
       const data = await res.json();
       console.log(`[send] Twilio ${res.status}:`, JSON.stringify(data));
