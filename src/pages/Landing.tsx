@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
-  Landmark,
   Users,
   PiggyBank,
   ShieldCheck,
@@ -12,6 +11,7 @@ import {
   TrendingUp,
   ChevronRight,
 } from "lucide-react";
+import logoImg from "/logo.png";
 
 const features = [
   {
@@ -69,9 +69,7 @@ export default function Landing() {
       <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-              <Landmark className="h-4.5 w-4.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="M-Chama" className="h-9 w-9 rounded-lg object-contain" />
             <span className="text-lg font-bold tracking-tight text-foreground">M-Chama</span>
           </Link>
           <div className="flex items-center gap-3">
@@ -237,9 +235,7 @@ export default function Landing() {
       <footer className="border-t border-border/60 bg-card/30">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-8 sm:flex-row sm:justify-between sm:px-6">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary">
-              <Landmark className="h-3.5 w-3.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="M-Chama" className="h-7 w-7 rounded-md object-contain" />
             <span className="text-sm font-semibold text-foreground">M-Chama</span>
           </div>
           <p className="text-xs text-muted-foreground">

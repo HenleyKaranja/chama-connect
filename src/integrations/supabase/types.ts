@@ -126,6 +126,54 @@ export type Database = {
           },
         ]
       }
+      investment_contributions: {
+        Row: {
+          amount: number
+          chama_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          payment_method: string | null
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          chama_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          payment_method?: string | null
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          chama_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          payment_method?: string | null
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_contributions_chama_id_fkey"
+            columns: ["chama_id"]
+            isOneToOne: false
+            referencedRelation: "chamas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investment_contributions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       loans: {
         Row: {
           amount: number
