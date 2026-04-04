@@ -235,9 +235,7 @@ export default function Landing() {
       <footer className="border-t border-border/60 bg-card/30">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 py-8 sm:flex-row sm:justify-between sm:px-6">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary">
-              <Landmark className="h-3.5 w-3.5 text-primary-foreground" />
-            </div>
+            <img src={logoImg} alt="M-Chama" className="h-7 w-7 rounded-md object-contain" />
             <span className="text-sm font-semibold text-foreground">M-Chama</span>
           </div>
           <p className="text-xs text-muted-foreground">

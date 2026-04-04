@@ -184,9 +184,7 @@ export default function AuthPage() {
         </Link>
 
         <div className="text-center mb-6">
-          <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary mb-4">
-            <Landmark className="h-6 w-6 text-primary-foreground" />
-          </div>
+          <img src={logoImg} alt="M-Chama" className="h-12 w-12 rounded-xl object-contain mx-auto mb-4" />
           <h1 className="text-2xl font-bold tracking-tight">M-Chama</h1>
           <p className="text-sm text-muted-foreground mt-1">
             {forgotMode
