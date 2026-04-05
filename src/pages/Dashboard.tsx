@@ -62,6 +62,26 @@ export default function Dashboard() {
     enabled: !!user,
   });
 
+  // My wallet transactions
+  const { data: walletTxs } = useQuery({
+    queryKey: ["my_wallet_transactions", user?.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("wallet_transactions").select("id, amount, type, description, created_at").eq("user_id", user!.id).order("created_at", { ascending: false }).limit(10);
+      return data ?? [];
+    },
+    enabled: !!user,
+  });
+
+  // My investment contributions
+  const { data: investmentTxs } = useQuery({
+    queryKey: ["my_investment_txs", user?.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("investment_contributions").select("id, amount, payment_method, notes, created_at, project_id").eq("user_id", user!.id).order("created_at", { ascending: false }).limit(10);
+      return data ?? [];
+    },
+    enabled: !!user,
+  });
+
   // Compute stats
   const totalBalance = wallets?.reduce((s, w) => s + Number(w.balance), 0) ?? 0;
   const chamasJoined = memberships?.filter(m => m.status === "active").length ?? 0;
