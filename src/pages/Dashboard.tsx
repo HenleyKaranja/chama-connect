@@ -62,6 +62,26 @@ export default function Dashboard() {
     enabled: !!user,
   });
 
+  // My wallet transactions
+  const { data: walletTxs } = useQuery({
+    queryKey: ["my_wallet_transactions", user?.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("wallet_transactions").select("id, amount, type, description, created_at").eq("user_id", user!.id).order("created_at", { ascending: false }).limit(10);
+      return data ?? [];
+    },
+    enabled: !!user,
+  });
+
+  // My investment contributions
+  const { data: investmentTxs } = useQuery({
+    queryKey: ["my_investment_txs", user?.id],
+    queryFn: async () => {
+      const { data } = await supabase.from("investment_contributions").select("id, amount, payment_method, notes, created_at, project_id").eq("user_id", user!.id).order("created_at", { ascending: false }).limit(10);
+      return data ?? [];
+    },
+    enabled: !!user,
+  });
+
   // Compute stats
   const totalBalance = wallets?.reduce((s, w) => s + Number(w.balance), 0) ?? 0;
   const chamasJoined = memberships?.filter(m => m.status === "active").length ?? 0;
@@ -96,7 +116,42 @@ export default function Dashboard() {
     return months;
   }, [loans]);
 
-  // Recent transactions
+  // My recent transactions (wallet + investment activity)
+  const myRecentTxs = useMemo(() => {
+    const txList: RecentTransaction[] = [];
+    const getName = () => profile?.full_name || "You";
+    const getInitials = (name: string) => name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+
+    walletTxs?.forEach(wt => {
+      const isPositive = wt.type === "deposit";
+      txList.push({
+        id: wt.id,
+        member: getName(),
+        type: wt.type === "deposit" ? "Wallet Deposit" : wt.type === "withdrawal" ? "Wallet Withdrawal" : wt.type,
+        amount: `${isPositive ? "+" : "-"}KES ${Math.abs(Number(wt.amount)).toLocaleString()}`,
+        date: format(new Date(wt.created_at), "MMM d, yyyy"),
+        avatar: getInitials(getName()),
+        positive: isPositive,
+      });
+    });
+
+    investmentTxs?.forEach(it => {
+      txList.push({
+        id: it.id,
+        member: getName(),
+        type: "Investment",
+        amount: `-KES ${Number(it.amount).toLocaleString()}`,
+        date: format(new Date(it.created_at), "MMM d, yyyy"),
+        avatar: getInitials(getName()),
+        positive: false,
+      });
+    });
+
+    txList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return txList.slice(0, 10);
+  }, [walletTxs, investmentTxs, profile]);
+
+  // All recent transactions (contributions + loans)
   const transactions = useMemo(() => {
     const txList: RecentTransaction[] = [];
     const getName = () => profile?.full_name || "You";
@@ -187,9 +242,44 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
+        {/* My Recent Transactions */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="rounded-xl border bg-card shadow-sm overflow-hidden">
           <div className="p-5 border-b">
-            <h3 className="text-sm font-semibold">Recent Transactions</h3>
+            <h3 className="text-sm font-semibold">My Recent Transactions</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b bg-muted/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Type</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Amount</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {myRecentTxs.length === 0 ? (
+                  <tr><td colSpan={3} className="text-center py-8 text-muted-foreground">No recent wallet or investment activity</td></tr>
+                ) : myRecentTxs.map((tx) => (
+                  <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{tx.avatar}</div>
+                        <span className="font-medium">{tx.type}</span>
+                      </div>
+                    </td>
+                    <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.positive ? "text-success" : "text-destructive"}`}>{tx.amount}</td>
+                    <td className="px-4 py-3 text-right text-muted-foreground">{tx.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+
+        {/* All Recent Transactions */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.58, duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="rounded-xl border bg-card shadow-sm overflow-hidden">
+          <div className="p-5 border-b">
+            <h3 className="text-sm font-semibold">All Recent Transactions</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
