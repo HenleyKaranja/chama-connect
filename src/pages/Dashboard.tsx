@@ -116,7 +116,42 @@ export default function Dashboard() {
     return months;
   }, [loans]);
 
-  // Recent transactions
+  // My recent transactions (wallet + investment activity)
+  const myRecentTxs = useMemo(() => {
+    const txList: RecentTransaction[] = [];
+    const getName = () => profile?.full_name || "You";
+    const getInitials = (name: string) => name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2);
+
+    walletTxs?.forEach(wt => {
+      const isPositive = wt.type === "deposit";
+      txList.push({
+        id: wt.id,
+        member: getName(),
+        type: wt.type === "deposit" ? "Wallet Deposit" : wt.type === "withdrawal" ? "Wallet Withdrawal" : wt.type,
+        amount: `${isPositive ? "+" : "-"}KES ${Math.abs(Number(wt.amount)).toLocaleString()}`,
+        date: format(new Date(wt.created_at), "MMM d, yyyy"),
+        avatar: getInitials(getName()),
+        positive: isPositive,
+      });
+    });
+
+    investmentTxs?.forEach(it => {
+      txList.push({
+        id: it.id,
+        member: getName(),
+        type: "Investment",
+        amount: `-KES ${Number(it.amount).toLocaleString()}`,
+        date: format(new Date(it.created_at), "MMM d, yyyy"),
+        avatar: getInitials(getName()),
+        positive: false,
+      });
+    });
+
+    txList.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return txList.slice(0, 10);
+  }, [walletTxs, investmentTxs, profile]);
+
+  // All recent transactions (contributions + loans)
   const transactions = useMemo(() => {
     const txList: RecentTransaction[] = [];
     const getName = () => profile?.full_name || "You";
