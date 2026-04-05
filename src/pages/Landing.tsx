@@ -69,7 +69,7 @@ export default function Landing() {
       <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src={logoImg} alt="M-Chama" className="h-12 w-12 rounded-lg object-contain" />
+            <img src={logoImg} alt="M-Chama" className="h-14 w-14 rounded-lg object-contain" />
             <span className="text-lg font-bold tracking-tight text-foreground">M-Chama</span>
           </Link>
           <div className="flex items-center gap-3">
