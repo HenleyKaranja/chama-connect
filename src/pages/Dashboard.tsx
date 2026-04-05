@@ -242,9 +242,44 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
+        {/* My Recent Transactions */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="rounded-xl border bg-card shadow-sm overflow-hidden">
           <div className="p-5 border-b">
-            <h3 className="text-sm font-semibold">Recent Transactions</h3>
+            <h3 className="text-sm font-semibold">My Recent Transactions</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b bg-muted/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Type</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Amount</th>
+                  <th className="text-right px-4 py-3 font-medium text-muted-foreground">Date</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {myRecentTxs.length === 0 ? (
+                  <tr><td colSpan={3} className="text-center py-8 text-muted-foreground">No recent wallet or investment activity</td></tr>
+                ) : myRecentTxs.map((tx) => (
+                  <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{tx.avatar}</div>
+                        <span className="font-medium">{tx.type}</span>
+                      </div>
+                    </td>
+                    <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.positive ? "text-success" : "text-destructive"}`}>{tx.amount}</td>
+                    <td className="px-4 py-3 text-right text-muted-foreground">{tx.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+
+        {/* All Recent Transactions */}
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.58, duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="rounded-xl border bg-card shadow-sm overflow-hidden">
+          <div className="p-5 border-b">
+            <h3 className="text-sm font-semibold">All Recent Transactions</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
