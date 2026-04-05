@@ -251,6 +251,7 @@ export default function Dashboard() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b bg-muted/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Member</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Type</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Amount</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Date</th>
@@ -258,15 +259,16 @@ export default function Dashboard() {
               </thead>
               <tbody className="divide-y">
                 {myRecentTxs.length === 0 ? (
-                  <tr><td colSpan={3} className="text-center py-8 text-muted-foreground">No recent wallet or investment activity</td></tr>
+                  <tr><td colSpan={4} className="text-center py-8 text-muted-foreground">No recent wallet or investment activity</td></tr>
                 ) : myRecentTxs.map((tx) => (
                   <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{tx.avatar}</div>
-                        <span className="font-medium">{tx.type}</span>
+                        <span className="font-medium">{tx.member}</span>
                       </div>
                     </td>
+                    <td className="px-4 py-3 font-medium">{tx.type}</td>
                     <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.positive ? "text-success" : "text-destructive"}`}>{tx.amount}</td>
                     <td className="px-4 py-3 text-right text-muted-foreground">{tx.date}</td>
                   </tr>
@@ -285,6 +287,7 @@ export default function Dashboard() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b bg-muted/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Member</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Type</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Amount</th>
                   <th className="text-right px-4 py-3 font-medium text-muted-foreground">Date</th>
@@ -292,15 +295,16 @@ export default function Dashboard() {
               </thead>
               <tbody className="divide-y">
                 {transactions.length === 0 ? (
-                  <tr><td colSpan={3} className="text-center py-8 text-muted-foreground">No recent transactions</td></tr>
+                  <tr><td colSpan={4} className="text-center py-8 text-muted-foreground">No recent transactions</td></tr>
                 ) : transactions.map((tx) => (
                   <tr key={tx.id} className="hover:bg-muted/30 transition-colors">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
                         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{tx.avatar}</div>
-                        <span className="font-medium">{tx.type}</span>
+                        <span className="font-medium">{tx.member}</span>
                       </div>
                     </td>
+                    <td className="px-4 py-3 font-medium">{tx.type}</td>
                     <td className={`px-4 py-3 text-right font-semibold tabular-nums ${tx.positive ? "text-success" : "text-destructive"}`}>{tx.amount}</td>
                     <td className="px-4 py-3 text-right text-muted-foreground">{tx.date}</td>
                   </tr>
