@@ -123,11 +123,7 @@ Deno.serve(async (req: Request) => {
         console.log("[verify] Created user:", user.id);
       } else {
         console.log("[verify] Found existing user:", user.id);
-        // Ensure phone is confirmed
-        await supabaseAdmin.auth.admin.updateUser(user.id, {
-          phone,
-          phone_confirm: true,
-        });
+        // Phone already confirmed via OTP verification
       }
 
       // Generate a magic link to create a session
