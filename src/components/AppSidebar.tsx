@@ -81,7 +81,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-r-0">
       <SidebarHeader className="p-4">
         <div className="flex items-center gap-3">
-          <img src={logoImg} alt="M-Chama" className="h-12 w-12 shrink-0 rounded-lg bg-white/90 p-1 object-contain" />
+          <img src={logoImg} alt="M-Chama" className="h-12 w-12 shrink-0 rounded-lg object-contain brightness-0 invert" />
           {!collapsed && (
             <div>
               <h1 className="text-base font-bold tracking-tight text-sidebar-foreground">
