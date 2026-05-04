@@ -147,5 +147,17 @@
   </div>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    function toggleCashNotes() {
+      const method = document.getElementById('contrib-method').value;
+      document.getElementById('cash-notes-group').style.display = method === 'cash' ? 'block' : 'none';
+    }
+    function submitContribution() {
+      const method = document.getElementById('contrib-method').value;
+      const msg = method === 'cash' ? 'Cash payment submitted for admin approval' : 'Contribution submitted successfully';
+      showToast(msg, 'success');
+      document.getElementById('contribution-modal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
