@@ -121,8 +121,15 @@ export default function Contributions() {
                     </SelectContent>
                   </Select>
                 </div>
+                {method === "cash" && (
+                  <div>
+                    <Label>Notes / Description</Label>
+                    <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="e.g. Paid cash to treasurer at meeting" />
+                    <p className="text-xs text-muted-foreground mt-1">Cash payments require admin verification</p>
+                  </div>
+                )}
                 <Button onClick={() => createMutation.mutate()} disabled={!chamaId || !amount || createMutation.isPending} className="w-full">
-                  {createMutation.isPending ? "Submitting..." : "Submit Payment"}
+                  {createMutation.isPending ? "Submitting..." : method === "cash" ? "Submit for Approval" : "Submit Payment"}
                 </Button>
               </div>
             </DialogContent>
