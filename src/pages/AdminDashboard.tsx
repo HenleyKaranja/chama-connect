@@ -12,6 +12,7 @@ import { FinancialInsights } from "@/components/admin/FinancialInsights";
 import { MerryGoRound } from "@/components/admin/MerryGoRound";
 import { AdminReports } from "@/components/admin/AdminReports";
 import { SystemSettings } from "@/components/admin/SystemSettings";
+import { PaymentApprovals } from "@/components/admin/PaymentApprovals";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -30,6 +31,7 @@ export default function AdminDashboard() {
             <TabsTrigger value="approvals" className="text-xs">Member Approvals</TabsTrigger>
             <TabsTrigger value="loan-approvals" className="text-xs">Loan Approvals</TabsTrigger>
             <TabsTrigger value="chama-approvals" className="text-xs">Chama Requests</TabsTrigger>
+            <TabsTrigger value="payment-approvals" className="text-xs">Payment Approvals</TabsTrigger>
             <TabsTrigger value="members" className="text-xs">Members</TabsTrigger>
             <TabsTrigger value="projects" className="text-xs">Projects</TabsTrigger>
             <TabsTrigger value="insights" className="text-xs">Financial Insights</TabsTrigger>
@@ -43,6 +45,7 @@ export default function AdminDashboard() {
           <TabsContent value="approvals"><MemberApprovals /></TabsContent>
           <TabsContent value="loan-approvals"><LoanApprovals /></TabsContent>
           <TabsContent value="chama-approvals"><ChamaApprovals /></TabsContent>
+          <TabsContent value="payment-approvals"><PaymentApprovals /></TabsContent>
           <TabsContent value="members"><AllMembers /></TabsContent>
           <TabsContent value="projects"><ProjectsManager /></TabsContent>
           <TabsContent value="insights"><FinancialInsights /></TabsContent>
