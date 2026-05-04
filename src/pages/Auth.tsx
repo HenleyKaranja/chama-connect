@@ -29,7 +29,7 @@ type AuthMethod = "otp" | "password";
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const [isLogin, setIsLogin] = useState(searchParams.get("mode") !== "signup");
-  const [authMethod, setAuthMethod] = useState<AuthMethod>("otp");
+  const [authMethod, setAuthMethod] = useState<AuthMethod>("password");
 
   // Shared fields
   const [phone, setPhone] = useState("");
@@ -200,18 +200,6 @@ export default function AuthPage() {
           <div className="flex rounded-lg bg-muted p-1 mb-6">
             <button
               type="button"
-              onClick={() => { setAuthMethod("otp"); setOtpSent(false); }}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
-                authMethod === "otp"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Phone className="h-3.5 w-3.5" />
-              Phone OTP
-            </button>
-            <button
-              type="button"
               onClick={() => setAuthMethod("password")}
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
                 authMethod === "password"
@@ -221,6 +209,18 @@ export default function AuthPage() {
             >
               <Lock className="h-3.5 w-3.5" />
               Password
+            </button>
+            <button
+              type="button"
+              onClick={() => { setAuthMethod("otp"); setOtpSent(false); }}
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
+                authMethod === "otp"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Phone className="h-3.5 w-3.5" />
+              Phone OTP
             </button>
           </div>
         )}
