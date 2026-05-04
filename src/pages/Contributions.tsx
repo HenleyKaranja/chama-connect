@@ -57,6 +57,7 @@ export default function Contributions() {
         chama_id: chamaId,
         amount: parseFloat(amount),
         payment_method: method,
+        notes: notes || null,
         status: "pending",
       });
       if (error) throw error;
