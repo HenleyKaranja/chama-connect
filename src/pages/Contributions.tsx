@@ -64,10 +64,11 @@ export default function Contributions() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contributions"] });
-      toast.success("Contribution submitted successfully");
+      toast.success(method === "cash" ? "Cash payment submitted for admin approval" : "Contribution submitted successfully");
       setOpen(false);
       setAmount("");
       setChamaId("");
+      setNotes("");
     },
     onError: (e: any) => toast.error(e.message),
   });
