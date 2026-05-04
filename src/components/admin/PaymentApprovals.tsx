@@ -18,7 +18,7 @@ export function PaymentApprovals() {
     queryFn: async () => {
       let query = supabase
         .from("contributions")
-        .select("*, chamas(name), profiles!contributions_user_id_fkey(full_name, phone)")
+        .select("*, chamas(name)")
         .order("created_at", { ascending: false });
 
       if (filter === "pending") {
@@ -26,17 +26,17 @@ export function PaymentApprovals() {
       }
 
       const { data, error } = await query;
-      if (error) {
-        // Fallback without foreign key hint
-        const { data: fallback, error: err2 } = await supabase
-          .from("contributions")
-          .select("*, chamas(name)")
-          .order("created_at", { ascending: false })
-          .eq(filter === "pending" ? "status" : "id", filter === "pending" ? "pending" : undefined as any);
-        if (err2) throw err2;
-        return fallback;
-      }
-      return data;
+      if (error) throw error;
+
+      // Fetch member names for each contribution
+      const userIds = [...new Set((data ?? []).map(c => c.user_id))];
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("user_id, full_name, phone")
+        .in("user_id", userIds);
+
+      const profileMap = new Map((profiles ?? []).map(p => [p.user_id, p]));
+      return (data ?? []).map(c => ({ ...c, profiles: profileMap.get(c.user_id) ?? null }));
     },
     enabled: !!user,
   });
