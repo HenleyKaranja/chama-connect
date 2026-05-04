@@ -27,7 +27,7 @@ export default function Contributions() {
   const [amount, setAmount] = useState("");
   const [chamaId, setChamaId] = useState("");
   const [method, setMethod] = useState("mpesa");
-
+  const [notes, setNotes] = useState("");
   const { data: chamas } = useQuery({
     queryKey: ["chamas"],
     queryFn: async () => {
@@ -57,16 +57,18 @@ export default function Contributions() {
         chama_id: chamaId,
         amount: parseFloat(amount),
         payment_method: method,
+        notes: notes || null,
         status: "pending",
       });
       if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contributions"] });
-      toast.success("Contribution submitted successfully");
+      toast.success(method === "cash" ? "Cash payment submitted for admin approval" : "Contribution submitted successfully");
       setOpen(false);
       setAmount("");
       setChamaId("");
+      setNotes("");
     },
     onError: (e: any) => toast.error(e.message),
   });
@@ -121,8 +123,15 @@ export default function Contributions() {
                     </SelectContent>
                   </Select>
                 </div>
+                {method === "cash" && (
+                  <div>
+                    <Label>Notes / Description</Label>
+                    <Input value={notes} onChange={e => setNotes(e.target.value)} placeholder="e.g. Paid cash to treasurer at meeting" />
+                    <p className="text-xs text-muted-foreground mt-1">Cash payments require admin verification</p>
+                  </div>
+                )}
                 <Button onClick={() => createMutation.mutate()} disabled={!chamaId || !amount || createMutation.isPending} className="w-full">
-                  {createMutation.isPending ? "Submitting..." : "Submit Payment"}
+                  {createMutation.isPending ? "Submitting..." : method === "cash" ? "Submit for Approval" : "Submit Payment"}
                 </Button>
               </div>
             </DialogContent>

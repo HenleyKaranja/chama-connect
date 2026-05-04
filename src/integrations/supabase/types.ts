@@ -85,6 +85,8 @@ export type Database = {
       contributions: {
         Row: {
           amount: number
+          approved_at: string | null
+          approved_by: string | null
           chama_id: string
           created_at: string
           id: string
@@ -96,6 +98,8 @@ export type Database = {
         }
         Insert: {
           amount: number
+          approved_at?: string | null
+          approved_by?: string | null
           chama_id: string
           created_at?: string
           id?: string
@@ -107,6 +111,8 @@ export type Database = {
         }
         Update: {
           amount?: number
+          approved_at?: string | null
+          approved_by?: string | null
           chama_id?: string
           created_at?: string
           id?: string

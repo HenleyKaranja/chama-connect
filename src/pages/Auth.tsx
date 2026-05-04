@@ -29,7 +29,7 @@ type AuthMethod = "otp" | "password";
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const [isLogin, setIsLogin] = useState(searchParams.get("mode") !== "signup");
-  const [authMethod, setAuthMethod] = useState<AuthMethod>("otp");
+  const [authMethod, setAuthMethod] = useState<AuthMethod>("password");
 
   // Shared fields
   const [phone, setPhone] = useState("");
@@ -200,18 +200,6 @@ export default function AuthPage() {
           <div className="flex rounded-lg bg-muted p-1 mb-6">
             <button
               type="button"
-              onClick={() => { setAuthMethod("otp"); setOtpSent(false); }}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
-                authMethod === "otp"
-                  ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              <Phone className="h-3.5 w-3.5" />
-              Phone OTP
-            </button>
-            <button
-              type="button"
               onClick={() => setAuthMethod("password")}
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
                 authMethod === "password"
@@ -221,6 +209,18 @@ export default function AuthPage() {
             >
               <Lock className="h-3.5 w-3.5" />
               Password
+            </button>
+            <button
+              type="button"
+              onClick={() => { setAuthMethod("otp"); setOtpSent(false); }}
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-md py-2 text-sm font-medium transition-colors ${
+                authMethod === "otp"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Phone className="h-3.5 w-3.5" />
+              Phone OTP
             </button>
           </div>
         )}
@@ -255,7 +255,58 @@ export default function AuthPage() {
               ← Back to sign in
             </button>
           </form>
-        ) : authMethod === "otp" ? (
+        ) : authMethod === "password" ? (
+          /* ── Password flow ── */
+          <form onSubmit={handlePasswordAuth} className="space-y-4">
+            {!isLogin && (
+              <>
+                <div className="space-y-2">
+                  <Label htmlFor="pw-name">Full Name</Label>
+                  <Input id="pw-name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Amina Wanjiku" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pw-phone">Phone (optional)</Label>
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input id="pw-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="0712 345 678" className="pl-10" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pw-role">Role</Label>
+                  <Select value={role} onValueChange={setRole}>
+                    <SelectTrigger id="pw-role"><SelectValue placeholder="Select role" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="member">Member</SelectItem>
+                      <SelectItem value="admin">Admin / Chairperson</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </>
+            )}
+            <div className="space-y-2">
+              <Label htmlFor="pw-email">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input id="pw-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="pl-10" required />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="pw-pass">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input id="pw-pass" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 6 characters" className="pl-10" required />
+              </div>
+            </div>
+            {isLogin && (
+              <button type="button" onClick={() => setForgotMode(true)} className="text-xs text-primary hover:underline">
+                Forgot password?
+              </button>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? (isLogin ? "Signing in..." : "Creating account...") : isLogin ? "Sign In" : "Create Account"}
+            </Button>
+          </form>
+        ) : (
           /* ── OTP flow ── */
           !otpSent ? (
             <form onSubmit={handleSendOtp} className="space-y-4">
@@ -308,57 +359,6 @@ export default function AuthPage() {
               </button>
             </form>
           )
-        ) : (
-          /* ── Password flow ── */
-          <form onSubmit={handlePasswordAuth} className="space-y-4">
-            {!isLogin && (
-              <>
-                <div className="space-y-2">
-                  <Label htmlFor="pw-name">Full Name</Label>
-                  <Input id="pw-name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Amina Wanjiku" required />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="pw-phone">Phone (optional)</Label>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="pw-phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="0712 345 678" className="pl-10" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="pw-role">Role</Label>
-                  <Select value={role} onValueChange={setRole}>
-                    <SelectTrigger id="pw-role"><SelectValue placeholder="Select role" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="member">Member</SelectItem>
-                      <SelectItem value="admin">Admin / Chairperson</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </>
-            )}
-            <div className="space-y-2">
-              <Label htmlFor="pw-email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="pw-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="pl-10" required />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="pw-pass">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input id="pw-pass" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Min 6 characters" className="pl-10" required />
-              </div>
-            </div>
-            {isLogin && (
-              <button type="button" onClick={() => setForgotMode(true)} className="text-xs text-primary hover:underline">
-                Forgot password?
-              </button>
-            )}
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? (isLogin ? "Signing in..." : "Creating account...") : isLogin ? "Sign In" : "Create Account"}
-            </Button>
-          </form>
         )}
 
         <p className="text-center text-sm text-muted-foreground mt-6">

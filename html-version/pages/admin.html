@@ -117,6 +117,53 @@
           </div>
         </div>
 
+        <!-- Payment Approvals -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+            <h3 style="font-size: 0.875rem; font-weight: 600;">💰 Payment Verification (Cash-in-Hand)</h3>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="table" style="margin: 0;">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th>Chama</th>
+                  <th>Amount</th>
+                  <th>Method</th>
+                  <th>Notes</th>
+                  <th>Date</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Grace Akinyi</td>
+                  <td>Friends United</td>
+                  <td>KES 8,000</td>
+                  <td><span class="badge" style="background: #fef3c7; color: #92400e;">💵 Cash</span></td>
+                  <td style="color: var(--muted-foreground);">Paid to treasurer at meeting</td>
+                  <td style="color: var(--muted-foreground);">May 2, 2026</td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Payment approved','success')">✓ Approve</button>
+                    <button class="btn btn-sm btn-outline" style="margin-left:0.25rem; color:var(--destructive);" onclick="showToast('Payment rejected','error')">✕ Reject</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>James Mutua</td>
+                  <td>Church Group</td>
+                  <td>KES 5,000</td>
+                  <td><span class="badge" style="background: #fef3c7; color: #92400e;">💵 Cash</span></td>
+                  <td style="color: var(--muted-foreground);">Cash at Sunday service</td>
+                  <td style="color: var(--muted-foreground);">May 1, 2026</td>
+                  <td style="text-align: right;">
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Payment approved','success')">✓ Approve</button>
+                    <button class="btn btn-sm btn-outline" style="margin-left:0.25rem; color:var(--destructive);" onclick="showToast('Payment rejected','error')">✕ Reject</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         <!-- System Management -->
         <div class="card">
           <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
