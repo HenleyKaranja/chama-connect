@@ -27,7 +27,7 @@ export default function Contributions() {
   const [amount, setAmount] = useState("");
   const [chamaId, setChamaId] = useState("");
   const [method, setMethod] = useState("mpesa");
-
+  const [notes, setNotes] = useState("");
   const { data: chamas } = useQuery({
     queryKey: ["chamas"],
     queryFn: async () => {
