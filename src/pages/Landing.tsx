@@ -12,6 +12,9 @@ import {
   ChevronRight,
 } from "lucide-react";
 import logoImg from "/logo.png";
+import heroImg from "@/assets/hero-savings.png";
+import walletImg from "@/assets/feature-wallet.png";
+import investImg from "@/assets/feature-invest.png";
 
 const features = [
   {
@@ -62,6 +65,8 @@ const fadeUp = {
   }),
 };
 
+const floatTransition = { duration: 4, repeat: Infinity, ease: "easeInOut" as const };
+
 export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
@@ -74,9 +79,7 @@ export default function Landing() {
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/auth">
-              <Button variant="ghost" size="sm">
-                Sign In
-              </Button>
+              <Button variant="ghost" size="sm">Sign In</Button>
             </Link>
             <Link to="/auth?mode=signup">
               <Button size="sm" className="gap-1.5">
@@ -87,60 +90,90 @@ export default function Landing() {
         </div>
       </nav>
 
-      {/* Hero */}
+      {/* Hero — now with animated illustration */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-        <div className="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 sm:py-32 lg:py-40">
-          <div className="mx-auto max-w-2xl text-center">
+        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-36">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            {/* Text */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                  Kenya's #1 Chama Platform
+                </span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+              >
+                Grow Together,{" "}
+                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Save Smarter
+                </span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg"
+              >
+                M-Chama brings your savings group online. Track contributions, manage loans,
+                invest together, and build wealth — all from one secure platform.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="mt-8 flex flex-col items-start gap-3 sm:flex-row"
+              >
+                <Link to="/auth?mode=signup">
+                  <Button size="lg" className="gap-2 px-8 text-base">
+                    Start Your Chama <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button variant="outline" size="lg" className="px-8 text-base">Sign In</Button>
+                </Link>
+              </motion.div>
+            </div>
+
+            {/* Animated Hero Image */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="relative hidden lg:block"
             >
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
-                Kenya's #1 Chama Platform
-              </span>
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl"
-            >
-              Grow Together,{" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Save Smarter
-              </span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg"
-            >
-              M-Chama brings your savings group online. Track contributions, manage loans,
-              invest together, and build wealth — all from one secure platform.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-            >
-              <Link to="/auth?mode=signup">
-                <Button size="lg" className="gap-2 px-8 text-base">
-                  Start Your Chama <ArrowRight className="h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/auth">
-                <Button variant="outline" size="lg" className="px-8 text-base">
-                  Sign In
-                </Button>
-              </Link>
+              <motion.img
+                src={heroImg}
+                alt="Community savings group"
+                width={800}
+                height={640}
+                className="w-full max-w-lg mx-auto drop-shadow-2xl"
+                animate={{ y: [0, -12, 0] }}
+                transition={floatTransition}
+              />
+              {/* Decorative floating elements */}
+              <motion.div
+                className="absolute -top-4 -right-4 h-20 w-20 rounded-full bg-accent/20 blur-xl"
+                animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute bottom-8 -left-6 h-16 w-16 rounded-full bg-primary/20 blur-xl"
+                animate={{ scale: [1, 1.4, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+              />
             </motion.div>
           </div>
         </div>
@@ -197,6 +230,76 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Showcase — Wallet & Investment images */}
+      <section className="border-t border-border/60 bg-muted/20">
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Seamless Mobile Money</h2>
+              <p className="mt-3 text-muted-foreground leading-relaxed">
+                Send and receive contributions instantly via M-Pesa. Track every shilling with real-time notifications and transparent records.
+              </p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center"
+            >
+              <motion.img
+                src={walletImg}
+                alt="Mobile money transfer"
+                loading="lazy"
+                width={640}
+                height={512}
+                className="w-full max-w-sm drop-shadow-xl"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+          </div>
+
+          <div className="grid items-center gap-12 lg:grid-cols-2 mt-20">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center order-2 lg:order-1"
+            >
+              <motion.img
+                src={investImg}
+                alt="Community investing"
+                loading="lazy"
+                width={640}
+                height={512}
+                className="w-full max-w-sm drop-shadow-xl"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="order-1 lg:order-2"
+            >
+              <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Grow Your Wealth Together</h2>
+              <p className="mt-3 text-muted-foreground leading-relaxed">
+                Pool your savings and invest in group projects. Track returns, monitor performance, and watch your wealth multiply as a community.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="border-t border-border/60">
         <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
@@ -217,11 +320,7 @@ export default function Landing() {
               </p>
               <div className="mt-8">
                 <Link to="/auth?mode=signup">
-                  <Button
-                    size="lg"
-                    variant="secondary"
-                    className="gap-2 px-8 text-base font-semibold"
-                  >
+                  <Button size="lg" variant="secondary" className="gap-2 px-8 text-base font-semibold">
                     Create Free Account <ChevronRight className="h-4 w-4" />
                   </Button>
                 </Link>

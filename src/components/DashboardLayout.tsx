@@ -2,8 +2,10 @@ import { ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Bell } from "lucide-react";
+import { useAutoLogout } from "@/hooks/useAutoLogout";
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
+  useAutoLogout();
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">

@@ -14,6 +14,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { LoanEligibility } from "@/components/LoanEligibility";
+import { logAuditEvent } from "@/lib/auditLog";
+import { sanitizeNumber } from "@/lib/sanitize";
 
 const statusColors: Record<string, string> = {
   active: "text-info bg-info/10",
@@ -50,8 +53,11 @@ export default function Loans() {
 
   const applyMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await supabase.from("loans").insert({ user_id: user!.id, chama_id: chamaId, amount: parseFloat(amount), status: "pending" });
+      const sanitizedAmount = sanitizeNumber(amount);
+      if (isNaN(sanitizedAmount) || sanitizedAmount <= 0) throw new Error("Invalid amount");
+      const { error } = await supabase.from("loans").insert({ user_id: user!.id, chama_id: chamaId, amount: sanitizedAmount, status: "pending" });
       if (error) throw error;
+      await logAuditEvent("loan_application", "loan", undefined, { chama_id: chamaId, amount: sanitizedAmount });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["loans"] });
@@ -89,6 +95,10 @@ export default function Loans() {
                     <SelectContent>{chamas?.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
+
+                {/* Loan Eligibility Check */}
+                <LoanEligibility chamaId={chamaId} />
+
                 <div>
                   <Label>Amount (KES)</Label>
                   <Input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="25000" />
