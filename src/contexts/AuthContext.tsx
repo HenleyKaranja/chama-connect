@@ -42,11 +42,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
           setTimeout(() => fetchUserData(session.user.id), 0);
+          if (event === "SIGNED_IN") {
+            logAuditEvent("login", "auth", session.user.id);
+          }
         } else {
           setRole(null);
           setProfile(null);
