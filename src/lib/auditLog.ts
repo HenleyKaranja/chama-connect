@@ -2,9 +2,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 export async function logAuditEvent(
   action: string,
-  entityType?: string,
-  entityId?: string,
-  details?: Record<string, unknown>
+  entityType?: string | null,
+  entityId?: string | null,
+  details?: Record<string, string | number | boolean | null>
 ) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
