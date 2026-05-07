@@ -13,6 +13,8 @@ import { MerryGoRound } from "@/components/admin/MerryGoRound";
 import { AdminReports } from "@/components/admin/AdminReports";
 import { SystemSettings } from "@/components/admin/SystemSettings";
 import { PaymentApprovals } from "@/components/admin/PaymentApprovals";
+import { AuditTracker } from "@/components/admin/AuditTracker";
+import { ActivityLogs } from "@/components/admin/ActivityLogs";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -37,6 +39,8 @@ export default function AdminDashboard() {
             <TabsTrigger value="insights" className="text-xs">Financial Insights</TabsTrigger>
             <TabsTrigger value="analytics" className="text-xs">Analytics</TabsTrigger>
             <TabsTrigger value="merry-go-round" className="text-xs">Merry-Go-Round</TabsTrigger>
+            <TabsTrigger value="audit-trail" className="text-xs">Audit Trail</TabsTrigger>
+            <TabsTrigger value="activity-logs" className="text-xs">Activity Logs</TabsTrigger>
             <TabsTrigger value="reports" className="text-xs">Reports</TabsTrigger>
             <TabsTrigger value="settings" className="text-xs">Settings</TabsTrigger>
           </TabsList>
@@ -51,6 +55,8 @@ export default function AdminDashboard() {
           <TabsContent value="insights"><FinancialInsights /></TabsContent>
           <TabsContent value="analytics"><AdminCharts /></TabsContent>
           <TabsContent value="merry-go-round"><MerryGoRound /></TabsContent>
+          <TabsContent value="audit-trail"><AuditTracker /></TabsContent>
+          <TabsContent value="activity-logs"><ActivityLogs /></TabsContent>
           <TabsContent value="reports"><AdminReports /></TabsContent>
           <TabsContent value="settings"><SystemSettings /></TabsContent>
         </Tabs>
