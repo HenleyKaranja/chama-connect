@@ -65,12 +65,7 @@ const fadeUp = {
   }),
 };
 
-const float = {
-  animate: {
-    y: [0, -12, 0],
-    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-  },
-};
+const floatTransition = { duration: 4, repeat: Infinity, ease: "easeInOut" as const };
 
 export default function Landing() {
   return (
