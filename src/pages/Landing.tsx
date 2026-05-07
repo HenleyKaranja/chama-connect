@@ -160,8 +160,8 @@ export default function Landing() {
                 width={800}
                 height={640}
                 className="w-full max-w-lg mx-auto drop-shadow-2xl"
-                variants={float}
-                animate="animate"
+                animate={{ y: [0, -12, 0] }}
+                transition={floatTransition}
               />
               {/* Decorative floating elements */}
               <motion.div
