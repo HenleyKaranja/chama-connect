@@ -13,6 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { TransactionPinGate } from "@/components/security/TransactionPinGate";
+import { logAuditEvent } from "@/lib/auditLog";
 
 const statusConfig = {
   paid: { color: "text-success bg-success/10", icon: CheckCircle2, label: "Paid" },
@@ -24,6 +26,7 @@ export default function Contributions() {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
+  const [pinOpen, setPinOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [chamaId, setChamaId] = useState("");
   const [method, setMethod] = useState("mpesa");
@@ -62,8 +65,9 @@ export default function Contributions() {
       });
       if (error) throw error;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({ queryKey: ["contributions"] });
+      await logAuditEvent("contribution_submitted", "contribution", null, { amount: parseFloat(amount), method });
       toast.success(method === "cash" ? "Cash payment submitted for admin approval" : "Contribution submitted successfully");
       setOpen(false);
       setAmount("");
@@ -130,8 +134,8 @@ export default function Contributions() {
                     <p className="text-xs text-muted-foreground mt-1">Cash payments require admin verification</p>
                   </div>
                 )}
-                <Button onClick={() => createMutation.mutate()} disabled={!chamaId || !amount || createMutation.isPending} className="w-full">
-                  {createMutation.isPending ? "Submitting..." : method === "cash" ? "Submit for Approval" : "Submit Payment"}
+                <Button onClick={() => { if (!chamaId || !amount) return; setOpen(false); setPinOpen(true); }} disabled={!chamaId || !amount || createMutation.isPending} className="w-full">
+                  {createMutation.isPending ? "Submitting..." : method === "cash" ? "Submit for Approval" : "Confirm with PIN"}
                 </Button>
               </div>
             </DialogContent>
@@ -194,6 +198,13 @@ export default function Contributions() {
           </div>
         </motion.div>
       </div>
+      <TransactionPinGate
+        open={pinOpen}
+        onOpenChange={setPinOpen}
+        onVerified={() => createMutation.mutate()}
+        title="Authorise Contribution"
+        description={`Confirm a KES ${Number(amount || 0).toLocaleString()} ${method.toUpperCase()} contribution.`}
+      />
     </AnimatedPage>
   );
 }
