@@ -129,6 +129,15 @@
           </button>
         </div>
 
+        <!-- Exit policy notice -->
+        <div class="card" style="background: hsl(38 95% 95%); border-color: hsl(38 95% 70%); padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; align-items: start;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="hsl(38 90% 40%)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <div>
+            <strong style="color: hsl(38 90% 30%);">Exit policy:</strong>
+            <span style="color: hsl(38 90% 30%);">Members cannot leave a chama during an active merry-go-round cycle. You must wait until every recipient has been paid out. An admin can override this with a logged reason.</span>
+          </div>
+        </div>
+
         <!-- Chamas Grid -->
         <div class="grid grid-cols-3" style="gap: 1.5rem;">
           <!-- Chama Card 1 -->
@@ -152,13 +161,11 @@
               </div>
             </div>
 
-            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
               <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;">View</button>
               <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;">Contribute</button>
+              <button class="btn btn-outline" style="padding: 0.5rem 0.75rem; color: hsl(0 70% 45%); border-color: hsl(0 70% 80%);" title="Cycle in progress" disabled>Leave 🔒</button>
             </div>
-          </div>
-
-          <!-- Chama Card 2 -->
           <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
             <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
               <div>
