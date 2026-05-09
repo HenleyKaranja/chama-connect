@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AnimatedPage, StaggerContainer, staggerItem } from "@/components/AnimatedPage";
 import { motion } from "framer-motion";
-import { Users, Plus, Copy, MoreVertical, Crown } from "lucide-react";
+import { Users, Plus, Copy, MoreVertical, Crown, LogOut, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { logAuditEvent } from "@/lib/auditLog";
 
 const colors = [
   "from-primary/20 to-primary/5",
@@ -79,6 +80,28 @@ export default function Chamas() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chama_members"] });
       toast.success("Joined chama!");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: async (chamaId: string) => {
+      // Cycle gate
+      const { data: canLeave } = await supabase.rpc("can_leave_chama", { _user_id: user!.id, _chama_id: chamaId });
+      if (canLeave === false) {
+        throw new Error("You cannot leave during an active merry-go-round cycle. Wait until all recipients have been paid out, or ask an admin to remove you.");
+      }
+      const { error } = await supabase
+        .from("chama_members")
+        .delete()
+        .eq("chama_id", chamaId)
+        .eq("user_id", user!.id);
+      if (error) throw error;
+      await logAuditEvent("chama_left", "chama", chamaId);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["chama_members"] });
+      toast.success("You have left the chama");
     },
     onError: (e: any) => toast.error(e.message),
   });
@@ -162,7 +185,21 @@ export default function Chamas() {
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t">
                       {isMember ? (
-                        <span className="text-xs text-success font-medium">✓ Member</span>
+                        <>
+                          <span className="text-xs text-success font-medium">✓ Member</span>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-xs h-7 text-destructive hover:text-destructive"
+                            onClick={() => {
+                              if (confirm(`Leave ${chama.name}? You can't leave during an active cycle.`)) {
+                                leaveMutation.mutate(chama.id);
+                              }
+                            }}
+                          >
+                            <LogOut className="h-3 w-3 mr-1" /> Leave
+                          </Button>
+                        </>
                       ) : (
                         <Button variant="outline" size="sm" className="text-xs h-7" onClick={() => joinMutation.mutate(chama.id)}>
                           Join
