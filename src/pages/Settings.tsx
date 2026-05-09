@@ -11,6 +11,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { PinSetupCard } from "@/components/security/PinSetupCard";
+import { ActiveSessions } from "@/components/security/ActiveSessions";
 
 export default function SettingsPage() {
   const { user, profile } = useAuth();
