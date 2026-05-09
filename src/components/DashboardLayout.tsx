@@ -3,9 +3,11 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { Bell } from "lucide-react";
 import { useAutoLogout } from "@/hooks/useAutoLogout";
+import { useSessionTracker } from "@/hooks/useSessionTracker";
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
   useAutoLogout();
+  useSessionTracker();
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
