@@ -15,6 +15,7 @@ import { ArrowLeft, Phone, Lock, Mail } from "lucide-react";
 import logoImg from "/logo.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { checkLoginLock, recordLoginAttempt } from "@/lib/loginGuard";
 
 const formatPhone = (raw: string) => {
   let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
@@ -119,7 +120,14 @@ export default function AuthPage() {
     setLoading(true);
     try {
       if (isLogin) {
+        const lock = await checkLoginLock(email);
+        if (lock.locked) {
+          toast.error(`Too many failed logins. Try again in ${lock.minutes} min.`);
+          setLoading(false);
+          return;
+        }
         const { error } = await supabase.auth.signInWithPassword({ email, password });
+        await recordLoginAttempt(email, !error);
         if (error) throw error;
         toast.success("Welcome back!");
       } else {

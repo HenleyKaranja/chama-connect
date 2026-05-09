@@ -11,6 +11,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { PinSetupCard } from "@/components/security/PinSetupCard";
+import { ActiveSessions } from "@/components/security/ActiveSessions";
 
 export default function SettingsPage() {
   const { user, profile } = useAuth();
@@ -165,6 +167,9 @@ export default function SettingsPage() {
             </div>
           </div>
         </motion.div>
+
+        <PinSetupCard />
+        <ActiveSessions />
 
         {/* Notifications */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26, duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }} className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
