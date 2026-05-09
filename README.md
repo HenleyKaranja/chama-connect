@@ -74,8 +74,8 @@ MongoDB / MySQL / PostgreSQL
 
 1. Clone the Repository
 
-git clone https://github.com/HenleyKaranja/mchama-connect.git
-cd mchama-system
+git clone https://github.com/HenleyKaranja/chama-connect.git
+
 
 2. Install Dependencies
 
