@@ -164,8 +164,92 @@
             </table>
           </div>
         </div>
+
+        <!-- Penalties Manager -->
+        <div class="card" style="margin-top:1.5rem;">
+          <div style="padding: 1rem; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+            <div>
+              <h3 style="font-size: 0.875rem; font-weight: 600;">⚠️ Penalties</h3>
+              <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-top:0.25rem;">Bill late or missed payments. Each chama configures its own rules (flat / percentage / daily).</p>
+            </div>
+            <div style="display:flex; gap:0.5rem;">
+              <button class="btn btn-outline btn-sm" onclick="showToast('Penalty rules editor opened','info')">⚙ Configure Rules</button>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Bill penalty modal opened','info')">+ Bill Penalty</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="table" style="margin:0;">
+              <thead>
+                <tr><th>Member</th><th>Chama</th><th>Amount</th><th>Reason</th><th>Status</th><th style="text-align:right;">Action</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mary Kipchoge</td>
+                  <td>Nairobi Farmers</td>
+                  <td>KES 200</td>
+                  <td>Missed monthly contribution</td>
+                  <td><span class="badge badge-danger">Pending</span></td>
+                  <td style="text-align:right;">
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Penalty marked paid','success')">✓ Paid</button>
+                    <button class="btn btn-sm btn-outline" style="margin-left:0.25rem;" onclick="showToast('Penalty waived','info')">Waive</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>James Mutua</td>
+                  <td>Church Group</td>
+                  <td>KES 350</td>
+                  <td>Late payment (7 days)</td>
+                  <td><span class="badge badge-danger">Pending</span></td>
+                  <td style="text-align:right;">
+                    <button class="btn btn-sm btn-primary" onclick="showToast('Penalty marked paid','success')">✓ Paid</button>
+                    <button class="btn btn-sm btn-outline" style="margin-left:0.25rem;" onclick="showToast('Penalty waived','info')">Waive</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Grace Wanjiru</td>
+                  <td>Friends United</td>
+                  <td>KES 500</td>
+                  <td>Missed cycle contribution</td>
+                  <td><span class="badge badge-success">Paid</span></td>
+                  <td style="text-align:right; color:var(--muted-foreground);">Resolved May 2</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Security Audit Snapshot -->
+        <div class="card" style="margin-top:1.5rem;">
+          <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+            <h3 style="font-size: 0.875rem; font-weight: 600;">🛡 Security Posture</h3>
+            <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-top:0.25rem;">Bank-grade controls active across the platform.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; padding: 1rem;">
+            <div style="padding:1rem; border:1px solid var(--border); border-radius:0.75rem;">
+              <div style="font-size:0.75rem; color:var(--muted-foreground);">Login Lockout</div>
+              <div style="font-weight:700; font-size:1.125rem;">5 fails / 15 min</div>
+              <div style="font-size:0.8125rem; color:var(--success);">3 lockouts blocked today</div>
+            </div>
+            <div style="padding:1rem; border:1px solid var(--border); border-radius:0.75rem;">
+              <div style="font-size:0.75rem; color:var(--muted-foreground);">Transaction PINs</div>
+              <div style="font-weight:700; font-size:1.125rem;">87% of members</div>
+              <div style="font-size:0.8125rem; color:var(--muted-foreground);">have a PIN set</div>
+            </div>
+            <div style="padding:1rem; border:1px solid var(--border); border-radius:0.75rem;">
+              <div style="font-size:0.75rem; color:var(--muted-foreground);">Active Sessions</div>
+              <div style="font-weight:700; font-size:1.125rem;">412 devices</div>
+              <div style="font-size:0.8125rem; color:var(--muted-foreground);">across 287 members</div>
+            </div>
+            <div style="padding:1rem; border:1px solid var(--border); border-radius:0.75rem;">
+              <div style="font-size:0.75rem; color:var(--muted-foreground);">Auto-Logout</div>
+              <div style="font-weight:700; font-size:1.125rem;">15 min idle</div>
+              <div style="font-size:0.8125rem; color:var(--success);">Enforced</div>
+            </div>
+          </div>
+        </div>
+
         <!-- System Management -->
-        <div class="card">
+        <div class="card" style="margin-top:1.5rem;">
           <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
             <h3 style="font-size: 0.875rem; font-weight: 600;">System Management</h3>
           </div>
