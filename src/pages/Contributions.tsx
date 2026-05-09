@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatedPage } from "@/components/AnimatedPage";
 import { motion } from "framer-motion";
+import { MyPenalties } from "@/components/MyPenalties";
 import { HandCoins, CheckCircle2, Clock, AlertCircle, Filter, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/StatCard";
