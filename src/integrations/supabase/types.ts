@@ -88,6 +88,9 @@ export type Database = {
           description: string | null
           id: string
           name: string
+          penalty_amount: number
+          penalty_grace_days: number
+          penalty_type: string
           total_savings: number
           updated_at: string
         }
@@ -99,6 +102,9 @@ export type Database = {
           description?: string | null
           id?: string
           name: string
+          penalty_amount?: number
+          penalty_grace_days?: number
+          penalty_type?: string
           total_savings?: number
           updated_at?: string
         }
@@ -110,6 +116,9 @@ export type Database = {
           description?: string | null
           id?: string
           name?: string
+          penalty_amount?: number
+          penalty_grace_days?: number
+          penalty_type?: string
           total_savings?: number
           updated_at?: string
         }
@@ -269,6 +278,33 @@ export type Database = {
           },
         ]
       }
+      login_attempts: {
+        Row: {
+          attempted_at: string
+          email: string
+          id: string
+          ip_address: string | null
+          success: boolean
+          user_agent: string | null
+        }
+        Insert: {
+          attempted_at?: string
+          email: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Update: {
+          attempted_at?: string
+          email?: string
+          id?: string
+          ip_address?: string | null
+          success?: boolean
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       merry_go_round_cycles: {
         Row: {
           amount: number
@@ -346,6 +382,48 @@ export type Database = {
         }
         Relationships: []
       }
+      penalties: {
+        Row: {
+          amount: number
+          chama_id: string
+          contribution_id: string | null
+          created_at: string
+          due_date: string | null
+          id: string
+          reason: string
+          resolved_at: string | null
+          resolved_by: string | null
+          status: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          chama_id: string
+          contribution_id?: string | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          reason?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          chama_id?: string
+          contribution_id?: string | null
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          reason?: string
+          resolved_at?: string | null
+          resolved_by?: string | null
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -354,7 +432,11 @@ export type Database = {
           id: string
           is_approved: boolean
           phone: string | null
+          pin_attempts: number
+          pin_locked_until: string | null
+          pin_set_at: string | null
           rejection_reason: string | null
+          transaction_pin_hash: string | null
           updated_at: string
           user_id: string
         }
@@ -365,7 +447,11 @@ export type Database = {
           id?: string
           is_approved?: boolean
           phone?: string | null
+          pin_attempts?: number
+          pin_locked_until?: string | null
+          pin_set_at?: string | null
           rejection_reason?: string | null
+          transaction_pin_hash?: string | null
           updated_at?: string
           user_id: string
         }
@@ -376,7 +462,11 @@ export type Database = {
           id?: string
           is_approved?: boolean
           phone?: string | null
+          pin_attempts?: number
+          pin_locked_until?: string | null
+          pin_set_at?: string | null
           rejection_reason?: string | null
+          transaction_pin_hash?: string | null
           updated_at?: string
           user_id?: string
         }
@@ -443,6 +533,39 @@ export type Database = {
         Update: {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_sessions: {
+        Row: {
+          created_at: string
+          device_label: string | null
+          id: string
+          ip_address: string | null
+          last_seen_at: string
+          revoked_at: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_label?: string | null
+          id?: string
+          ip_address?: string | null
+          last_seen_at?: string
+          revoked_at?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_label?: string | null
+          id?: string
+          ip_address?: string | null
+          last_seen_at?: string
+          revoked_at?: string | null
+          user_agent?: string | null
           user_id?: string
         }
         Relationships: []
@@ -526,6 +649,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      can_leave_chama: {
+        Args: { _chama_id: string; _user_id: string }
+        Returns: boolean
+      }
+      has_active_cycle: { Args: { _chama_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
