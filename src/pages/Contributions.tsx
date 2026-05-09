@@ -149,6 +149,8 @@ export default function Contributions() {
           <StatCard title="Pending" value={`KES ${pendingAmount.toLocaleString()}`} change="Awaiting confirmation" changeType="neutral" icon={Clock} index={2} />
         </div>
 
+        <MyPenalties />
+
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
