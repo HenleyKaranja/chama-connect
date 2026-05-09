@@ -92,6 +92,44 @@
             </div>
           </div>
 
+          <!-- Transaction PIN -->
+          <div class="card">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h3 style="font-size: 1rem; font-weight: 600;">🔒 Transaction PIN</h3>
+                <p style="font-size: 0.8125rem; color: var(--muted-foreground); margin-top: 0.25rem;">A 4-6 digit code required to confirm contributions, withdrawals and loan actions. Locks for 15 min after 5 wrong tries.</p>
+              </div>
+              <span class="badge badge-success">Active</span>
+            </div>
+            <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end;">
+              <div class="form-group" style="margin: 0;"><label>New PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
+              <div class="form-group" style="margin: 0;"><label>Confirm PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
+              <button class="btn btn-primary">Update PIN</button>
+            </div>
+          </div>
+
+          <!-- Active Devices -->
+          <div class="card">
+            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
+              <h3 style="font-size: 1rem; font-weight: 600;">📱 Active Devices</h3>
+              <p style="font-size: 0.8125rem; color: var(--muted-foreground); margin-top: 0.25rem;">Devices currently signed into your account. Revoke any you don't recognise.</p>
+            </div>
+            <div style="padding: 1rem 1.5rem;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                <div style="flex: 1;"><div style="font-weight: 600;">Mac · Chrome</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active just now · Nairobi, KE</div></div>
+                <span class="badge badge-success">Current</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
+                <div style="flex: 1;"><div style="font-weight: 600;">Android device · Mobile app</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 2 hours ago</div></div>
+                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;">Revoke</button>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0;">
+                <div style="flex: 1;"><div style="font-weight: 600;">Windows PC · Edge</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 3 days ago</div></div>
+                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;">Revoke</button>
+              </div>
+            </div>
+          </div>
+
           <!-- Notification Preferences -->
           <div class="card">
             <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
