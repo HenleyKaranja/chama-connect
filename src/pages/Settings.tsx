@@ -168,6 +168,9 @@ export default function SettingsPage() {
           </div>
         </motion.div>
 
+        <PinSetupCard />
+        <ActiveSessions />
+
         {/* Notifications */}
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.26, duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }} className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
           <div className="flex items-center gap-2 text-sm font-semibold">
