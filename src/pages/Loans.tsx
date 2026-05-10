@@ -220,6 +220,39 @@ export default function Loans() {
             })
           )}
         </div>
+
+        {/* Repay Dialog */}
+        <Dialog open={repayOpen} onOpenChange={setRepayOpen}>
+          <DialogContent>
+            <DialogHeader><DialogTitle>Repay Loan</DialogTitle></DialogHeader>
+            {repayLoan && (
+              <div className="space-y-4 pt-2">
+                <div className="rounded-lg bg-muted/40 p-3 text-sm space-y-1">
+                  <div className="flex justify-between"><span className="text-muted-foreground">Chama</span><span className="font-medium">{repayLoan.chamas?.name}</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Loan amount</span><span>KES {Number(repayLoan.amount).toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Already repaid</span><span>KES {Number(repayLoan.repaid_amount).toLocaleString()}</span></div>
+                  <div className="flex justify-between font-semibold"><span>Outstanding</span><span>KES {(Number(repayLoan.amount) - Number(repayLoan.repaid_amount)).toLocaleString()}</span></div>
+                </div>
+                <div>
+                  <Label>Amount to repay (KES)</Label>
+                  <Input type="number" value={repayAmount} onChange={(e) => setRepayAmount(e.target.value)} placeholder="e.g. 5000" />
+                  <p className="text-xs text-muted-foreground mt-1">Funds will be deducted from your wallet balance.</p>
+                </div>
+                <Button onClick={() => setPinOpen(true)} disabled={!repayAmount || repayMutation.isPending} className="w-full">
+                  {repayMutation.isPending ? "Processing..." : "Confirm Repayment"}
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        <TransactionPinGate
+          open={pinOpen}
+          onOpenChange={setPinOpen}
+          onVerified={async () => { await repayMutation.mutateAsync(); }}
+          title="Authorise Loan Repayment"
+          description="Enter your transaction PIN to confirm this repayment."
+        />
       </div>
     </AnimatedPage>
   );
