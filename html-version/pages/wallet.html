@@ -56,7 +56,7 @@
                 <span style="font-weight: 600;">KES 85,000</span>
               </div>
             </div>
-            <button class="btn btn-primary btn-full">Withdraw Funds</button>
+            <button class="btn btn-primary btn-full" onclick="withdraw('Nairobi Farmers Wallet',145000)">Withdraw Funds</button>
           </div>
 
           <!-- Wallet 2 -->
@@ -78,7 +78,7 @@
                 <span style="font-weight: 600;">KES 120,000</span>
               </div>
             </div>
-            <button class="btn btn-primary btn-full">Withdraw Funds</button>
+            <button class="btn btn-primary btn-full" onclick="withdraw('Friends United Wallet',250000)">Withdraw Funds</button>
           </div>
         </div>
 
@@ -129,5 +129,25 @@
   </div>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    function withdraw(name, balance) {
+      showDetails('Withdraw from ' + name,
+        `<table class="table" style="margin:0 0 0.75rem;"><tbody>
+           <tr><td>Available balance</td><td style="text-align:right;font-weight:600;">KES ${balance.toLocaleString()}</td></tr>
+           <tr><td>Daily limit</td><td style="text-align:right;">KES 100,000</td></tr>
+           <tr><td>Withdrawal fee</td><td style="text-align:right;">KES 25</td></tr>
+         </tbody></table>
+         <div class="form-group"><label>Amount (KES)</label><input type="number" id="wd-amt" placeholder="e.g. 5000"></div>
+         <div class="form-group"><label>Destination</label>
+           <select><option>M-Pesa · +254 712 ••• 678</option><option>Bank · KCB ••• 4421</option></select>
+         </div>
+         <div class="form-group"><label>Transaction PIN</label>
+           <input type="password" inputmode="numeric" maxlength="6" id="wd-pin" placeholder="••••" style="text-align:center;letter-spacing:0.5em;">
+         </div>`,
+        [{ label: 'Cancel' },
+         { label: 'Confirm withdrawal', primary: true,
+           onClick: "var a=parseFloat(document.getElementById('wd-amt').value),p=document.getElementById('wd-pin').value;if(!a||a<=0)return showToast('Enter a valid amount','error');if(!/^\\d{4,6}$/.test(p))return showToast('PIN must be 4-6 digits','error');showToast('Withdrawal of KES '+a.toLocaleString()+' processing','success');document.getElementById('__detailsModal').style.display='none';" }]);
+    }
+  </script>
 </body>
 </html>

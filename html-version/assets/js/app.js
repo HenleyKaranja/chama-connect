@@ -149,6 +149,52 @@ const closeModal = (modalId) => {
   }
 };
 
+// Generic details modal — for buttons that previously did nothing
+const showDetails = (title, bodyHtml, actions) => {
+  let modal = document.getElementById('__detailsModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = '__detailsModal';
+    modal.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:center;justify-content:center;padding:1rem;';
+    modal.innerHTML = `
+      <div style="background:var(--card);border-radius:0.75rem;max-width:640px;width:100%;max-height:85vh;overflow:auto;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);">
+          <h3 id="__detailsTitle" style="font-size:1rem;font-weight:700;margin:0;"></h3>
+          <button onclick="document.getElementById('__detailsModal').style.display='none'" style="background:none;border:none;cursor:pointer;font-size:1.25rem;color:var(--muted-foreground);">✕</button>
+        </div>
+        <div id="__detailsBody" style="padding:1.25rem;font-size:0.9375rem;color:var(--foreground);"></div>
+        <div id="__detailsActions" style="padding:0.75rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:0.5rem;justify-content:flex-end;"></div>
+      </div>`;
+    document.body.appendChild(modal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+  }
+  document.getElementById('__detailsTitle').textContent = title;
+  document.getElementById('__detailsBody').innerHTML = bodyHtml;
+  const actionsEl = document.getElementById('__detailsActions');
+  actionsEl.innerHTML = '';
+  (actions || [{ label: 'Close', primary: false, onClick: 'document.getElementById(\'__detailsModal\').style.display=\'none\'' }]).forEach(a => {
+    const b = document.createElement('button');
+    b.className = 'btn ' + (a.primary ? 'btn-primary' : 'btn-outline');
+    b.textContent = a.label;
+    b.setAttribute('onclick', a.onClick || "document.getElementById('__detailsModal').style.display='none'");
+    actionsEl.appendChild(b);
+  });
+  modal.style.display = 'flex';
+};
+
+// Trigger a mock file download (used by Download PDF / Backup buttons)
+const downloadMockFile = (filename, content, mime = 'text/plain') => {
+  const blob = new Blob([content || `M-Chama mock export — ${filename}\nGenerated: ${new Date().toISOString()}`], { type: mime });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  showToast(`${filename} downloaded`, 'success');
+};
+
+
 // Form validation
 const validateForm = (formId) => {
   const form = document.getElementById(formId);

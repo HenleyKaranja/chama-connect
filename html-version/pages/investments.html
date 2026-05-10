@@ -39,7 +39,7 @@
             <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Group Investments</h1>
             <p style="color: var(--muted-foreground);">Pool resources and invest in projects together</p>
           </div>
-          <button class="btn btn-primary">+ New Investment</button>
+          <button class="btn btn-primary" onclick="newInvestment()">+ New Investment</button>
         </div>
 
         <div class="grid grid-cols-3" style="gap: 1rem; margin-bottom: 2rem;">
@@ -81,7 +81,7 @@
               </div>
             </div>
 
-            <button class="btn btn-outline btn-full">View Details</button>
+            <button class="btn btn-outline btn-full" onclick="viewInvestment('Nairobi Retail Space','Commercial property development',80000,14200,'Active')">View Details</button>
           </div>
 
           <!-- Investment 2 -->
@@ -104,7 +104,7 @@
               </div>
             </div>
 
-            <button class="btn btn-outline btn-full">View Details</button>
+            <button class="btn btn-outline btn-full" onclick="viewInvestment('Agricultural Project','Large-scale farming initiative',120000,22500,'Active')">View Details</button>
           </div>
 
           <!-- Investment 3 -->
@@ -127,7 +127,7 @@
               </div>
             </div>
 
-            <button class="btn btn-outline btn-full">View Details</button>
+            <button class="btn btn-outline btn-full" onclick="viewInvestment('Tech Startup Fund','Technology entrepreneurship',100000,18300,'Active')">View Details</button>
           </div>
 
           <!-- Investment 4 -->
@@ -150,7 +150,7 @@
               </div>
             </div>
 
-            <button class="btn btn-outline btn-full">View Details</button>
+            <button class="btn btn-outline btn-full" onclick="viewInvestment('Education Initiative','Community learning center',60000,9500,'Under Review')">View Details</button>
           </div>
         </div>
       </div>
@@ -158,5 +158,35 @@
   </div>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    function newInvestment() {
+      showDetails('Propose a new investment',
+        `<div class="form-group"><label>Project name</label><input type="text" placeholder="e.g. Kisumu Solar Farm"></div>
+         <div class="form-group"><label>Target amount (KES)</label><input type="number" placeholder="500000"></div>
+         <div class="form-group"><label>Description</label><input type="text" placeholder="Short pitch"></div>
+         <p style="font-size:0.8125rem;color:var(--muted-foreground);">Proposals require admin approval before members can contribute.</p>`,
+        [{ label: 'Cancel' }, { label: 'Submit', primary: true, onClick: "showToast('Investment proposal submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
+    }
+    function viewInvestment(name, desc, invested, returns, status) {
+      const roi = ((returns / invested) * 100).toFixed(1);
+      showDetails(name,
+        `<p style="margin:0 0 0.75rem;color:var(--muted-foreground);">${desc}</p>
+         <table class="table" style="margin:0;"><tbody>
+           <tr><td>Your investment</td><td style="text-align:right;font-weight:600;">KES ${invested.toLocaleString()}</td></tr>
+           <tr><td>Returns earned</td><td style="text-align:right;color:var(--success);font-weight:600;">KES ${returns.toLocaleString()}</td></tr>
+           <tr><td>ROI</td><td style="text-align:right;">${roi}%</td></tr>
+           <tr><td>Started</td><td style="text-align:right;">Jan 2026</td></tr>
+           <tr><td>Term</td><td style="text-align:right;">24 months</td></tr>
+           <tr><td>Status</td><td style="text-align:right;">${status}</td></tr>
+         </tbody></table>
+         <h4 style="margin:1rem 0 0.5rem;font-size:0.875rem;">Recent activity</h4>
+         <table class="table" style="margin:0;"><tbody>
+           <tr><td>10 May 2026</td><td>Quarterly distribution</td><td style="text-align:right;color:var(--success);">+KES ${(returns/4).toFixed(0)}</td></tr>
+           <tr><td>10 Feb 2026</td><td>Quarterly distribution</td><td style="text-align:right;color:var(--success);">+KES ${(returns/4).toFixed(0)}</td></tr>
+           <tr><td>15 Jan 2026</td><td>Initial contribution</td><td style="text-align:right;">KES ${invested.toLocaleString()}</td></tr>
+         </tbody></table>`,
+        [{ label: 'Close' }, { label: 'Top up', primary: true, onClick: "showToast('Top-up flow opened','info');document.getElementById('__detailsModal').style.display='none';" }]);
+    }
+  </script>
 </body>
 </html>
