@@ -117,6 +117,52 @@
     </div>
   </div>
 
+  <!-- Repay Loan Modal -->
+  <div id="repayModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:0.75rem; padding:1.5rem; max-width:420px; width:90%;">
+      <h3 style="font-size:1.125rem; font-weight:700; margin-bottom:0.25rem;">Repay Loan</h3>
+      <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-bottom:1rem;">Funds will be deducted from your wallet balance.</p>
+      <div style="background:rgba(0,0,0,0.04); border-radius:0.5rem; padding:0.75rem; margin-bottom:1rem; font-size:0.875rem;">
+        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Chama</span><span id="rm-chama" style="font-weight:600;">-</span></div>
+        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Loan</span><span id="rm-loan">-</span></div>
+        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Repaid</span><span id="rm-repaid">-</span></div>
+        <div style="display:flex; justify-content:space-between; font-weight:600; padding-top:0.25rem;"><span>Outstanding</span><span id="rm-balance">-</span></div>
+      </div>
+      <div class="form-group">
+        <label>Amount to repay (KES)</label>
+        <input type="number" id="rm-amount" placeholder="e.g. 5000">
+      </div>
+      <div class="form-group">
+        <label>Transaction PIN</label>
+        <input type="password" inputmode="numeric" maxlength="6" id="rm-pin" placeholder="••••" style="text-align:center; letter-spacing:0.5em;">
+      </div>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button class="btn btn-outline" onclick="closeRepayModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitRepay()">Confirm Repayment</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../assets/js/app.js"></script>
+  <script>
+    function openRepayModal(chama, loan, repaid) {
+      document.getElementById('rm-chama').textContent = chama;
+      document.getElementById('rm-loan').textContent = 'KES ' + loan.toLocaleString();
+      document.getElementById('rm-repaid').textContent = 'KES ' + repaid.toLocaleString();
+      document.getElementById('rm-balance').textContent = 'KES ' + (loan - repaid).toLocaleString();
+      document.getElementById('rm-amount').value = '';
+      document.getElementById('rm-pin').value = '';
+      document.getElementById('repayModal').style.display = 'flex';
+    }
+    function closeRepayModal() { document.getElementById('repayModal').style.display = 'none'; }
+    function submitRepay() {
+      const amt = parseFloat(document.getElementById('rm-amount').value);
+      const pin = document.getElementById('rm-pin').value;
+      if (!amt || amt <= 0) return showToast('Enter a valid amount', 'error');
+      if (!/^\d{4,6}$/.test(pin)) return showToast('PIN must be 4-6 digits', 'error');
+      showToast('Repayment of KES ' + amt.toLocaleString() + ' submitted', 'success');
+      closeRepayModal();
+    }
+  </script>
 </body>
 </html>
