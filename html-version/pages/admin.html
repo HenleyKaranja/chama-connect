@@ -254,12 +254,12 @@
             <h3 style="font-size: 0.875rem; font-weight: 600;">System Management</h3>
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem;">
-            <button class="btn btn-outline" style="padding: 0.75rem;">View All Users</button>
-            <button class="btn btn-outline" style="padding: 0.75rem;">System Settings</button>
-            <button class="btn btn-outline" style="padding: 0.75rem;">View Audit Log</button>
-            <button class="btn btn-outline" style="padding: 0.75rem;">Generate Reports</button>
-            <button class="btn btn-outline" style="padding: 0.75rem;">Backup Data</button>
-            <button class="btn btn-outline" style="padding: 0.75rem;">Manage Roles</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('users')">View All Users</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('settings')">System Settings</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('audit')">View Audit Log</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('reports')">Generate Reports</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('backup')">Backup Data</button>
+            <button class="btn btn-outline" style="padding: 0.75rem;" onclick="adminView('roles')">Manage Roles</button>
           </div>
         </div>
       </div>
@@ -267,5 +267,73 @@
   </div>
 
   <script src="../assets/js/app.js"></script>
+  <script>
+    function approveLoan(name, amount) {
+      showDetails('Approve loan · ' + name,
+        `<p style="margin:0 0 0.75rem;">You are about to approve a loan request from <strong>${name}</strong>.</p>
+         <table class="table" style="margin:0;"><tbody>
+           <tr><td>Amount requested</td><td style="text-align:right;font-weight:600;">KES ${amount.toLocaleString()}</td></tr>
+           <tr><td>Interest rate</td><td style="text-align:right;">10% p.a.</td></tr>
+           <tr><td>Repayment term</td><td style="text-align:right;">6 months</td></tr>
+           <tr><td>Monthly instalment</td><td style="text-align:right;">KES ${Math.round(amount * 1.1 / 6).toLocaleString()}</td></tr>
+         </tbody></table>`,
+        [
+          { label: 'Reject', onClick: `showToast('Loan for ${name} rejected','error');document.getElementById('__detailsModal').style.display='none';` },
+          { label: 'Approve', primary: true, onClick: `showToast('Loan for ${name} approved','success');document.getElementById('__detailsModal').style.display='none';` }
+        ]);
+    }
+    function reviewMember(name, phone, email, applied) {
+      showDetails('Review member · ' + name,
+        `<table class="table" style="margin:0 0 0.75rem;"><tbody>
+           <tr><td>Full name</td><td style="text-align:right;font-weight:600;">${name}</td></tr>
+           <tr><td>Phone</td><td style="text-align:right;">${phone}</td></tr>
+           <tr><td>Email</td><td style="text-align:right;">${email}</td></tr>
+           <tr><td>Applied</td><td style="text-align:right;">${applied}</td></tr>
+           <tr><td>Initial role</td><td style="text-align:right;">Member</td></tr>
+         </tbody></table>
+         <p style="font-size:0.8125rem;color:var(--muted-foreground);margin:0;">Approving will activate the account and grant chama access.</p>`,
+        [
+          { label: 'Reject', onClick: `showToast('${name} rejected','error');document.getElementById('__detailsModal').style.display='none';` },
+          { label: 'Approve', primary: true, onClick: `showToast('${name} approved','success');document.getElementById('__detailsModal').style.display='none';` }
+        ]);
+    }
+    function adminView(kind) {
+      const views = {
+        users: { title: 'All users', body: `<table class="table" style="margin:0;"><thead><tr><th>Name</th><th>Role</th><th>Status</th></tr></thead><tbody>
+            <tr><td>John Kimani</td><td>Member</td><td><span class="badge badge-success">Active</span></td></tr>
+            <tr><td>Mary Kipchoge</td><td>Treasurer</td><td><span class="badge badge-success">Active</span></td></tr>
+            <tr><td>Peter Omondi</td><td>Member</td><td><span class="badge badge-warning">Suspended</span></td></tr>
+            <tr><td>Alice Njoroge</td><td>Member</td><td><span class="badge badge-warning">Pending</span></td></tr>
+            <tr><td>Susan Wairimu</td><td>Admin</td><td><span class="badge badge-success">Active</span></td></tr></tbody></table>` },
+        settings: { title: 'System settings', body: `<table class="table" style="margin:0;"><tbody>
+            <tr><td>Default penalty type</td><td style="text-align:right;">Flat fee</td></tr>
+            <tr><td>Default penalty amount</td><td style="text-align:right;">KES 200</td></tr>
+            <tr><td>Loan interest rate</td><td style="text-align:right;">10% p.a.</td></tr>
+            <tr><td>Auto-logout idle</td><td style="text-align:right;">15 minutes</td></tr>
+            <tr><td>Login lockout threshold</td><td style="text-align:right;">5 attempts</td></tr>
+            <tr><td>Currency</td><td style="text-align:right;">KES</td></tr></tbody></table>` },
+        audit: { title: 'Recent audit log', body: `<table class="table" style="margin:0;"><thead><tr><th>When</th><th>Actor</th><th>Action</th></tr></thead><tbody>
+            <tr><td>10:32</td><td>admin@m-chama.co.ke</td><td>approved member · Mary K.</td></tr>
+            <tr><td>09:48</td><td>john@example.com</td><td>contribution · KES 5,000</td></tr>
+            <tr><td>09:15</td><td>admin@m-chama.co.ke</td><td>approved loan · Peter O.</td></tr>
+            <tr><td>08:02</td><td>system</td><td>cycle 4 payout completed</td></tr>
+            <tr><td>Yesterday</td><td>mary@example.com</td><td>pin_reset</td></tr></tbody></table>` },
+        reports: { title: 'Generate reports', body: `<p style="margin:0 0 0.75rem;">Pick a report to download.</p>
+            <div style="display:grid;gap:0.5rem;">
+              <button class="btn btn-outline" onclick="downloadMockFile('contributions-report.csv','date,member,amount\\n2026-05-09,John,5000\\n2026-05-09,Mary,5000','text/csv')">Contributions (CSV)</button>
+              <button class="btn btn-outline" onclick="downloadMockFile('loans-report.csv','member,amount,status\\nPeter,45000,active','text/csv')">Loans (CSV)</button>
+              <button class="btn btn-outline" onclick="downloadMockFile('penalties-report.csv','member,amount,reason\\nJohn,200,Late','text/csv')">Penalties (CSV)</button>
+            </div>` },
+        backup: { title: 'Backup data', body: `<p>Generate a full backup snapshot of all chama data.</p>`,
+          actions: [{ label: 'Download backup', primary: true, onClick: `downloadMockFile('m-chama-backup-${new Date().toISOString().slice(0,10)}.json','{\\"snapshot\\":true}','application/json');document.getElementById('__detailsModal').style.display='none';` }] },
+        roles: { title: 'Manage roles', body: `<table class="table" style="margin:0;"><thead><tr><th>Role</th><th>Members</th><th>Permissions</th></tr></thead><tbody>
+            <tr><td>Admin</td><td>2</td><td>Full access</td></tr>
+            <tr><td>Treasurer</td><td>4</td><td>Approve payments, manage cycles</td></tr>
+            <tr><td>Member</td><td>38</td><td>Contribute, view, apply for loans</td></tr></tbody></table>` }
+      };
+      const v = views[kind];
+      showDetails(v.title, v.body, v.actions);
+    }
+  </script>
 </body>
 </html>
