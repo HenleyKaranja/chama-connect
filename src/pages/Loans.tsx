@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { LoanEligibility } from "@/components/LoanEligibility";
 import { logAuditEvent } from "@/lib/auditLog";
 import { sanitizeNumber } from "@/lib/sanitize";
+import { TransactionPinGate } from "@/components/security/TransactionPinGate";
 
 const statusColors: Record<string, string> = {
   active: "text-info bg-info/10",
@@ -31,6 +32,12 @@ export default function Loans() {
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
   const [chamaId, setChamaId] = useState("");
+
+  // Repay state
+  const [repayOpen, setRepayOpen] = useState(false);
+  const [repayLoan, setRepayLoan] = useState<any>(null);
+  const [repayAmount, setRepayAmount] = useState("");
+  const [pinOpen, setPinOpen] = useState(false);
 
   const { data: chamas } = useQuery({
     queryKey: ["chamas"],
@@ -65,6 +72,54 @@ export default function Loans() {
       setOpen(false);
       setAmount("");
       setChamaId("");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  const repayMutation = useMutation({
+    mutationFn: async () => {
+      if (!repayLoan) throw new Error("No loan selected");
+      const amt = sanitizeNumber(repayAmount);
+      if (isNaN(amt) || amt <= 0) throw new Error("Invalid amount");
+      const balance = Number(repayLoan.amount) - Number(repayLoan.repaid_amount);
+      if (amt > balance) throw new Error(`Maximum repayment is KES ${balance.toLocaleString()}`);
+
+      const { data: wallet, error: wErr } = await supabase
+        .from("wallets").select("id, balance").eq("user_id", user!.id).limit(1).single();
+      if (wErr) throw wErr;
+      if (Number(wallet.balance) < amt) throw new Error("Insufficient wallet balance");
+
+      const newRepaid = Number(repayLoan.repaid_amount) + amt;
+      const fullyRepaid = newRepaid >= Number(repayLoan.amount);
+
+      const { error: lErr } = await supabase.from("loans").update({
+        repaid_amount: newRepaid,
+        status: fullyRepaid ? "completed" : "active",
+      }).eq("id", repayLoan.id);
+      if (lErr) throw lErr;
+
+      const { error: bErr } = await supabase.from("wallets")
+        .update({ balance: Number(wallet.balance) - amt })
+        .eq("id", wallet.id);
+      if (bErr) throw bErr;
+
+      await supabase.from("wallet_transactions").insert({
+        user_id: user!.id,
+        wallet_id: wallet.id,
+        type: "loan_repayment",
+        amount: amt,
+        description: `Loan repayment · ${repayLoan.chamas?.name ?? "Chama"}`,
+      });
+
+      await logAuditEvent("loan_repayment", "loan", repayLoan.id, { amount: amt, fully_repaid: fullyRepaid });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["loans"] });
+      queryClient.invalidateQueries({ queryKey: ["wallet"] });
+      toast.success("Repayment successful");
+      setRepayOpen(false);
+      setRepayLoan(null);
+      setRepayAmount("");
     },
     onError: (e: any) => toast.error(e.message),
   });
@@ -145,6 +200,9 @@ export default function Loans() {
                           </div>
                           <Progress value={repaidPct} className="h-2" />
                           {loan.due_date && <p className="text-xs text-muted-foreground">Due: {format(new Date(loan.due_date), "MMM d, yyyy")}</p>}
+                          <Button size="sm" variant="outline" className="mt-2" onClick={() => { setRepayLoan(loan); setRepayAmount(""); setRepayOpen(true); }}>
+                            Repay Loan
+                          </Button>
                         </div>
                       )}
                       {loan.status === "completed" && <p className="text-xs text-muted-foreground flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-success" />Fully repaid</p>}
@@ -162,6 +220,39 @@ export default function Loans() {
             })
           )}
         </div>
+
+        {/* Repay Dialog */}
+        <Dialog open={repayOpen} onOpenChange={setRepayOpen}>
+          <DialogContent>
+            <DialogHeader><DialogTitle>Repay Loan</DialogTitle></DialogHeader>
+            {repayLoan && (
+              <div className="space-y-4 pt-2">
+                <div className="rounded-lg bg-muted/40 p-3 text-sm space-y-1">
+                  <div className="flex justify-between"><span className="text-muted-foreground">Chama</span><span className="font-medium">{repayLoan.chamas?.name}</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Loan amount</span><span>KES {Number(repayLoan.amount).toLocaleString()}</span></div>
+                  <div className="flex justify-between"><span className="text-muted-foreground">Already repaid</span><span>KES {Number(repayLoan.repaid_amount).toLocaleString()}</span></div>
+                  <div className="flex justify-between font-semibold"><span>Outstanding</span><span>KES {(Number(repayLoan.amount) - Number(repayLoan.repaid_amount)).toLocaleString()}</span></div>
+                </div>
+                <div>
+                  <Label>Amount to repay (KES)</Label>
+                  <Input type="number" value={repayAmount} onChange={(e) => setRepayAmount(e.target.value)} placeholder="e.g. 5000" />
+                  <p className="text-xs text-muted-foreground mt-1">Funds will be deducted from your wallet balance.</p>
+                </div>
+                <Button onClick={() => setPinOpen(true)} disabled={!repayAmount || repayMutation.isPending} className="w-full">
+                  {repayMutation.isPending ? "Processing..." : "Confirm Repayment"}
+                </Button>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        <TransactionPinGate
+          open={pinOpen}
+          onOpenChange={setPinOpen}
+          onVerified={async () => { await repayMutation.mutateAsync(); }}
+          title="Authorise Loan Repayment"
+          description="Enter your transaction PIN to confirm this repayment."
+        />
       </div>
     </AnimatedPage>
   );
