@@ -283,7 +283,30 @@
   <script src="../assets/js/app.js"></script>
   <script>
     function openCreateChamaModal() {
-      showToast('Create Chama feature coming soon!', 'info');
+      showDetails('Create a new chama',
+        `<div class="form-group"><label>Chama name</label><input type="text" id="cc-name" placeholder="e.g. Nairobi Investors"></div>
+         <div class="form-group"><label>Monthly contribution (KES)</label><input type="number" id="cc-amt" placeholder="5000"></div>
+         <div class="form-group"><label>Description</label><input type="text" id="cc-desc" placeholder="Short description"></div>`,
+        [{ label: 'Cancel' }, { label: 'Create chama', primary: true, onClick: "showToast('Chama created — pending admin approval','success');document.getElementById('__detailsModal').style.display='none';" }]);
+    }
+    function viewChama(name, savings, amt, members) {
+      showDetails(name,
+        `<table class="table" style="margin:0;"><tbody>
+           <tr><td>Total savings</td><td style="text-align:right;font-weight:600;">KES ${savings.toLocaleString()}</td></tr>
+           <tr><td>Members</td><td style="text-align:right;">${members}</td></tr>
+           <tr><td>Monthly contribution</td><td style="text-align:right;">KES ${amt.toLocaleString()}</td></tr>
+           <tr><td>Frequency</td><td style="text-align:right;">Monthly</td></tr>
+           <tr><td>Active cycle</td><td style="text-align:right;">Cycle 4 of ${members}</td></tr>
+           <tr><td>Next payout</td><td style="text-align:right;">25 May 2026</td></tr>
+         </tbody></table>
+         <p style="font-size:0.8125rem;color:var(--muted-foreground);margin-top:0.75rem;">Members can contribute, view cycles and apply for loans against this chama.</p>`);
+    }
+    function contributeChama(name, amt) {
+      showDetails('Contribute to ' + name,
+        `<div class="form-group"><label>Amount (KES)</label><input type="number" id="cb-amt" value="${amt}"></div>
+         <div class="form-group"><label>Method</label><select><option>M-Pesa STK Push</option><option>Cash (admin verification)</option><option>Wallet balance</option></select></div>
+         <div class="form-group"><label>Transaction PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align:center;letter-spacing:0.5em;"></div>`,
+        [{ label: 'Cancel' }, { label: 'Confirm', primary: true, onClick: "showToast('Contribution submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
     }
   </script>
 </body>
