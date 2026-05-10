@@ -39,7 +39,7 @@
             <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">My Loans</h1>
             <p style="color: var(--muted-foreground);">Manage and track your chama loans</p>
           </div>
-          <button class="btn btn-primary">+ Apply for Loan</button>
+          <button class="btn btn-primary" onclick="applyLoan()">+ Apply for Loan</button>
         </div>
 
         <div class="grid grid-cols-3" style="gap: 1rem; margin-bottom: 2rem;">
@@ -91,7 +91,7 @@
                   <td><span class="badge badge-warning">Pending</span></td>
                   <td>-</td>
                   <td>KES 25,000</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline">View</button></td>
+                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Friends United',25000,0,'Pending')">View</button></td>
                 </tr>
                 <tr>
                   <td>Church Group</td>
@@ -99,7 +99,7 @@
                   <td><span class="badge badge-success">Completed</span></td>
                   <td>KES 15,000</td>
                   <td>KES 0</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline">View</button></td>
+                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Church Group',15000,15000,'Completed')">View</button></td>
                 </tr>
                 <tr>
                   <td>Business Collective</td>
@@ -107,7 +107,7 @@
                   <td><span class="badge badge-success">Completed</span></td>
                   <td>KES 20,000</td>
                   <td>KES 0</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline">View</button></td>
+                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Business Collective',20000,20000,'Completed')">View</button></td>
                 </tr>
               </tbody>
             </table>
