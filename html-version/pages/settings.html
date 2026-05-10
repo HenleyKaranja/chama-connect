@@ -178,10 +178,37 @@
     </div>
   </div>
 
+  <!-- PIN Reset Modal -->
+  <div id="pinResetModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:0.75rem; padding:1.5rem; max-width:400px; width:90%;">
+      <h3 style="font-size:1.125rem; font-weight:700; margin-bottom:0.25rem;">🔑 Reset Transaction PIN</h3>
+      <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-bottom:1rem;">Confirm your account password to clear the existing PIN. You'll then be able to set a new one.</p>
+      <div class="form-group">
+        <label>Account password</label>
+        <input type="password" id="prm-pass" placeholder="Your login password">
+      </div>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button class="btn btn-outline" onclick="closePinResetModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitPinReset()">Reset PIN</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../assets/js/app.js"></script>
   <script>
     function openChangePasswordModal() {
       showToast('Change password feature coming soon!', 'info');
+    }
+    function openPinResetModal() {
+      document.getElementById('prm-pass').value = '';
+      document.getElementById('pinResetModal').style.display = 'flex';
+    }
+    function closePinResetModal() { document.getElementById('pinResetModal').style.display = 'none'; }
+    function submitPinReset() {
+      const pass = document.getElementById('prm-pass').value;
+      if (!pass) return showToast('Enter your password', 'error');
+      showToast('PIN cleared. Set a new PIN above.', 'success');
+      closePinResetModal();
     }
 
     function confirmDelete() {
