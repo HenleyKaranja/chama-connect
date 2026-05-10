@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Lock, ShieldCheck } from "lucide-react";
+import { Lock, ShieldCheck, KeyRound } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { hashPin, isValidPin } from "@/lib/pin";
 import { toast } from "sonner";
 import { logAuditEvent } from "@/lib/auditLog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export function PinSetupCard() {
   const { user } = useAuth();
@@ -15,6 +16,11 @@ export function PinSetupCard() {
   const [pin, setPin] = useState("");
   const [confirmPin, setConfirmPin] = useState("");
   const [saving, setSaving] = useState(false);
+
+  // Reset flow
+  const [resetOpen, setResetOpen] = useState(false);
+  const [resetPassword, setResetPassword] = useState("");
+  const [resetting, setResetting] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -47,6 +53,37 @@ export function PinSetupCard() {
     }
   };
 
+  const resetPin = async () => {
+    if (!user?.email) return toast.error("Account email not found");
+    if (!resetPassword) return toast.error("Enter your account password");
+    setResetting(true);
+    try {
+      // Re-authenticate by signing in with password
+      const { error: authErr } = await supabase.auth.signInWithPassword({
+        email: user.email,
+        password: resetPassword,
+      });
+      if (authErr) throw new Error("Incorrect password");
+
+      const { error } = await supabase.from("profiles").update({
+        transaction_pin_hash: null,
+        pin_set_at: null,
+        pin_attempts: 0,
+        pin_locked_until: null,
+      }).eq("user_id", user.id);
+      if (error) throw error;
+      await logAuditEvent("pin_reset", "security", user.id);
+      toast.success("PIN cleared. Set a new PIN below.");
+      setHasPin(false);
+      setResetOpen(false);
+      setResetPassword("");
+    } catch (e: any) {
+      toast.error(e.message);
+    } finally {
+      setResetting(false);
+    }
+  };
+
   return (
     <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
       <div className="flex items-center gap-2 text-sm font-semibold">
@@ -69,9 +106,36 @@ export function PinSetupCard() {
             onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, ""))} placeholder="••••" className="text-center tracking-widest" />
         </div>
       </div>
-      <Button size="sm" onClick={save} disabled={saving || !pin}>
-        {saving ? "Saving..." : hasPin ? "Update PIN" : "Set PIN"}
-      </Button>
+      <div className="flex items-center gap-2">
+        <Button size="sm" onClick={save} disabled={saving || !pin}>
+          {saving ? "Saving..." : hasPin ? "Update PIN" : "Set PIN"}
+        </Button>
+        {hasPin && (
+          <Button size="sm" variant="ghost" className="gap-1 text-xs" onClick={() => setResetOpen(true)}>
+            <KeyRound className="h-3 w-3" /> Forgot PIN?
+          </Button>
+        )}
+      </div>
+
+      <Dialog open={resetOpen} onOpenChange={(o) => { setResetOpen(o); if (!o) setResetPassword(""); }}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2"><KeyRound className="h-4 w-4" /> Reset Transaction PIN</DialogTitle>
+            <DialogDescription>
+              Confirm your account password to clear the existing PIN. You'll then be able to set a new one.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 pt-2">
+            <div>
+              <Label className="text-xs">Account password</Label>
+              <Input type="password" value={resetPassword} onChange={(e) => setResetPassword(e.target.value)} placeholder="Your login password" autoFocus />
+            </div>
+            <Button onClick={resetPin} disabled={resetting || !resetPassword} className="w-full">
+              {resetting ? "Verifying..." : "Reset PIN"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
