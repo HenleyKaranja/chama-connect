@@ -55,7 +55,7 @@
                 <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" value="+254712345678" required>
               </div>
-              <button class="btn btn-primary">Save Changes</button>
+              <button class="btn btn-primary" onclick="showToast('Profile updated','success')">Save Changes</button>
             </div>
           </div>
 
@@ -87,7 +87,7 @@
                   <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Session Management</h4>
                   <p style="font-size: 0.875rem; color: var(--muted-foreground);">Manage active sessions</p>
                 </div>
-                <button class="btn btn-outline">View Sessions</button>
+                <button class="btn btn-outline" onclick="document.querySelectorAll('.card')[3].scrollIntoView({behavior:'smooth'});">View Sessions</button>
               </div>
             </div>
           </div>
@@ -104,7 +104,7 @@
             <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end;">
               <div class="form-group" style="margin: 0;"><label>New PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
               <div class="form-group" style="margin: 0;"><label>Confirm PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
-              <button class="btn btn-primary">Update PIN</button>
+              <button class="btn btn-primary" onclick="showToast('Transaction PIN updated','success')">Update PIN</button>
             </div>
             <div style="padding: 0 1.5rem 1.25rem;">
               <button class="btn btn-outline" style="font-size:0.8125rem;" onclick="openPinResetModal()">🔑 Forgot PIN?</button>
@@ -124,11 +124,11 @@
               </div>
               <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
                 <div style="flex: 1;"><div style="font-weight: 600;">Android device · Mobile app</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 2 hours ago</div></div>
-                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;">Revoke</button>
+                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;" onclick="if(confirm('Sign out this device?')){this.closest('div').style.display='none';showToast('Device revoked','success');}">Revoke</button>
               </div>
               <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0;">
                 <div style="flex: 1;"><div style="font-weight: 600;">Windows PC · Edge</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 3 days ago</div></div>
-                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;">Revoke</button>
+                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;" onclick="if(confirm('Sign out this device?')){this.closest('div').style.display='none';showToast('Device revoked','success');}">Revoke</button>
               </div>
             </div>
           </div>
