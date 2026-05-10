@@ -33,6 +33,12 @@ export default function Loans() {
   const [amount, setAmount] = useState("");
   const [chamaId, setChamaId] = useState("");
 
+  // Repay state
+  const [repayOpen, setRepayOpen] = useState(false);
+  const [repayLoan, setRepayLoan] = useState<any>(null);
+  const [repayAmount, setRepayAmount] = useState("");
+  const [pinOpen, setPinOpen] = useState(false);
+
   const { data: chamas } = useQuery({
     queryKey: ["chamas"],
     queryFn: async () => {
