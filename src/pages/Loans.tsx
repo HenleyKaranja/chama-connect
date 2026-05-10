@@ -76,6 +76,54 @@ export default function Loans() {
     onError: (e: any) => toast.error(e.message),
   });
 
+  const repayMutation = useMutation({
+    mutationFn: async () => {
+      if (!repayLoan) throw new Error("No loan selected");
+      const amt = sanitizeNumber(repayAmount);
+      if (isNaN(amt) || amt <= 0) throw new Error("Invalid amount");
+      const balance = Number(repayLoan.amount) - Number(repayLoan.repaid_amount);
+      if (amt > balance) throw new Error(`Maximum repayment is KES ${balance.toLocaleString()}`);
+
+      const { data: wallet, error: wErr } = await supabase
+        .from("wallets").select("id, balance").eq("user_id", user!.id).limit(1).single();
+      if (wErr) throw wErr;
+      if (Number(wallet.balance) < amt) throw new Error("Insufficient wallet balance");
+
+      const newRepaid = Number(repayLoan.repaid_amount) + amt;
+      const fullyRepaid = newRepaid >= Number(repayLoan.amount);
+
+      const { error: lErr } = await supabase.from("loans").update({
+        repaid_amount: newRepaid,
+        status: fullyRepaid ? "completed" : "active",
+      }).eq("id", repayLoan.id);
+      if (lErr) throw lErr;
+
+      const { error: bErr } = await supabase.from("wallets")
+        .update({ balance: Number(wallet.balance) - amt })
+        .eq("id", wallet.id);
+      if (bErr) throw bErr;
+
+      await supabase.from("wallet_transactions").insert({
+        user_id: user!.id,
+        wallet_id: wallet.id,
+        type: "loan_repayment",
+        amount: amt,
+        description: `Loan repayment · ${repayLoan.chamas?.name ?? "Chama"}`,
+      });
+
+      await logAuditEvent("loan_repayment", "loan", repayLoan.id, { amount: amt, fully_repaid: fullyRepaid });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["loans"] });
+      queryClient.invalidateQueries({ queryKey: ["wallet"] });
+      toast.success("Repayment successful");
+      setRepayOpen(false);
+      setRepayLoan(null);
+      setRepayAmount("");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
   const totalBorrowed = loans?.filter(l => l.status === "active" || l.status === "completed").reduce((s, l) => s + Number(l.amount), 0) ?? 0;
   const outstanding = loans?.filter(l => l.status === "active").reduce((s, l) => s + Number(l.amount) - Number(l.repaid_amount), 0) ?? 0;
   const pendingCount = loans?.filter(l => l.status === "pending").length ?? 0;
