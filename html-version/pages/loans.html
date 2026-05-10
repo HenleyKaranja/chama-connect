@@ -162,6 +162,34 @@
       if (!/^\d{4,6}$/.test(pin)) return showToast('PIN must be 4-6 digits', 'error');
       showToast('Repayment of KES ' + amt.toLocaleString() + ' submitted', 'success');
       closeRepayModal();
+    function applyLoan() {
+      showDetails('Apply for a loan',
+        `<div class="form-group"><label>Chama</label><select><option>Nairobi Farmers</option><option>Friends United</option><option>Church Group</option></select></div>
+         <div class="form-group"><label>Amount (KES)</label><input type="number" placeholder="25000"></div>
+         <div class="form-group"><label>Reason</label><input type="text" placeholder="School fees, business, etc."></div>
+         <div style="background:rgba(27,107,75,0.08);padding:0.75rem;border-radius:0.5rem;font-size:0.8125rem;">
+           <strong>Eligibility:</strong> 3+ months active membership, 3+ paid contributions. Max loan = 3× total contributions.
+         </div>`,
+        [{ label: 'Cancel' }, { label: 'Submit application', primary: true, onClick: "showToast('Loan application submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
+    }
+    function viewLoan(name, amount, repaid, status) {
+      const balance = amount - repaid;
+      const pct = amount ? Math.round((repaid / amount) * 100) : 0;
+      showDetails('Loan · ' + name,
+        `<table class="table" style="margin:0;"><tbody>
+           <tr><td>Loan amount</td><td style="text-align:right;font-weight:600;">KES ${amount.toLocaleString()}</td></tr>
+           <tr><td>Interest</td><td style="text-align:right;">10% p.a.</td></tr>
+           <tr><td>Repaid</td><td style="text-align:right;">KES ${repaid.toLocaleString()} (${pct}%)</td></tr>
+           <tr><td>Outstanding</td><td style="text-align:right;font-weight:600;">KES ${balance.toLocaleString()}</td></tr>
+           <tr><td>Status</td><td style="text-align:right;">${status}</td></tr>
+           <tr><td>Applied</td><td style="text-align:right;">3 Apr 2026</td></tr>
+         </tbody></table>
+         <h4 style="margin:1rem 0 0.5rem;font-size:0.875rem;">Repayment history</h4>
+         <table class="table" style="margin:0;"><tbody>
+           <tr><td>5 May 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
+           <tr><td>5 Apr 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
+           <tr><td>5 Mar 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
+         </tbody></table>`);
     }
   </script>
 </body>
