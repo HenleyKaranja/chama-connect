@@ -200,6 +200,9 @@ export default function Loans() {
                           </div>
                           <Progress value={repaidPct} className="h-2" />
                           {loan.due_date && <p className="text-xs text-muted-foreground">Due: {format(new Date(loan.due_date), "MMM d, yyyy")}</p>}
+                          <Button size="sm" variant="outline" className="mt-2" onClick={() => { setRepayLoan(loan); setRepayAmount(""); setRepayOpen(true); }}>
+                            Repay Loan
+                          </Button>
                         </div>
                       )}
                       {loan.status === "completed" && <p className="text-xs text-muted-foreground flex items-center gap-1"><CheckCircle2 className="h-3 w-3 text-success" />Fully repaid</p>}
