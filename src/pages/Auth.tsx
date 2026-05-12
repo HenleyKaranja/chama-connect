@@ -16,6 +16,7 @@ import logoImg from "/logo.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { checkLoginLock, recordLoginAttempt } from "@/lib/loginGuard";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const formatPhone = (raw: string) => {
   let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
