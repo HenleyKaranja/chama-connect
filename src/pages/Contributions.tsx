@@ -56,6 +56,8 @@ export default function Contributions() {
 
   const createMutation = useMutation({
     mutationFn: async () => {
+      const rl = checkRateLimit(`contribute:${user!.id}`, RATE_LIMITS.contribution.max, RATE_LIMITS.contribution.windowMs);
+      if (!rl.allowed) throw new Error(`Too many attempts. Try again in ${rl.retryInSec}s.`);
       const { error } = await supabase.from("contributions").insert({
         user_id: user!.id,
         chama_id: chamaId,
