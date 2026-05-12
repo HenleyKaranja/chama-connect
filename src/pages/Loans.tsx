@@ -18,6 +18,7 @@ import { LoanEligibility } from "@/components/LoanEligibility";
 import { logAuditEvent } from "@/lib/auditLog";
 import { sanitizeNumber } from "@/lib/sanitize";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const statusColors: Record<string, string> = {
   active: "text-info bg-info/10",
