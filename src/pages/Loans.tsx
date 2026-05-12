@@ -82,6 +82,8 @@ export default function Loans() {
   const repayMutation = useMutation({
     mutationFn: async () => {
       if (!repayLoan) throw new Error("No loan selected");
+      const rl = checkRateLimit(`loanRepay:${user!.id}`, RATE_LIMITS.loanRepay.max, RATE_LIMITS.loanRepay.windowMs);
+      if (!rl.allowed) throw new Error(`Too many repayment attempts. Try again in ${rl.retryInSec}s.`);
       const amt = sanitizeNumber(repayAmount);
       if (isNaN(amt) || amt <= 0) throw new Error("Invalid amount");
       const balance = Number(repayLoan.amount) - Number(repayLoan.repaid_amount);
