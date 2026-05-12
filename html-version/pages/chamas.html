@@ -1,313 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - My Chamas</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <!-- Sidebar Toggle (Mobile) -->
-  <button class="sidebar-toggle" onclick="toggleSidebar()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline>
-        </svg>
-        <span>Dashboard</span>
-      </a>
-      <a href="chamas.html" class="sidebar-nav-item active">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        <span>My Chamas</span>
-      </a>
-      <a href="contributions.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="1"></circle>
-          <path d="M12 1v6m0 6v6"></path>
-          <path d="M4.22 4.22l4.24 4.24m3.08 3.08l4.24 4.24"></path>
-          <path d="M1 12h6m6 0h6"></path>
-          <path d="M4.22 19.78l4.24-4.24m3.08-3.08l4.24-4.24"></path>
-        </svg>
-        <span>Contributions</span>
-      </a>
-      <a href="loans.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-          <path d="M16 4V2H8v2"></path>
-        </svg>
-        <span>Loans</span>
-      </a>
-      <a href="wallet.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-          <path d="M1 10h22"></path>
-        </svg>
-        <span>Wallet</span>
-      </a>
-      <a href="investments.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline>
-          <polyline points="17 6 23 6 23 12"></polyline>
-        </svg>
-        <span>Investments</span>
-      </a>
-      <a href="reports.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <line x1="12" y1="2" x2="12" y2="22"></line>
-          <path d="M17 5H9.5a1.5 1.5 0 0 0-1.5 1.5v12a1.5 1.5 0 0 0 1.5 1.5H17"></path>
-        </svg>
-        <span>Reports</span>
-      </a>
-
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; padding: 0.5rem 1rem; margin-bottom: 0.5rem;">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-        </svg>
-        <span>Admin Panel</span>
-      </a>
-
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m3.08 3.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m3.08-3.08l4.24-4.24"></path>
-        </svg>
-        <span>Settings</span>
-      </a>
-      <a href="notifications.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-        </svg>
-        <span>Notifications</span>
-      </a>
-
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item">
-        <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-          <polyline points="16 17 21 12 16 7"></polyline>
-          <line x1="21" y1="12" x2="9" y2="12"></line>
-        </svg>
-        <span>Logout</span>
-      </a>
-    </nav>
-  </aside>
-
-  <!-- Main Layout -->
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <!-- Header -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <div>
-            <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">My Chamas</h1>
-            <p style="color: var(--muted-foreground);">Manage and view all your savings groups.</p>
-          </div>
-          <button class="btn btn-primary" onclick="openCreateChamaModal()">
-            + Create Chama
-          </button>
-        </div>
-
-        <!-- Exit policy notice -->
-        <div class="card" style="background: hsl(38 95% 95%); border-color: hsl(38 95% 70%); padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; gap: 0.75rem; align-items: start;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="hsl(38 90% 40%)" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <div>
-            <strong style="color: hsl(38 90% 30%);">Exit policy:</strong>
-            <span style="color: hsl(38 90% 30%);">Members cannot leave a chama during an active merry-go-round cycle. You must wait until every recipient has been paid out. An admin can override this with a logged reason.</span>
-          </div>
-        </div>
-
-        <!-- Chamas Grid -->
-        <div class="grid grid-cols-3" style="gap: 1.5rem;">
-          <!-- Chama Card 1 -->
-          <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <div>
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">Nairobi Farmers</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">8 members</p>
-              </div>
-              <span class="badge badge-success">Active</span>
-            </div>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Total Balance</span>
-                <span style="font-weight: 600;">KES 145,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Your Share</span>
-                <span style="font-weight: 600;">KES 18,125</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-              <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;" onclick="viewChama('Nairobi Farmers',145000,5000,12)">View</button>
-              <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;" onclick="contributeChama('Nairobi Farmers',5000)">Contribute</button>
-              <button class="btn btn-outline" style="padding: 0.5rem 0.75rem; color: hsl(0 70% 45%); border-color: hsl(0 70% 80%);" title="Cycle in progress" disabled>Leave 🔒</button>
-            </div>
-          </div>
-
-          <!-- Chama Card 2 -->
-          <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <div>
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">Friends United</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">12 members</p>
-              </div>
-              <span class="badge badge-success">Active</span>
-            </div>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Total Balance</span>
-                <span style="font-weight: 600;">KES 250,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Your Share</span>
-                <span style="font-weight: 600;">KES 20,833</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-              <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;" onclick="viewChama('Friends United',250000,7500,15)">View</button>
-              <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;" onclick="contributeChama('Friends United',7500)">Contribute</button>
-            </div>
-          </div>
-
-          <!-- Chama Card 3 -->
-          <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <div>
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">Tech Savers</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">6 members</p>
-              </div>
-              <span class="badge badge-warning">Pending</span>
-            </div>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Total Balance</span>
-                <span style="font-weight: 600;">KES 85,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Your Share</span>
-                <span style="font-weight: 600;">KES 14,166</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-              <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;" onclick="viewChama('Tech Savers',85000,3000,8)">View</button>
-              <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;" onclick="contributeChama('Tech Savers',3000)">Contribute</button>
-            </div>
-          </a>
-
-          <!-- Chama Card 4 -->
-          <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <div>
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">Church Group</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">15 members</p>
-              </div>
-              <span class="badge badge-success">Active</span>
-            </div>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Total Balance</span>
-                <span style="font-weight: 600;">KES 380,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Your Share</span>
-                <span style="font-weight: 600;">KES 25,333</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-              <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;" onclick="viewChama('Church Group',380000,2500,22)">View</button>
-              <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;" onclick="contributeChama('Church Group',2500)">Contribute</button>
-            </div>
-          </div>
-
-          <!-- Chama Card 5 -->
-          <div class="card" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)'" onmouseout="this.style.boxShadow='0 1px 3px rgba(0,0,0,0.06)'">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
-              <div>
-                <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">Business Collective</h3>
-                <p style="font-size: 0.875rem; color: var(--muted-foreground);">10 members</p>
-              </div>
-              <span class="badge badge-success">Active</span>
-            </div>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Total Balance</span>
-                <span style="font-weight: 600;">KES 520,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--muted-foreground); font-size: 0.875rem;">Your Share</span>
-                <span style="font-weight: 600;">KES 52,000</span>
-              </div>
-            </div>
-
-            <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
-              <button class="btn btn-outline" style="flex: 1; padding: 0.5rem;" onclick="viewChama('Business Collective',520000,10000,18)">View</button>
-              <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;" onclick="contributeChama('Business Collective',10000)">Contribute</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chamas — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-lg" style="padding:2rem 1.5rem">
+  <div class="flex justify-between items-center mb-lg">
+    <div><h1 style="font-size:1.75rem;font-weight:700">Chamas</h1><p style="color:var(--muted-foreground)">Browse and join savings groups.</p></div>
+    <button class="btn btn-primary" onclick="openCreate()" id="createBtn" style="display:none">+ New chama</button>
   </div>
-
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function openCreateChamaModal() {
-      showDetails('Create a new chama',
-        `<div class="form-group"><label>Chama name</label><input type="text" id="cc-name" placeholder="e.g. Nairobi Investors"></div>
-         <div class="form-group"><label>Monthly contribution (KES)</label><input type="number" id="cc-amt" placeholder="5000"></div>
-         <div class="form-group"><label>Description</label><input type="text" id="cc-desc" placeholder="Short description"></div>`,
-        [{ label: 'Cancel' }, { label: 'Create chama', primary: true, onClick: "showToast('Chama created — pending admin approval','success');document.getElementById('__detailsModal').style.display='none';" }]);
-    }
-    function viewChama(name, savings, amt, members) {
-      showDetails(name,
-        `<table class="table" style="margin:0;"><tbody>
-           <tr><td>Total savings</td><td style="text-align:right;font-weight:600;">KES ${savings.toLocaleString()}</td></tr>
-           <tr><td>Members</td><td style="text-align:right;">${members}</td></tr>
-           <tr><td>Monthly contribution</td><td style="text-align:right;">KES ${amt.toLocaleString()}</td></tr>
-           <tr><td>Frequency</td><td style="text-align:right;">Monthly</td></tr>
-           <tr><td>Active cycle</td><td style="text-align:right;">Cycle 4 of ${members}</td></tr>
-           <tr><td>Next payout</td><td style="text-align:right;">25 May 2026</td></tr>
-         </tbody></table>
-         <p style="font-size:0.8125rem;color:var(--muted-foreground);margin-top:0.75rem;">Members can contribute, view cycles and apply for loans against this chama.</p>`);
-    }
-    function contributeChama(name, amt) {
-      showDetails('Contribute to ' + name,
-        `<div class="form-group"><label>Amount (KES)</label><input type="number" id="cb-amt" value="${amt}"></div>
-         <div class="form-group"><label>Method</label><select><option>M-Pesa STK Push</option><option>Cash (admin verification)</option><option>Wallet balance</option></select></div>
-         <div class="form-group"><label>Transaction PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align:center;letter-spacing:0.5em;"></div>`,
-        [{ label: 'Cancel' }, { label: 'Confirm', primary: true, onClick: "showToast('Contribution submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
-    }
-  </script>
-</body>
-</html>
+  <div id="list" class="grid grid-cols-2 gap-4">Loading…</div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+let chamas = [];
+async function refresh() {
+  chamas = await API.get("/api/chamas");
+  document.getElementById("list").innerHTML = chamas.map(c => `
+    <div class="card">
+      <div class="flex justify-between items-start"><div>
+        <h3 class="card-title">${escapeHtml(c.name)}</h3>
+        <p style="color:var(--muted-foreground);font-size:.875rem">${escapeHtml(c.description || "")}</p>
+      </div>${c.is_member ? badge("member") : ""}</div>
+      <div class="flex justify-between mt-md" style="font-size:.875rem">
+        <div><div style="color:var(--muted-foreground)">Contribution</div><div class="font-semibold">${fmtKES(c.contribution_amount)} / ${escapeHtml(c.contribution_frequency)}</div></div>
+        <div><div style="color:var(--muted-foreground)">Total savings</div><div class="font-semibold">${fmtKES(c.total_savings)}</div></div>
+      </div>
+      <div class="flex gap-2 mt-md">
+        ${c.is_member
+          ? `<button class="btn btn-outline btn-sm" onclick="leave('${c.id}')">Leave</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="join('${c.id}')">Join</button>`}
+      </div>
+    </div>`).join("") || "<p>No chamas yet.</p>";
+}
+async function join(id) {
+  try { await API.post(`/api/chamas/${id}/join`); showToast("Joined", "success"); refresh(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+async function leave(id) {
+  if (!confirm("Leave this chama?")) return;
+  try { await API.del(`/api/chamas/${id}/leave`); showToast("Left", "success"); refresh(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+function openCreate() {
+  showDetails("New chama", `
+    <div class="form-group"><label class="form-label">Name</label><input id="cn" class="form-input" /></div>
+    <div class="form-group"><label class="form-label">Description</label><input id="cd" class="form-input" /></div>
+    <div class="form-group"><label class="form-label">Contribution amount (KES)</label><input id="ca" type="number" class="form-input" /></div>
+    <div class="form-group"><label class="form-label">Frequency</label><select id="cf" class="form-input"><option>monthly</option><option>weekly</option></select></div>
+  `, [{ label: "Cancel" }, { label: "Create", primary: true, onClick: "createChama()" }]);
+}
+async function createChama() {
+  try {
+    await API.post("/api/chamas", {
+      name: document.getElementById("cn").value, description: document.getElementById("cd").value,
+      contribution_amount: parseFloat(document.getElementById("ca").value) || 0,
+      contribution_frequency: document.getElementById("cf").value,
+    });
+    document.getElementById("__detailsModal").style.display = "none";
+    showToast("Created", "success"); refresh();
+  } catch (e) { showToast(e.message, "error"); }
+}
+(async () => {
+  const me = await Auth.requireAuth(); await mountShell("chamas");
+  if (me.role === "admin") document.getElementById("createBtn").style.display = "";
+  refresh();
+})();
+</script>
+</body></html>

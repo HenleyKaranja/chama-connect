@@ -1,221 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Settings</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Settings — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-md" style="padding:2rem 1.5rem">
+  <h1 style="font-size:1.75rem;font-weight:700;margin-bottom:1.5rem">Settings</h1>
 
-  <aside class="sidebar">
-    <div class="sidebar-header"><img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
+  <div class="card mb-lg">
+    <h3 class="card-title">Profile</h3>
+    <div class="form-group"><label class="form-label">Full name</label><input id="fn" class="form-input" /></div>
+    <div class="form-group"><label class="form-label">Phone</label><input id="ph" class="form-input" /></div>
+    <button class="btn btn-primary" onclick="saveProfile()">Save</button>
+  </div>
 
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 2rem;">Account Settings</h1>
-
-        <div class="grid grid-cols-1" style="gap: 2rem;">
-          <!-- Profile Settings -->
-          <div class="card">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-              <h3 style="font-size: 1rem; font-weight: 600;">Profile Information</h3>
-            </div>
-            <div style="padding: 1.5rem;">
-              <div class="form-group">
-                <label for="full-name">Full Name</label>
-                <input type="text" id="full-name" value="John Kipchoge" required>
-              </div>
-              <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" value="john.kipchoge@example.com" required>
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" value="+254712345678" required>
-              </div>
-              <button class="btn btn-primary" onclick="showToast('Profile updated','success')">Save Changes</button>
-            </div>
-          </div>
-
-          <!-- Security Settings -->
-          <div class="card">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-              <h3 style="font-size: 1rem; font-weight: 600;">Security Settings</h3>
-            </div>
-            <div style="padding: 1.5rem;">
-              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Change Password</h4>
-                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Update your password regularly</p>
-                </div>
-                <button class="btn btn-outline" onclick="openChangePasswordModal()">Change</button>
-              </div>
-              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Two-Factor Authentication</h4>
-                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Enable 2FA for enhanced security</p>
-                </div>
-                <label style="position: relative; display: inline-block; width: 50px; height: 24px;">
-                  <input type="checkbox" style="display: none;">
-                  <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); border-radius: 24px; transition: 0.3s;"></span>
-                </label>
-              </div>
-              <div style="padding: 1rem 0; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Session Management</h4>
-                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">Manage active sessions</p>
-                </div>
-                <button class="btn btn-outline" onclick="document.querySelectorAll('.card')[3].scrollIntoView({behavior:'smooth'});">View Sessions</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Transaction PIN -->
-          <div class="card">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <h3 style="font-size: 1rem; font-weight: 600;">🔒 Transaction PIN</h3>
-                <p style="font-size: 0.8125rem; color: var(--muted-foreground); margin-top: 0.25rem;">A 4-6 digit code required to confirm contributions, withdrawals and loan actions. Locks for 15 min after 5 wrong tries.</p>
-              </div>
-              <span class="badge badge-success">Active</span>
-            </div>
-            <div style="padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr auto; gap: 0.75rem; align-items: end;">
-              <div class="form-group" style="margin: 0;"><label>New PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
-              <div class="form-group" style="margin: 0;"><label>Confirm PIN</label><input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align: center; letter-spacing: 0.5em;"></div>
-              <button class="btn btn-primary" onclick="showToast('Transaction PIN updated','success')">Update PIN</button>
-            </div>
-            <div style="padding: 0 1.5rem 1.25rem;">
-              <button class="btn btn-outline" style="font-size:0.8125rem;" onclick="openPinResetModal()">🔑 Forgot PIN?</button>
-            </div>
-          </div>
-
-          <!-- Active Devices -->
-          <div class="card">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-              <h3 style="font-size: 1rem; font-weight: 600;">📱 Active Devices</h3>
-              <p style="font-size: 0.8125rem; color: var(--muted-foreground); margin-top: 0.25rem;">Devices currently signed into your account. Revoke any you don't recognise.</p>
-            </div>
-            <div style="padding: 1rem 1.5rem;">
-              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
-                <div style="flex: 1;"><div style="font-weight: 600;">Mac · Chrome</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active just now · Nairobi, KE</div></div>
-                <span class="badge badge-success">Current</span>
-              </div>
-              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border);">
-                <div style="flex: 1;"><div style="font-weight: 600;">Android device · Mobile app</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 2 hours ago</div></div>
-                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;" onclick="if(confirm('Sign out this device?')){this.closest('div').style.display='none';showToast('Device revoked','success');}">Revoke</button>
-              </div>
-              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0;">
-                <div style="flex: 1;"><div style="font-weight: 600;">Windows PC · Edge</div><div style="font-size: 0.8125rem; color: var(--muted-foreground);">Last active 3 days ago</div></div>
-                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive); padding: 0.25rem 0.75rem; font-size: 0.8125rem;" onclick="if(confirm('Sign out this device?')){this.closest('div').style.display='none';showToast('Device revoked','success');}">Revoke</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Notification Preferences -->
-          <div class="card">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-              <h3 style="font-size: 1rem; font-weight: 600;">Notification Preferences</h3>
-            </div>
-            <div style="padding: 1.5rem;">
-              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 500;">Email Notifications</span>
-                <input type="checkbox" checked>
-              </div>
-              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 500;">SMS Notifications</span>
-                <input type="checkbox" checked>
-              </div>
-              <div style="padding: 1rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 500;">Push Notifications</span>
-                <input type="checkbox">
-              </div>
-              <div style="padding: 1rem 0; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 500;">Marketing Communications</span>
-                <input type="checkbox">
-              </div>
-            </div>
-          </div>
-
-          <!-- Danger Zone -->
-          <div class="card" style="border-color: var(--destructive);">
-            <div style="padding: 1rem; border-bottom: 1px solid var(--destructive);">
-              <h3 style="font-size: 1rem; font-weight: 600; color: var(--destructive);">Danger Zone</h3>
-            </div>
-            <div style="padding: 1.5rem;">
-              <div style="padding: 1rem; background-color: rgba(230, 57, 70, 0.05); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <h4 style="font-weight: 600; color: var(--destructive); margin-bottom: 0.25rem;">Delete Account</h4>
-                  <p style="font-size: 0.875rem; color: var(--muted-foreground);">This action cannot be undone</p>
-                </div>
-                <button class="btn btn-outline" style="color: var(--destructive); border-color: var(--destructive);" onclick="confirmDelete()">Delete</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="card mb-lg">
+    <h3 class="card-title">Transaction PIN</h3>
+    <p style="color:var(--muted-foreground);font-size:.875rem;margin-bottom:.75rem">Required to authorize money-moving actions. <span id="pinStatus"></span></p>
+    <div class="flex gap-2">
+      <button class="btn btn-primary btn-sm" onclick="openSetPin()">Set / change PIN</button>
+      <button class="btn btn-outline btn-sm" onclick="openResetPin()">Forgot PIN?</button>
     </div>
   </div>
 
-  <!-- PIN Reset Modal -->
-  <div id="pinResetModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center;">
-    <div style="background:var(--card); border-radius:0.75rem; padding:1.5rem; max-width:400px; width:90%;">
-      <h3 style="font-size:1.125rem; font-weight:700; margin-bottom:0.25rem;">🔑 Reset Transaction PIN</h3>
-      <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-bottom:1rem;">Confirm your account password to clear the existing PIN. You'll then be able to set a new one.</p>
-      <div class="form-group">
-        <label>Account password</label>
-        <input type="password" id="prm-pass" placeholder="Your login password">
-      </div>
-      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
-        <button class="btn btn-outline" onclick="closePinResetModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="submitPinReset()">Reset PIN</button>
-      </div>
-    </div>
+  <div class="card mb-lg">
+    <h3 class="card-title">Active sessions</h3>
+    <div id="sessions">Loading…</div>
   </div>
 
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function openChangePasswordModal() {
-      showToast('Change password feature coming soon!', 'info');
-    }
-    function openPinResetModal() {
-      document.getElementById('prm-pass').value = '';
-      document.getElementById('pinResetModal').style.display = 'flex';
-    }
-    function closePinResetModal() { document.getElementById('pinResetModal').style.display = 'none'; }
-    function submitPinReset() {
-      const pass = document.getElementById('prm-pass').value;
-      if (!pass) return showToast('Enter your password', 'error');
-      showToast('PIN cleared. Set a new PIN above.', 'success');
-      closePinResetModal();
-    }
-
-    function confirmDelete() {
-      if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-        showToast('Account deletion has been initiated', 'success');
-      }
-    }
-  </script>
-</body>
-</html>
+  <div class="card">
+    <h3 class="card-title">Theme</h3>
+    <button class="btn btn-outline" onclick="themeToggle()">Toggle dark mode</button>
+  </div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+async function load() {
+  const me = await Auth.user() || await Auth.load();
+  document.getElementById("fn").value = me.profile?.full_name || "";
+  document.getElementById("ph").value = me.profile?.phone || "";
+  document.getElementById("pinStatus").textContent = me.profile?.has_pin ? "✓ PIN is set." : "PIN not yet set.";
+  const sessions = await API.get("/api/sessions");
+  document.getElementById("sessions").innerHTML = sessions.length ? sessions.map(s => `
+    <div class="flex justify-between items-center" style="padding:.5rem 0;border-bottom:1px solid var(--border)">
+      <div><div class="font-medium">${escapeHtml(s.device_label||"Device")}</div>
+        <div style="font-size:.75rem;color:var(--muted-foreground)">${escapeHtml(s.user_agent||"")}</div>
+        <div style="font-size:.75rem;color:var(--muted-foreground)">Last seen ${fmtDateTime(s.last_seen_at)}</div></div>
+      <button class="btn btn-outline btn-sm" onclick="revoke('${s.id}')">Revoke</button>
+    </div>`).join("") : "<p style='color:var(--muted-foreground)'>No active sessions.</p>";
+}
+async function saveProfile() {
+  try { await API.put("/api/profile", { full_name: document.getElementById("fn").value, phone: document.getElementById("ph").value }); showToast("Saved", "success"); }
+  catch (e) { showToast(e.message, "error"); }
+}
+function openSetPin() {
+  showDetails("Set PIN", `<div class="form-group"><label class="form-label">New PIN (4-6 digits)</label><input id="np" type="password" maxlength="6" class="form-input" /></div>`,
+    [{ label: "Cancel" }, { label: "Save", primary: true, onClick: "submitPin()" }]);
+}
+async function submitPin() {
+  try { await API.post("/api/auth/set-pin", { pin: document.getElementById("np").value }); document.getElementById("__detailsModal").style.display="none"; showToast("PIN updated","success"); load(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+function openResetPin() {
+  showDetails("Reset PIN", `<p style="margin-bottom:1rem;font-size:.875rem">Confirm your account password to clear your PIN.</p>
+    <div class="form-group"><label class="form-label">Password</label><input id="rp" type="password" class="form-input" /></div>`,
+    [{ label: "Cancel" }, { label: "Reset", primary: true, onClick: "submitResetPin()" }]);
+}
+async function submitResetPin() {
+  try { await API.post("/api/auth/reset-pin", { password: document.getElementById("rp").value }); document.getElementById("__detailsModal").style.display="none"; showToast("PIN cleared. Set a new one.","success"); load(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+async function revoke(id) { await API.del(`/api/sessions/${id}`); showToast("Session revoked","success"); load(); }
+(async () => { await Auth.requireAuth(); await mountShell("settings"); load(); })();
+</script>
+</body></html>

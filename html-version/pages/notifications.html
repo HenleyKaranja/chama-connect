@@ -1,125 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Notifications</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-
-  <aside class="sidebar">
-    <div class="sidebar-header"><img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
-
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 2rem;">Notifications</h1>
-
-        <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
-          <button class="btn btn-primary" onclick="filterNotifications('all')">All</button>
-          <button class="btn btn-outline" onclick="filterNotifications('unread')">Unread</button>
-          <button class="btn btn-outline" onclick="filterNotifications('important')">Important</button>
-        </div>
-
-        <div class="card" id="notifications-container">
-          <!-- New Contribution -->
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; cursor: pointer; background-color: rgba(27, 107, 75, 0.05);" onmouseover="this.style.backgroundColor='rgba(27, 107, 75, 0.1)'" onmouseout="this.style.backgroundColor='rgba(27, 107, 75, 0.05)'">
-            <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--success); color: white; flex-shrink: 0;">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg>
-            </div>
-            <div style="flex: 1;">
-              <h4 style="font-weight: 600; margin-bottom: 0.25rem;">New Contribution Received</h4>
-              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">You received a contribution of KES 5,000 from Nairobi Farmers Chama</p>
-              <p style="font-size: 0.75rem; color: var(--muted-foreground);">Today at 10:30 AM</p>
-            </div>
-            <button class="btn btn-sm btn-outline" onclick="markAsRead(this)">Mark Read</button>
-          </div>
-
-          <!-- Loan Approved -->
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; cursor: pointer;">
-            <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--accent); color: white; flex-shrink: 0;">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg>
-            </div>
-            <div style="flex: 1;">
-              <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Loan Application Approved ✓</h4>
-              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Your loan application for KES 50,000 from Friends United has been approved</p>
-              <p style="font-size: 0.75rem; color: var(--muted-foreground);">Mar 29, 2026 at 2:15 PM</p>
-            </div>
-          </div>
-
-          <!-- Investment Update -->
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; cursor: pointer;">
-            <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--info); color: white; flex-shrink: 0;">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg>
-            </div>
-            <div style="flex: 1;">
-              <h4 style="font-weight: 600; margin-bottom: 0.25rem;">Investment Returns Posted</h4>
-              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Your investment in Tech Startup Fund has generated KES 4,200 in returns</p>
-              <p style="font-size: 0.75rem; color: var(--muted-foreground);">Mar 28, 2026 at 9:00 AM</p>
-            </div>
-          </div>
-
-          <!-- Member Joined -->
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; cursor: pointer;">
-            <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--primary); color: white; flex-shrink: 0;">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-            </div>
-            <div style="flex: 1;">
-              <h4 style="font-weight: 600; margin-bottom: 0.25rem;">New Member Joined</h4>
-              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Alice Njoroge has joined the Church Group chama</p>
-              <p style="font-size: 0.75rem; color: var(--muted-foreground);">Mar 27, 2026 at 3:45 PM</p>
-            </div>
-          </div>
-
-          <!-- System Update -->
-          <div style="padding: 1rem; display: flex; gap: 1rem; cursor: pointer;">
-            <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; background-color: var(--warning); color: white; flex-shrink: 0;">
-              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
-            </div>
-            <div style="flex: 1;">
-              <h4 style="font-weight: 600; margin-bottom: 0.25rem;">System Maintenance Scheduled</h4>
-              <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">Scheduled maintenance on April 5, 2026 from 2:00 AM to 3:00 AM</p>
-              <p style="font-size: 0.75rem; color: var(--muted-foreground);">Mar 25, 2026</p>
-            </div>
-          </div>
-        </div>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Notifications — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-lg" style="padding:2rem 1.5rem">
+  <h1 style="font-size:1.75rem;font-weight:700;margin-bottom:1.5rem">Notifications</h1>
+  <div id="list" class="grid gap-3">Loading…</div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+async function refresh() {
+  const items = await API.get("/api/notifications");
+  document.getElementById("list").innerHTML = items.length ? items.map(n => `
+    <div class="card" style="${n.is_read ? 'opacity:.65' : ''}">
+      <div class="flex justify-between items-start">
+        <div><div class="font-semibold">${escapeHtml(n.title)}</div>
+          <div style="color:var(--muted-foreground);font-size:.875rem">${escapeHtml(n.message)}</div>
+          <div style="font-size:.75rem;color:var(--muted-foreground);margin-top:.25rem">${fmtDateTime(n.created_at)}</div></div>
+        ${badge(n.type)}
       </div>
-    </div>
-  </div>
-
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function markAsRead(button) {
-      const notification = button.closest('div');
-      notification.style.backgroundColor = 'transparent';
-      button.style.display = 'none';
-      showToast('Notification marked as read', 'success');
-    }
-
-    function filterNotifications(type) {
-      showToast(`Filtering notifications: ${type}`, 'info');
-    }
-  </script>
-</body>
-</html>
+      ${!n.is_read ? `<button class="btn btn-outline btn-sm mt-md" onclick="mark('${n.id}')">Mark as read</button>` : ""}
+    </div>`).join("") : "<p style='color:var(--muted-foreground)'>No notifications.</p>";
+}
+async function mark(id) { await API.put(`/api/notifications/${id}/read`); refresh(); }
+(async () => { await Auth.requireAuth(); await mountShell("notifications"); refresh(); })();
+</script>
+</body></html>

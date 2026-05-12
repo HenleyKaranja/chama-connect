@@ -1,305 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Dashboard</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <style>
-    .chart-container { height: 300px; position: relative; margin-top: 1rem; }
-    .transaction-positive { color: var(--success); }
-    .transaction-negative { color: var(--destructive); }
-  </style>
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: var(--radius); object-fit: contain; filter: brightness(0) invert(1);">
-      <div class="sidebar-title">M-Chama</div>
-    </div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle><path d="M12 1v6m0 6v6"></path></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.8rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <!-- Header -->
-        <div style="margin-bottom: 2rem;">
-          <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Habari, John 👋</h1>
-          <p style="color: var(--muted-foreground);">Here's what's happening with your chamas today.</p>
-        </div>
-
-        <!-- Stat Cards -->
-        <div class="grid grid-cols-4" style="gap: 1rem; margin-bottom: 2rem;">
-          <div class="stat-card">
-            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
-              <div>
-                <div class="stat-card-title">Total Balance</div>
-                <div class="stat-card-value">KES 128,450</div>
-                <div class="stat-card-change positive">Across all wallets</div>
-              </div>
-              <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background-color: rgba(27, 107, 75, 0.1); border-radius: var(--radius); color: var(--primary);">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><path d="M1 10h22"></path></svg>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
-              <div>
-                <div class="stat-card-title">My Chamas</div>
-                <div class="stat-card-value">5</div>
-                <div class="stat-card-change">5 total memberships</div>
-              </div>
-              <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: var(--radius); color: var(--accent);">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
-              <div>
-                <div class="stat-card-title">This Month</div>
-                <div class="stat-card-value">KES 15,000</div>
-                <div class="stat-card-change positive">Paid contributions</div>
-              </div>
-              <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background-color: rgba(45, 143, 94, 0.1); border-radius: var(--radius); color: var(--success);">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle><path d="M12 1v6m0 6v6"></path></svg>
-              </div>
-            </div>
-          </div>
-          <div class="stat-card">
-            <div style="display: flex; align-items: flex-start; justify-content: space-between;">
-              <div>
-                <div class="stat-card-title">Active Loans</div>
-                <div class="stat-card-value">KES 45,000</div>
-                <div class="stat-card-change">2 pending approval</div>
-              </div>
-              <div style="width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: var(--radius); color: var(--accent);">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Charts Section -->
-        <div class="grid grid-cols-2" style="gap: 1.5rem; margin-bottom: 2rem;">
-          <div class="card" style="border-radius: 0.75rem; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-            <h3 style="font-weight: 600; margin-bottom: 1rem;">My Contribution Trend</h3>
-            <div class="chart-container"><canvas id="contribution-chart"></canvas></div>
-          </div>
-          <div class="card" style="border-radius: 0.75rem; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
-            <h3 style="font-weight: 600; margin-bottom: 1rem;">My Loans Overview</h3>
-            <div class="chart-container"><canvas id="loans-chart"></canvas></div>
-          </div>
-        </div>
-
-        <!-- My Recent Transactions -->
-        <div class="card" style="border-radius: 0.75rem; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 1.5rem;">
-          <div style="padding: 1.25rem; border-bottom: 1px solid var(--border);">
-            <h3 style="font-weight: 600;">My Recent Transactions</h3>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Member</th>
-                  <th>Type</th>
-                  <th style="text-align: right;">Amount</th>
-                  <th style="text-align: right;">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">JK</div>
-                      <span style="font-weight: 500;">John Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Wallet Deposit</td>
-                  <td style="text-align: right; color: var(--success); font-weight: 600;">+KES 10,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 30, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">JK</div>
-                      <span style="font-weight: 500;">John Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Investment</td>
-                  <td style="text-align: right; color: var(--destructive); font-weight: 600;">-KES 15,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 28, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">JK</div>
-                      <span style="font-weight: 500;">John Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Wallet Withdrawal</td>
-                  <td style="text-align: right; color: var(--destructive); font-weight: 600;">-KES 5,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 25, 2026</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- All Recent Transactions -->
-        <div class="card" style="border-radius: 0.75rem; border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05); overflow: hidden;">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 1.25rem; border-bottom: 1px solid var(--border);">
-            <h3 style="font-weight: 600;">All Recent Transactions</h3>
-            <a href="wallet.html" style="color: var(--primary); text-decoration: none;">View All</a>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Member</th>
-                  <th>Type</th>
-                  <th style="text-align: right;">Amount</th>
-                  <th style="text-align: right;">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">JK</div>
-                      <span style="font-weight: 500;">John Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Contribution</td>
-                  <td style="text-align: right; color: var(--success); font-weight: 600;">+KES 5,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 29, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(217, 157, 92, 0.1); color: var(--accent); font-weight: 600;">MK</div>
-                      <span style="font-weight: 500;">Mary Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Loan Disbursed</td>
-                  <td style="text-align: right; color: var(--destructive); font-weight: 600;">-KES 20,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 27, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(45, 143, 94, 0.1); color: var(--success); font-weight: 600;">AN</div>
-                      <span style="font-weight: 500;">Alice Njoroge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Contribution</td>
-                  <td style="text-align: right; color: var(--success); font-weight: 600;">+KES 5,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 22, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">PO</div>
-                      <span style="font-weight: 500;">Peter Omondi</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Loan Repaid</td>
-                  <td style="text-align: right; color: var(--success); font-weight: 600;">+KES 10,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 20, 2026</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                      <div class="avatar avatar-sm" style="background-color: rgba(27, 107, 75, 0.1); color: var(--primary); font-weight: 600;">JK</div>
-                      <span style="font-weight: 500;">John Kipchoge</span>
-                    </div>
-                  </td>
-                  <td style="font-weight: 500;">Contribution</td>
-                  <td style="text-align: right; color: var(--success); font-weight: 600;">+KES 5,000</td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 15, 2026</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dashboard — M-Chama</title>
+<link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main">
+  <div class="container container-lg" style="padding:2rem 1.5rem">
+    <h1 style="font-size:1.75rem;font-weight:700;margin-bottom:.25rem">Welcome back, <span id="userName">…</span></h1>
+    <p style="color:var(--muted-foreground);margin-bottom:1.5rem">Here's what's happening in your chamas today.</p>
+    <div class="grid grid-cols-4 gap-4 mb-lg" id="stats">…</div>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="card"><h3 class="card-title">Recent contributions</h3><div id="contribs">Loading…</div></div>
+      <div class="card"><h3 class="card-title">My chamas</h3><div id="chamas">Loading…</div></div>
     </div>
   </div>
+</main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+(async () => {
+  const me = await Auth.requireAuth();
+  await mountShell("dashboard");
+  document.getElementById("userName").textContent = me.profile?.full_name || me.user.email;
 
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function drawBarChart(canvasId, data, labels) {
-      const canvas = document.getElementById(canvasId);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      canvas.width = canvas.offsetWidth;
-      canvas.height = 250;
-      const width = canvas.width, height = canvas.height, padding = 40;
-      const maxValue = Math.max(...data);
-      const barWidth = (width - padding * 2) / data.length;
-      const barSpacing = 10;
-      const actualBarWidth = barWidth - barSpacing;
+  const [wallets, contribs, chamas, notifs] = await Promise.all([
+    API.get("/api/wallets"), API.get("/api/contributions"),
+    API.get("/api/chamas"), API.get("/api/notifications"),
+  ]);
+  const balance = wallets.reduce((s, w) => s + Number(w.balance), 0);
+  const unread = notifs.filter(n => !n.is_read).length;
+  const myChamas = chamas.filter(c => c.is_member);
 
-      ctx.clearRect(0, 0, width, height);
+  document.getElementById("stats").innerHTML = `
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Wallet balance</div><div style="font-size:1.5rem;font-weight:700">${fmtKES(balance)}</div></div>
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Active chamas</div><div style="font-size:1.5rem;font-weight:700">${myChamas.length}</div></div>
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Contributions</div><div style="font-size:1.5rem;font-weight:700">${contribs.length}</div></div>
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Unread alerts</div><div style="font-size:1.5rem;font-weight:700">${unread}</div></div>`;
 
-      ctx.strokeStyle = '#e0dcd5';
-      ctx.lineWidth = 1;
-      for (let i = 0; i <= 5; i++) {
-        const y = padding + (height - padding * 2) * (1 - i / 5);
-        ctx.beginPath(); ctx.moveTo(padding, y); ctx.lineTo(width - padding, y); ctx.stroke();
-      }
+  document.getElementById("contribs").innerHTML = contribs.length ?
+    contribs.slice(0, 5).map(c => `<div class="flex justify-between" style="padding:.5rem 0;border-bottom:1px solid var(--border)">
+      <div><div class="font-medium">${escapeHtml(c.chama_name || "—")}</div><div style="font-size:.75rem;color:var(--muted-foreground)">${fmtDate(c.created_at)}</div></div>
+      <div style="text-align:right"><div class="font-semibold">${fmtKES(c.amount)}</div>${badge(c.status)}</div></div>`).join("")
+    : "<p style='color:var(--muted-foreground)'>No contributions yet.</p>";
 
-      ctx.strokeStyle = '#e0dcd5';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(padding, padding); ctx.lineTo(padding, height - padding); ctx.lineTo(width - padding, height - padding); ctx.stroke();
-
-      data.forEach((value, index) => {
-        const x = padding + index * barWidth + (barWidth - actualBarWidth) / 2;
-        const barHeight = ((value / maxValue) * (height - padding * 2));
-        const y = height - padding - barHeight;
-
-        ctx.fillStyle = index % 2 === 0 ? '#1b6b4b' : '#d99d5c';
-        ctx.beginPath();
-        ctx.roundRect(x, y, actualBarWidth, barHeight, [4, 4, 0, 0]);
-        ctx.fill();
-
-        ctx.fillStyle = '#6b8a6b';
-        ctx.font = '13px system-ui';
-        ctx.textAlign = 'center';
-        ctx.fillText(labels[index], x + actualBarWidth / 2, height - padding + 20);
-
-        ctx.fillStyle = '#1f2c1f';
-        ctx.font = 'bold 12px system-ui';
-        ctx.fillText(value.toLocaleString(), x + actualBarWidth / 2, y - 5);
-      });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      drawBarChart('contribution-chart', [5000, 5000, 3500, 5000, 5000, 4500, 5000, 5000], ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']);
-      drawBarChart('loans-chart', [0, 20000, 20000, 15000, 0, 10000, 0, 0], ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']);
-    });
-  </script>
-</body>
-</html>
+  document.getElementById("chamas").innerHTML = myChamas.length ?
+    myChamas.slice(0, 5).map(c => `<div class="flex justify-between" style="padding:.5rem 0;border-bottom:1px solid var(--border)">
+      <div><div class="font-medium">${escapeHtml(c.name)}</div><div style="font-size:.75rem;color:var(--muted-foreground)">${escapeHtml(c.contribution_frequency)}</div></div>
+      <div class="font-semibold">${fmtKES(c.total_savings)}</div></div>`).join("")
+    : `<p style='color:var(--muted-foreground)'>You haven't joined any chama. <a href="/chamas.html">Browse</a>.</p>`;
+})();
+</script>
+</body></html>
