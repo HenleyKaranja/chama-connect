@@ -61,6 +61,8 @@ export default function Loans() {
 
   const applyMutation = useMutation({
     mutationFn: async () => {
+      const rl = checkRateLimit(`loanApply:${user!.id}`, RATE_LIMITS.loanApply.max, RATE_LIMITS.loanApply.windowMs);
+      if (!rl.allowed) throw new Error(`Too many loan applications. Try again in ${rl.retryInSec}s.`);
       const sanitizedAmount = sanitizeNumber(amount);
       if (isNaN(sanitizedAmount) || sanitizedAmount <= 0) throw new Error("Invalid amount");
       const { error } = await supabase.from("loans").insert({ user_id: user!.id, chama_id: chamaId, amount: sanitizedAmount, status: "pending" });
