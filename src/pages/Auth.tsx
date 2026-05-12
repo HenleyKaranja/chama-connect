@@ -16,6 +16,7 @@ import logoImg from "/logo.png";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { checkLoginLock, recordLoginAttempt } from "@/lib/loginGuard";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const formatPhone = (raw: string) => {
   let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
@@ -64,6 +65,8 @@ export default function AuthPage() {
     setLoading(true);
     try {
       const formattedPhone = formatPhone(phone);
+      const rl = checkRateLimit(`otp:${formattedPhone}`, RATE_LIMITS.otpRequest.max, RATE_LIMITS.otpRequest.windowMs);
+      if (!rl.allowed) { toast.error(`Too many OTP requests. Try again in ${rl.retryInSec}s.`); setLoading(false); return; }
       const { data, error } = await supabase.functions.invoke("twilio-verify", {
         body: { action: "send", phone: formattedPhone },
       });

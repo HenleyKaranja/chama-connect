@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
 import { logAuditEvent } from "@/lib/auditLog";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const statusConfig = {
   paid: { color: "text-success bg-success/10", icon: CheckCircle2, label: "Paid" },
@@ -56,6 +57,8 @@ export default function Contributions() {
 
   const createMutation = useMutation({
     mutationFn: async () => {
+      const rl = checkRateLimit(`contribute:${user!.id}`, RATE_LIMITS.contribution.max, RATE_LIMITS.contribution.windowMs);
+      if (!rl.allowed) throw new Error(`Too many attempts. Try again in ${rl.retryInSec}s.`);
       const { error } = await supabase.from("contributions").insert({
         user_id: user!.id,
         chama_id: chamaId,

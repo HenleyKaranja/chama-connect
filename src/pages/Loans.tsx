@@ -18,6 +18,7 @@ import { LoanEligibility } from "@/components/LoanEligibility";
 import { logAuditEvent } from "@/lib/auditLog";
 import { sanitizeNumber } from "@/lib/sanitize";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const statusColors: Record<string, string> = {
   active: "text-info bg-info/10",
@@ -60,6 +61,8 @@ export default function Loans() {
 
   const applyMutation = useMutation({
     mutationFn: async () => {
+      const rl = checkRateLimit(`loanApply:${user!.id}`, RATE_LIMITS.loanApply.max, RATE_LIMITS.loanApply.windowMs);
+      if (!rl.allowed) throw new Error(`Too many loan applications. Try again in ${rl.retryInSec}s.`);
       const sanitizedAmount = sanitizeNumber(amount);
       if (isNaN(sanitizedAmount) || sanitizedAmount <= 0) throw new Error("Invalid amount");
       const { error } = await supabase.from("loans").insert({ user_id: user!.id, chama_id: chamaId, amount: sanitizedAmount, status: "pending" });
@@ -79,6 +82,8 @@ export default function Loans() {
   const repayMutation = useMutation({
     mutationFn: async () => {
       if (!repayLoan) throw new Error("No loan selected");
+      const rl = checkRateLimit(`loanRepay:${user!.id}`, RATE_LIMITS.loanRepay.max, RATE_LIMITS.loanRepay.windowMs);
+      if (!rl.allowed) throw new Error(`Too many repayment attempts. Try again in ${rl.retryInSec}s.`);
       const amt = sanitizeNumber(repayAmount);
       if (isNaN(amt) || amt <= 0) throw new Error("Invalid amount");
       const balance = Number(repayLoan.amount) - Number(repayLoan.repaid_amount);

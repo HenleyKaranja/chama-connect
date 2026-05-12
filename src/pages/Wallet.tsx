@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const WALLET_PRESETS = [
   { name: "Savings Wallet", type: "savings" },
@@ -105,6 +106,8 @@ export default function WalletPage() {
 
   const withdrawMutation = useMutation({
     mutationFn: async () => {
+      const rl = checkRateLimit(`withdraw:${user!.id}`, RATE_LIMITS.withdraw.max, RATE_LIMITS.withdraw.windowMs);
+      if (!rl.allowed) throw new Error(`Too many withdrawals. Try again in ${rl.retryInSec}s.`);
       const amt = parseFloat(txAmount);
       if (!amt || amt <= 0) throw new Error("Invalid amount");
       const wallet = wallets?.find(w => w.id === selectedWalletId);
