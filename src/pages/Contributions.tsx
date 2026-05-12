@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
 import { logAuditEvent } from "@/lib/auditLog";
+import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
 
 const statusConfig = {
   paid: { color: "text-success bg-success/10", icon: CheckCircle2, label: "Paid" },
