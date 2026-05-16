@@ -96,4 +96,4 @@ GET    /api/admin/audit        GET    /api/admin/stats
 
 - This runs **only on your machine** (the Lovable preview can't host Node servers). Deploy elsewhere if you need it online.
 - The React/Lovable Cloud version of the app continues to live in `src/` and is unaffected.
-- For production: change `JWT_SECRET` env var, enable HTTPS, add proper rate limiting at the edge, move SQLite to Postgres.
+- For production: change `JWT_SECRET` env var, enable HTTPS, add proper rate limiting at the edge, move SQLite to Postgres .
