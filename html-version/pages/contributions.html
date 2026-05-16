@@ -1,186 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Contributions</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-
-  <aside class="sidebar">
-    <div class="sidebar-header"><img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle><path d="M12 1v6m0 6v6"></path></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
-
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <div>
-            <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">My Contributions</h1>
-            <p style="color: var(--muted-foreground);">Track all your chama contributions</p>
-          </div>
-          <button class="btn btn-primary" onclick="document.getElementById('contribution-modal').style.display='flex'">+ New Contribution</button>
-        </div>
-
-        <!-- Penalties on member account -->
-        <div class="card" style="background: hsl(0 80% 97%); border-color: hsl(0 80% 80%); padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-            <strong style="color: hsl(0 70% 35%);">⚠️ Penalties on Your Account</strong>
-            <span style="font-weight:700; color: hsl(0 70% 35%);">KES 450 pending</span>
-          </div>
-          <div style="font-size:0.875rem; padding-top:0.5rem; border-top:1px solid hsl(0 80% 88%); display:flex; justify-content:space-between;">
-            <div>
-              <div style="font-weight:500;">Missed monthly contribution</div>
-              <div style="color: var(--muted-foreground); font-size:0.8125rem;">Nairobi Farmers · Apr 5, 2026</div>
-            </div>
-            <span class="badge badge-danger">Pending</span>
-          </div>
-        </div>
-
-        <!-- Pin gate notice -->
-        <div style="font-size:0.8125rem; color: var(--muted-foreground); margin-bottom:1rem;">🔒 Money actions require your Transaction PIN.</div>
-
-        <div class="card">
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-            <h3 style="font-size: 0.875rem; font-weight: 600;">All Contributions</h3>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Chama</th>
-                  <th>Amount</th>
-                  <th>Method</th>
-                  <th>Notes</th>
-                  <th>Status</th>
-                  <th style="text-align: right;">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Nairobi Farmers</td>
-                  <td>KES 5,000</td>
-                  <td><span class="badge" style="background: var(--muted); color: var(--muted-foreground);">M-Pesa</span></td>
-                  <td style="color: var(--muted-foreground);">—</td>
-                  <td><span class="badge badge-success">Paid</span></td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 29, 2026</td>
-                </tr>
-                <tr>
-                  <td>Friends United</td>
-                  <td>KES 8,000</td>
-                  <td><span class="badge" style="background: #fef3c7; color: #92400e;">💵 Cash</span></td>
-                  <td style="color: var(--muted-foreground);">Paid to treasurer at meeting</td>
-                  <td><span class="badge badge-warning">Pending Approval</span></td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 28, 2026</td>
-                </tr>
-                <tr>
-                  <td>Tech Savers</td>
-                  <td>KES 3,000</td>
-                  <td><span class="badge" style="background: var(--muted); color: var(--muted-foreground);">Bank</span></td>
-                  <td style="color: var(--muted-foreground);">—</td>
-                  <td><span class="badge badge-warning">Pending</span></td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 25, 2026</td>
-                </tr>
-                <tr>
-                  <td>Church Group</td>
-                  <td>KES 5,000</td>
-                  <td><span class="badge" style="background: #fef3c7; color: #92400e;">💵 Cash</span></td>
-                  <td style="color: var(--muted-foreground);">Cash at Sunday service</td>
-                  <td><span class="badge badge-success">Approved</span></td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 22, 2026</td>
-                </tr>
-                <tr>
-                  <td>Business Collective</td>
-                  <td>KES 10,000</td>
-                  <td><span class="badge" style="background: var(--muted); color: var(--muted-foreground);">M-Pesa</span></td>
-                  <td style="color: var(--muted-foreground);">—</td>
-                  <td><span class="badge badge-success">Paid</span></td>
-                  <td style="text-align: right; color: var(--muted-foreground);">Mar 20, 2026</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- New Contribution Modal -->
-        <div id="contribution-modal" style="display:none; position:fixed; inset:0; z-index:100; background:rgba(0,0,0,0.5); align-items:center; justify-content:center; padding:1rem;">
-          <div class="card" style="width:100%; max-width:28rem; padding:1.5rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h3 style="font-weight:600;">Make a Contribution</h3>
-              <button onclick="document.getElementById('contribution-modal').style.display='none'" style="background:none; border:none; cursor:pointer; font-size:1.25rem; color:var(--muted-foreground);">✕</button>
-            </div>
-            <div style="display:flex; flex-direction:column; gap:1rem;">
-              <div class="form-group">
-                <label>Chama</label>
-                <select id="contrib-chama">
-                  <option value="">Select chama</option>
-                  <option>Nairobi Farmers</option>
-                  <option>Friends United</option>
-                  <option>Tech Savers</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Amount (KES)</label>
-                <input type="number" id="contrib-amount" placeholder="5000">
-              </div>
-              <div class="form-group">
-                <label>Payment Method</label>
-                <select id="contrib-method" onchange="toggleCashNotes()">
-                  <option value="mpesa">M-Pesa</option>
-                  <option value="bank">Bank Transfer</option>
-                  <option value="cash">Cash</option>
-                </select>
-              </div>
-              <div id="cash-notes-group" class="form-group" style="display:none;">
-                <label>Notes / Description</label>
-                <input type="text" id="contrib-notes" placeholder="e.g. Paid cash to treasurer at meeting">
-                <p style="font-size:0.75rem; color:var(--muted-foreground); margin-top:0.25rem;">Cash payments require admin verification</p>
-              </div>
-              <div class="form-group" style="background:hsl(40 60% 95%); padding:0.75rem; border-radius:0.5rem; border:1px solid hsl(40 60% 80%);">
-                <label style="margin-bottom:0.25rem; display:block;">🔒 Transaction PIN</label>
-                <input type="password" inputmode="numeric" maxlength="6" placeholder="••••" style="text-align:center; letter-spacing:0.5em;">
-                <p style="font-size:0.75rem; color:var(--muted-foreground); margin-top:0.25rem;">Required to authorise this payment.</p>
-              </div>
-              <button class="btn btn-primary btn-full" onclick="submitContribution()">Confirm with PIN</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contributions — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-lg" style="padding:2rem 1.5rem">
+  <div class="flex justify-between items-center mb-lg">
+    <div><h1 style="font-size:1.75rem;font-weight:700">Contributions</h1><p style="color:var(--muted-foreground)">Track and submit your contributions.</p></div>
+    <button class="btn btn-primary" onclick="openContribute()">+ New contribution</button>
   </div>
-
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function toggleCashNotes() {
-      const method = document.getElementById('contrib-method').value;
-      document.getElementById('cash-notes-group').style.display = method === 'cash' ? 'block' : 'none';
-    }
-    function submitContribution() {
-      const method = document.getElementById('contrib-method').value;
-      const msg = method === 'cash' ? 'Cash payment submitted for admin approval' : 'Contribution submitted successfully';
-      showToast(msg, 'success');
-      document.getElementById('contribution-modal').style.display = 'none';
-    }
-  </script>
-</body>
-</html>
+  <div id="stats" class="grid grid-cols-3 gap-4 mb-lg"></div>
+  <div class="card"><h3 class="card-title">My contributions</h3><div id="list">Loading…</div></div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+let chamas = [];
+async function refresh() {
+  const list = await API.get("/api/contributions");
+  const paid = list.filter(c => c.status === "paid").reduce((s, c) => s + Number(c.amount), 0);
+  const pending = list.filter(c => c.status === "pending").reduce((s, c) => s + Number(c.amount), 0);
+  document.getElementById("stats").innerHTML = `
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Total paid</div><div style="font-size:1.5rem;font-weight:700">${fmtKES(paid)}</div></div>
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Pending</div><div style="font-size:1.5rem;font-weight:700">${fmtKES(pending)}</div></div>
+    <div class="card"><div style="color:var(--muted-foreground);font-size:.875rem">Count</div><div style="font-size:1.5rem;font-weight:700">${list.length}</div></div>`;
+  document.getElementById("list").innerHTML = list.length ? `<table class="table"><thead><tr><th>Date</th><th>Chama</th><th>Method</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+    ${list.map(c => `<tr><td>${fmtDate(c.created_at)}</td><td>${escapeHtml(c.chama_name || "—")}</td><td>${escapeHtml(c.payment_method)}</td><td class="font-semibold">${fmtKES(c.amount)}</td><td>${badge(c.status)}</td></tr>`).join("")}
+    </tbody></table>` : "<p style='color:var(--muted-foreground)'>No contributions yet.</p>";
+}
+function openContribute() {
+  showDetails("New contribution", `
+    <div class="form-group"><label class="form-label">Chama</label>
+      <select id="ch" class="form-input">${chamas.filter(c=>c.is_member).map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join("")}</select></div>
+    <div class="form-group"><label class="form-label">Amount (KES)</label><input id="amt" type="number" class="form-input" /></div>
+    <div class="form-group"><label class="form-label">Method</label>
+      <select id="pm" class="form-input"><option value="mpesa">M-Pesa</option><option value="bank">Bank</option><option value="cash">Cash (admin verification)</option></select></div>
+    <div class="form-group"><label class="form-label">Notes</label><input id="nt" class="form-input" /></div>
+  `, [{ label: "Cancel" }, { label: "Submit", primary: true, onClick: "submitContrib()" }]);
+}
+async function submitContrib() {
+  const method = document.getElementById("pm").value;
+  const amount = parseFloat(document.getElementById("amt").value);
+  const chama_id = document.getElementById("ch").value;
+  const notes = document.getElementById("nt").value;
+  if (!amount || amount <= 0) return showToast("Invalid amount", "error");
+  const rl = checkRate("contrib", 5, 60_000); if (!rl.ok) return showToast(`Wait ${rl.retry}s`, "error");
+  document.getElementById("__detailsModal").style.display = "none";
+  let pin = null;
+  if (method !== "cash") { pin = await askPin(); if (!pin) return; }
+  try {
+    await API.post("/api/contributions", { chama_id, amount, payment_method: method, notes, pin });
+    showToast(method === "cash" ? "Submitted for admin approval" : "Contribution paid", "success");
+    refresh();
+  } catch (e) { showToast(e.message, "error"); }
+}
+(async () => {
+  await Auth.requireAuth(); await mountShell("contributions");
+  chamas = await API.get("/api/chamas");
+  refresh();
+})();
+</script>
+</body></html>

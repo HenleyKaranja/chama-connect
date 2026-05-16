@@ -1,192 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Investments</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-
-  <aside class="sidebar">
-    <div class="sidebar-header"><img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
-
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <div>
-            <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">Group Investments</h1>
-            <p style="color: var(--muted-foreground);">Pool resources and invest in projects together</p>
-          </div>
-          <button class="btn btn-primary" onclick="newInvestment()">+ New Investment</button>
-        </div>
-
-        <div class="grid grid-cols-3" style="gap: 1rem; margin-bottom: 2rem;">
-          <div class="card">
-            <div class="stat-card-title">Total Invested</div>
-            <div class="stat-card-value">KES 480,000</div>
-            <div class="stat-card-change positive">6 projects</div>
-          </div>
-          <div class="card">
-            <div class="stat-card-title">Returns Generated</div>
-            <div class="stat-card-value">KES 78,500</div>
-            <div class="stat-card-change positive">+18.5%</div>
-          </div>
-          <div class="card">
-            <div class="stat-card-title">Pending Investments</div>
-            <div class="stat-card-value">KES 60,000</div>
-            <div class="stat-card-change">Under review</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2" style="gap: 1.5rem;">
-          <!-- Investment 1 -->
-          <div class="card">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem;">Nairobi Retail Space</h3>
-            <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Commercial property development</p>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Your Investment</span>
-                <span style="font-weight: 600;">KES 80,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Returns Earned</span>
-                <span style="font-weight: 600; color: var(--success);">KES 14,200</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Status</span>
-                <span class="badge badge-success">Active</span>
-              </div>
-            </div>
-
-            <button class="btn btn-outline btn-full" onclick="viewInvestment('Nairobi Retail Space','Commercial property development',80000,14200,'Active')">View Details</button>
-          </div>
-
-          <!-- Investment 2 -->
-          <div class="card">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem;">Agricultural Project</h3>
-            <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Large-scale farming initiative</p>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Your Investment</span>
-                <span style="font-weight: 600;">KES 120,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Returns Earned</span>
-                <span style="font-weight: 600; color: var(--success);">KES 22,500</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Status</span>
-                <span class="badge badge-success">Active</span>
-              </div>
-            </div>
-
-            <button class="btn btn-outline btn-full" onclick="viewInvestment('Agricultural Project','Large-scale farming initiative',120000,22500,'Active')">View Details</button>
-          </div>
-
-          <!-- Investment 3 -->
-          <div class="card">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem;">Tech Startup Fund</h3>
-            <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Technology entrepreneurship</p>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Your Investment</span>
-                <span style="font-weight: 600;">KES 100,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Returns Earned</span>
-                <span style="font-weight: 600; color: var(--success);">KES 18,300</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Status</span>
-                <span class="badge badge-success">Active</span>
-              </div>
-            </div>
-
-            <button class="btn btn-outline btn-full" onclick="viewInvestment('Tech Startup Fund','Technology entrepreneurship',100000,18300,'Active')">View Details</button>
-          </div>
-
-          <!-- Investment 4 -->
-          <div class="card">
-            <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.75rem;">Education Initiative</h3>
-            <p style="font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem;">Community learning center</p>
-            
-            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Your Investment</span>
-                <span style="font-weight: 600;">KES 60,000</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Returns Earned</span>
-                <span style="font-weight: 600; color: var(--success);">KES 9,500</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
-                <span style="color: var(--muted-foreground);">Status</span>
-                <span class="badge badge-warning">Under Review</span>
-              </div>
-            </div>
-
-            <button class="btn btn-outline btn-full" onclick="viewInvestment('Education Initiative','Community learning center',60000,9500,'Under Review')">View Details</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function newInvestment() {
-      showDetails('Propose a new investment',
-        `<div class="form-group"><label>Project name</label><input type="text" placeholder="e.g. Kisumu Solar Farm"></div>
-         <div class="form-group"><label>Target amount (KES)</label><input type="number" placeholder="500000"></div>
-         <div class="form-group"><label>Description</label><input type="text" placeholder="Short pitch"></div>
-         <p style="font-size:0.8125rem;color:var(--muted-foreground);">Proposals require admin approval before members can contribute.</p>`,
-        [{ label: 'Cancel' }, { label: 'Submit', primary: true, onClick: "showToast('Investment proposal submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
-    }
-    function viewInvestment(name, desc, invested, returns, status) {
-      const roi = ((returns / invested) * 100).toFixed(1);
-      showDetails(name,
-        `<p style="margin:0 0 0.75rem;color:var(--muted-foreground);">${desc}</p>
-         <table class="table" style="margin:0;"><tbody>
-           <tr><td>Your investment</td><td style="text-align:right;font-weight:600;">KES ${invested.toLocaleString()}</td></tr>
-           <tr><td>Returns earned</td><td style="text-align:right;color:var(--success);font-weight:600;">KES ${returns.toLocaleString()}</td></tr>
-           <tr><td>ROI</td><td style="text-align:right;">${roi}%</td></tr>
-           <tr><td>Started</td><td style="text-align:right;">Jan 2026</td></tr>
-           <tr><td>Term</td><td style="text-align:right;">24 months</td></tr>
-           <tr><td>Status</td><td style="text-align:right;">${status}</td></tr>
-         </tbody></table>
-         <h4 style="margin:1rem 0 0.5rem;font-size:0.875rem;">Recent activity</h4>
-         <table class="table" style="margin:0;"><tbody>
-           <tr><td>10 May 2026</td><td>Quarterly distribution</td><td style="text-align:right;color:var(--success);">+KES ${(returns/4).toFixed(0)}</td></tr>
-           <tr><td>10 Feb 2026</td><td>Quarterly distribution</td><td style="text-align:right;color:var(--success);">+KES ${(returns/4).toFixed(0)}</td></tr>
-           <tr><td>15 Jan 2026</td><td>Initial contribution</td><td style="text-align:right;">KES ${invested.toLocaleString()}</td></tr>
-         </tbody></table>`,
-        [{ label: 'Close' }, { label: 'Top up', primary: true, onClick: "showToast('Top-up flow opened','info');document.getElementById('__detailsModal').style.display='none';" }]);
-    }
-  </script>
-</body>
-</html>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Investments — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-lg" style="padding:2rem 1.5rem">
+  <h1 style="font-size:1.75rem;font-weight:700">Investments</h1>
+  <p style="color:var(--muted-foreground);margin-bottom:1.5rem">Chama-scoped projects you can fund.</p>
+  <div id="list" class="grid grid-cols-2 gap-4">Loading…</div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+async function refresh() {
+  const projects = await API.get("/api/projects");
+  document.getElementById("list").innerHTML = projects.length ? projects.map(p => {
+    const pct = p.target_amount ? Math.min(100, Math.round(p.current_amount / p.target_amount * 100)) : 0;
+    return `<div class="card">
+      <h3 class="card-title">${escapeHtml(p.name)}</h3>
+      <p style="color:var(--muted-foreground);font-size:.875rem">${escapeHtml(p.description||"")}</p>
+      <div style="margin:.75rem 0"><div style="background:var(--muted);border-radius:999px;height:8px;overflow:hidden"><div style="background:var(--primary);height:100%;width:${pct}%"></div></div>
+        <div class="flex justify-between mt-md" style="font-size:.875rem"><span>${fmtKES(p.current_amount)} raised</span><span>${fmtKES(p.target_amount)} goal · ${pct}%</span></div></div>
+      <button class="btn btn-primary btn-sm" onclick="openContrib('${p.id}','${p.chama_id||''}')">Contribute</button>
+    </div>`;
+  }).join("") : "<p style='color:var(--muted-foreground)'>No projects.</p>";
+}
+function openContrib(id, chama_id) {
+  showDetails("Contribute to project", `<div class="form-group"><label class="form-label">Amount</label><input id="amt" type="number" class="form-input" /></div>`,
+    [{ label: "Cancel" }, { label: "Pay", primary: true, onClick: `submit('${id}','${chama_id}')` }]);
+}
+async function submit(id, chama_id) {
+  const amount = parseFloat(document.getElementById("amt").value);
+  document.getElementById("__detailsModal").style.display = "none";
+  const pin = await askPin(); if (!pin) return;
+  try { await API.post(`/api/projects/${id}/contribute`, { amount, chama_id, pin }); showToast("Thanks for investing!", "success"); refresh(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+(async () => { await Auth.requireAuth(); await mountShell("investments"); refresh(); })();
+</script>
+</body></html>

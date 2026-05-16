@@ -1,266 +1,99 @@
-# M-Chama HTML/CSS/JS Version
+# M-Chama — HTML/CSS/JS + Node/SQLite version
 
-This is a vanilla HTML, CSS, and JavaScript version of the M-Chama application - a comprehensive chama (savings group) management platform.
+A full functional clone of the M-Chama React app, rebuilt with vanilla HTML/CSS/JS on the frontend and Node.js + Express + SQLite on the backend. Runs entirely on your local machine.
 
-## 📁 Project Structure
+## Run it
+
+```bash
+cd html-version/server
+npm install
+npm run seed     # creates data/mchama.db with demo accounts
+npm start        # http://localhost:3000
+```
+
+Open http://localhost:3000 in your browser.
+
+### Demo accounts
+
+| Role   | Email                   | Password    |
+|--------|-------------------------|-------------|
+| Admin  | admin@mchama.test       | admin1234   |
+| Member | member@mchama.test      | member1234  |
+
+## What's included
+
+- **14 pages** — landing, auth, dashboard, chamas, contributions, loans, wallet, investments, reports, notifications, settings, admin, sidebar, 404
+- **Auth** — email/password with bcrypt + JWT (httpOnly cookie + Bearer fallback). 5-fail / 15-min login lockout.
+- **RBAC** — admin / treasurer / member, enforced server-side
+- **Approvals** — member, contribution, loan, cash-payment workflows
+- **Wallets** — multi-wallet, deposit, withdraw (PIN-gated), transactions
+- **Loans** — apply, approve/reject, repay (PIN-gated, deducts from wallet)
+- **Chamas** — list/join/leave (blocked during active merry-go-round cycle)
+- **Investments** — chama-scoped projects with progress tracking
+- **Penalties** — admin can bill missed contributions
+- **Cycles** — merry-go-round payout schedule
+- **Audit log** — every sensitive action recorded
+- **Sessions** — list/revoke active devices
+- **Transaction PIN** — SHA-256 hashed, 5-fail lockout, password-reset flow
+- **Idle logout** — 15 min inactivity
+- **Rate limits** — client-side UX guard on login/contribute/loan/withdraw
+- **Reports** — CSV exports for contributions, loans, transactions
+
+## Project layout
 
 ```
 html-version/
+├── pages/                  # 14 HTML pages
 ├── assets/
-│   ├── css/
-│   │   └── style.css          # Main stylesheet with all styles
+│   ├── css/style.css
 │   └── js/
-│       └── app.js              # Core JavaScript utilities
-└── pages/
-    ├── landing.html            # Landing/Home page
-    ├── auth.html               # Login & Signup page
-    ├── dashboard.html          # Main dashboard
-    ├── chamas.html             # My Chamas page
-    ├── contributions.html      # Contributions tracking
-    ├── loans.html              # Loans management
-    ├── wallet.html             # Digital wallets
-    ├── investments.html        # Investments page
-    ├── reports.html            # Financial reports
-    ├── admin.html              # Admin dashboard
-    ├── notifications.html      # Notifications center
-    ├── settings.html           # Account settings
-    ├── sidebar.html            # Sidebar component (reference)
-    └── 404.html                # Not found page
+│       ├── api.js          # fetch wrapper + JWT
+│       ├── auth.js         # session + page guards
+│       ├── lib.js          # formatters, sidebar shell, PIN, idle, rate limit
+│       └── app.js          # toasts, modals, theme
+└── server/
+    ├── server.js           # Express app + all REST routes
+    ├── db.js               # SQLite schema (14 tables)
+    ├── auth.js             # JWT middleware
+    ├── seed.js             # demo data
+    └── data/mchama.db      # created on first run
 ```
 
-## 🎨 Design & Features
+## API surface (selected)
 
-### Color Scheme
-- **Primary**: #1b6b4b (Forest Green)
-- **Accent**: #d99d5c (Warm Orange)
-- **Success**: #2d8f5e (Success Green)
-- **Destructive**: #e63946 (Red)
-- **Background**: #f7f3eb (Light Cream)
-- **Sidebar**: #1f3d2f (Dark Green)
+```
+POST   /api/auth/signup        POST   /api/auth/login
+POST   /api/auth/logout        GET    /api/auth/me
+POST   /api/auth/set-pin       POST   /api/auth/reset-pin
+PUT    /api/profile
 
-### Features Included
+GET    /api/chamas             POST   /api/chamas (admin)
+POST   /api/chamas/:id/join    DELETE /api/chamas/:id/leave
 
-#### 1. **Landing Page** (`landing.html`)
-- Hero section with CTA buttons
-- Feature showcase grid (6 features)
-- Statistics section
-- Footer with links
-- Fully responsive design
+GET    /api/contributions      POST   /api/contributions
+PUT    /api/contributions/:id/approve|reject (admin/treasurer)
 
-#### 2. **Authentication** (`auth.html`)
-- Login form
-- Sign up form with role selection
-- Password visibility toggle
-- Form validation
-- Social auth button (placeholder)
+GET    /api/wallets            POST   /api/wallets
+GET    /api/wallet-transactions
+POST   /api/wallets/:id/deposit|withdraw
 
-#### 3. **Dashboard** (`dashboard.html`)
-- Welcome greeting
-- Stat cards (Balance, Chamas, Contributions, Loans)
-- Contribution trend chart
-- Loans overview chart
-- Recent transactions table
-- SVG-based mini charts
+GET    /api/loans              POST   /api/loans
+PUT    /api/loans/:id/approve|reject  POST /api/loans/:id/repay
 
-#### 4. **My Chamas** (`chamas.html`)
-- Chama grid with cards
-- Member count & balances
-- Status badges
-- Action buttons (View, Contribute)
-- 5 sample chamas with mock data
+GET    /api/projects           POST   /api/projects (admin)
+POST   /api/projects/:id/contribute
 
-#### 5. **Contributions** (`contributions.html`)
-- All contributions table
-- Status filters
-- Date and amount tracking
-- View/download options
+GET    /api/notifications      PUT    /api/notifications/:id/read
+GET    /api/penalties          POST   /api/penalties (admin/treasurer)
+GET    /api/cycles             POST   /api/cycles (admin)
+GET    /api/sessions           DELETE /api/sessions/:id
 
-#### 6. **Loans** (`loans.html`)
-- Loan statistics cards
-- Active & pending loans
-- Repayment status
-- Apply for loan button
-- Loan management actions
-
-#### 7. **Wallet** (`wallet.html`)
-- Multiple wallet cards
-- Balance display
-- Contribution & withdrawal history
-- Transaction table
-- Withdrawal functionality
-
-#### 8. **Investments** (`investments.html`)
-- Investment statistics
-- Project cards with returns
-- Status tracking
-- Investment details
-- 4 sample investment projects
-
-#### 9. **Reports** (`reports.html`)
-- Financial summaries
-- Report generation
-- Date range selection
-- PDF download options
-- 4 sample reports
-
-#### 10. **Admin Dashboard** (`admin.html`)
-- Administrator statistics
-- Pending approvals table
-- Member applications
-- System management buttons
-- Role-based access
-
-#### 11. **Notifications** (`notifications.html`)
-- Notification list with icons
-- Different notification types
-- Filter options (All, Unread, Important)
-- Mark as read functionality
-- Timestamp display
-
-#### 12. **Settings** (`settings.html`)
-- Profile information form
-- Security settings
-- Two-factor authentication toggle
-- Notification preferences
-- Account deletion (danger zone)
-
-## 🚀 Getting Started
-
-### Installation
-No installation required! Simply open any HTML file in your web browser.
-
-### Usage
-1. Open `pages/landing.html` in a web browser
-2. Navigate through pages using the navigation links
-3. The sidebar is available on all dashboard pages
-4. Mobile navigation available with hamburger menu
-
-### Browser Compatibility
-- Chrome/Chromium (recommended)
-- Firefox
-- Safari
-- Edge
-- All modern browsers supporting ES6
-
-## 💥 Features & Interactivity
-
-### JavaScript Functionality
-- **Theme Management**: Light/Dark mode toggle (stored in localStorage)
-- **Sidebar Toggle**: Mobile hamburger menu
-- **Form Validation**: Client-side validation
-- **Toast Notifications**: Success/error/info messages
-- **Charts**: SVG-based mini charts on dashboard
-- **Active Links**: Automatic highlighting of current page
-- **Charts**: Native canvas-based bar charts
-- **Modal Management**: Modal open/close functionality
-- **Currency & Date Formatting**: Localization utilities
-
-### Responsive Design
-- Mobile-first approach
-- Breakpoints: 480px, 768px, 1024px
-- Hamburger menu for mobile
-- Touch-friendly buttons
-- Optimized tables & grids
-
-## 📱 Navigation
-
-### Sidebar Items
-- Dashboard
-- My Chamas
-- Contributions
-- Loans
-- Wallet
-- Investments
-- Reports
-- ---- (Admin Section)
-- Admin Panel
-- ---- 
-- Settings
-- Notifications
-- ---- 
-- Logout
-
-## 🎯 Sample Data
-
-All pages include realistic sample data:
-- **Chamas**: Nairobi Farmers, Friends United, Tech Savers, Church Group, Business Collective
-- **Members**: 12-15 members per chama
-- **Balances**: KES 85,000 - KES 520,000
-- **Transactions**: Recent contribution and loan records
-- **Dates**: March-April 2026
-
-## 🔄 Form Examples
-
-The application includes interactive forms:
-- Login/Signup form with role selection
-- Profile edit form
-- Settings page with preferences
-- All with basic client-side validation
-
-## 🎨 CSS Features
-
-### Utility Classes
-- Spacing utilities (mt, mb, p)
-- Text utilities (text-center, text-right)
-- Display utilities (hidden, block)
-- Color utilities (text-primary, text-muted)
-- Grid system (grid-cols-1 through grid-cols-4)
-- Flexbox helpers
-
-### Components
-- Buttons (primary, secondary, outline, accent)
-- Cards with shadows
-- Tables with zebra striping
-- Forms with labels
-- Badges (success, warning, destructive, info)
-- Stat cards
-- Avatar components
-
-### Animations
-- Fade-in effect
-- Slide-in animation
-- Pulse animation
-- Smooth transitions
-
-## 📝 Notes
-
-1. **No Backend**: All data is mocked/hardcoded for demonstration
-2. **No Authentication**: Login redirects directly to dashboard
-3. **Responsive**: All pages work on mobile, tablet, and desktop
-4. **Customizable**: Easy to modify colors, text, and styling
-5. **Production Ready**: Code is production-ready for static hosting
-
-## 🔧 Customization
-
-### Change Colors
-Edit CSS variables in `assets/css/style.css`:
-```css
-:root {
-  --primary: #1b6b4b;
-  --accent: #d99d5c;
-  /* ... modify other colors ... */
-}
+GET    /api/admin/members      PUT    /api/admin/members/:id/approve|reject|role
+GET    /api/admin/audit        GET    /api/admin/stats
 ```
 
-### Add More Pages
-1. Create a new HTML file in `pages/`
-2. Copy the sidebar and layout structure
-3. Customize the content
-4. Update sidebar links
+## Notes
 
-### Modify Sample Data
-Edit the HTML directly in each page's table or card sections.
-
-## 📄 License
-
-This is a demo/template project for educational purposes.
-
-## 🤝 Support
-
-For questions or customization needs, contact the development team.
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: March 30, 2026  
-**Created for**: M-Chama Platform
+- This runs **only on your machine** (the Lovable preview can't host Node servers). Deploy elsewhere if you need it online.
+- The React/Lovable Cloud version of the app continues to live in `src/` and is unaffected.
+- For production: change `JWT_SECRET` env var, enable HTTPS, add proper rate limiting at the edge, move SQLite to Postgres.

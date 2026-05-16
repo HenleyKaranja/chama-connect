@@ -1,196 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Loans</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-  <button class="sidebar-toggle" onclick="toggleSidebar()"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
-
-  <aside class="sidebar">
-    <div class="sidebar-header"><img src="../logo.png" alt="M-Chama" style="height: 3rem; width: 3rem; border-radius: 0.75rem; object-fit: contain; filter: brightness(0) invert(1);"><div class="sidebar-title">M-Chama</div></div>
-    <nav class="sidebar-nav">
-      <a href="dashboard.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="12 3 20 7.5 20 16.5 12 21 4 16.5 4 7.5 12 3"></polyline></svg><span>Dashboard</span></a>
-      <a href="chamas.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg><span>My Chamas</span></a>
-      <a href="contributions.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"></circle></svg><span>Contributions</span></a>
-      <a href="loans.html" class="sidebar-nav-item active"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect></svg><span>Loans</span></a>
-      <a href="wallet.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect></svg><span>Wallet</span></a>
-      <a href="investments.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline></svg><span>Investments</span></a>
-      <a href="reports.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line></svg><span>Reports</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <div style="font-size: 0.75rem; text-transform: uppercase; padding: 0.5rem 1rem; color: rgba(255,255,255,0.5);">Admin</div>
-      <a href="admin.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>Admin Panel</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="settings.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle></svg><span>Settings</span></a>
-      <a href="notifications.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path></svg><span>Notifications</span></a>
-      <hr style="border: none; border-top: 1px solid var(--sidebar-border); margin: 1rem 0; opacity: 0.5;">
-      <a href="landing.html" class="sidebar-nav-item"><svg class="sidebar-nav-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg><span>Logout</span></a>
-    </nav>
-  </aside>
-
-  <div class="layout">
-    <div class="layout-main">
-      <div class="layout-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-          <div>
-            <h1 style="font-size: 1.875rem; font-weight: 700; margin-bottom: 0.5rem;">My Loans</h1>
-            <p style="color: var(--muted-foreground);">Manage and track your chama loans</p>
-          </div>
-          <button class="btn btn-primary" onclick="applyLoan()">+ Apply for Loan</button>
-        </div>
-
-        <div class="grid grid-cols-3" style="gap: 1rem; margin-bottom: 2rem;">
-          <div class="card">
-            <div class="stat-card-title">Active Loans</div>
-            <div class="stat-card-value">KES 45,000</div>
-            <div class="stat-card-change">2 loans</div>
-          </div>
-          <div class="card">
-            <div class="stat-card-title">Repaid So Far</div>
-            <div class="stat-card-value">KES 30,000</div>
-            <div class="stat-card-change">2 completed</div>
-          </div>
-          <div class="card">
-            <div class="stat-card-title">Pending Approval</div>
-            <div class="stat-card-value">KES 15,000</div>
-            <div class="stat-card-change">1 waiting</div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div style="padding: 1rem; border-bottom: 1px solid var(--border);">
-            <h3 style="font-size: 0.875rem; font-weight: 600;">All Loans</h3>
-          </div>
-          <div style="overflow-x: auto;">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Chama</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Repaid</th>
-                  <th>Balance</th>
-                  <th style="text-align: right;">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Nairobi Farmers</td>
-                  <td>KES 20,000</td>
-                  <td><span class="badge badge-success">Active</span></td>
-                  <td>KES 10,000</td>
-                  <td>KES 10,000</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-primary" onclick="openRepayModal('Nairobi Farmers', 20000, 10000)">Repay</button></td>
-                </tr>
-                <tr>
-                  <td>Friends United</td>
-                  <td>KES 25,000</td>
-                  <td><span class="badge badge-warning">Pending</span></td>
-                  <td>-</td>
-                  <td>KES 25,000</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Friends United',25000,0,'Pending')">View</button></td>
-                </tr>
-                <tr>
-                  <td>Church Group</td>
-                  <td>KES 15,000</td>
-                  <td><span class="badge badge-success">Completed</span></td>
-                  <td>KES 15,000</td>
-                  <td>KES 0</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Church Group',15000,15000,'Completed')">View</button></td>
-                </tr>
-                <tr>
-                  <td>Business Collective</td>
-                  <td>KES 20,000</td>
-                  <td><span class="badge badge-success">Completed</span></td>
-                  <td>KES 20,000</td>
-                  <td>KES 0</td>
-                  <td style="text-align: right;"><button class="btn btn-sm btn-outline" onclick="viewLoan('Business Collective',20000,20000,'Completed')">View</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+<html lang="en"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Loans — M-Chama</title><link rel="stylesheet" href="/assets/css/style.css" />
+</head><body>
+<main class="layout-main"><div class="container container-lg" style="padding:2rem 1.5rem">
+  <div class="flex justify-between items-center mb-lg">
+    <div><h1 style="font-size:1.75rem;font-weight:700">Loans</h1><p style="color:var(--muted-foreground)">Apply, track and repay your loans.</p></div>
+    <button class="btn btn-primary" onclick="openApply()">+ Apply for loan</button>
   </div>
-
-  <!-- Repay Loan Modal -->
-  <div id="repayModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center;">
-    <div style="background:var(--card); border-radius:0.75rem; padding:1.5rem; max-width:420px; width:90%;">
-      <h3 style="font-size:1.125rem; font-weight:700; margin-bottom:0.25rem;">Repay Loan</h3>
-      <p style="font-size:0.8125rem; color:var(--muted-foreground); margin-bottom:1rem;">Funds will be deducted from your wallet balance.</p>
-      <div style="background:rgba(0,0,0,0.04); border-radius:0.5rem; padding:0.75rem; margin-bottom:1rem; font-size:0.875rem;">
-        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Chama</span><span id="rm-chama" style="font-weight:600;">-</span></div>
-        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Loan</span><span id="rm-loan">-</span></div>
-        <div style="display:flex; justify-content:space-between;"><span style="color:var(--muted-foreground);">Repaid</span><span id="rm-repaid">-</span></div>
-        <div style="display:flex; justify-content:space-between; font-weight:600; padding-top:0.25rem;"><span>Outstanding</span><span id="rm-balance">-</span></div>
-      </div>
-      <div class="form-group">
-        <label>Amount to repay (KES)</label>
-        <input type="number" id="rm-amount" placeholder="e.g. 5000">
-      </div>
-      <div class="form-group">
-        <label>Transaction PIN</label>
-        <input type="password" inputmode="numeric" maxlength="6" id="rm-pin" placeholder="••••" style="text-align:center; letter-spacing:0.5em;">
-      </div>
-      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
-        <button class="btn btn-outline" onclick="closeRepayModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="submitRepay()">Confirm Repayment</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="../assets/js/app.js"></script>
-  <script>
-    function openRepayModal(chama, loan, repaid) {
-      document.getElementById('rm-chama').textContent = chama;
-      document.getElementById('rm-loan').textContent = 'KES ' + loan.toLocaleString();
-      document.getElementById('rm-repaid').textContent = 'KES ' + repaid.toLocaleString();
-      document.getElementById('rm-balance').textContent = 'KES ' + (loan - repaid).toLocaleString();
-      document.getElementById('rm-amount').value = '';
-      document.getElementById('rm-pin').value = '';
-      document.getElementById('repayModal').style.display = 'flex';
-    }
-    function closeRepayModal() { document.getElementById('repayModal').style.display = 'none'; }
-    function submitRepay() {
-      const amt = parseFloat(document.getElementById('rm-amount').value);
-      const pin = document.getElementById('rm-pin').value;
-      if (!amt || amt <= 0) return showToast('Enter a valid amount', 'error');
-      if (!/^\d{4,6}$/.test(pin)) return showToast('PIN must be 4-6 digits', 'error');
-      showToast('Repayment of KES ' + amt.toLocaleString() + ' submitted', 'success');
-      closeRepayModal();
-    function applyLoan() {
-      showDetails('Apply for a loan',
-        `<div class="form-group"><label>Chama</label><select><option>Nairobi Farmers</option><option>Friends United</option><option>Church Group</option></select></div>
-         <div class="form-group"><label>Amount (KES)</label><input type="number" placeholder="25000"></div>
-         <div class="form-group"><label>Reason</label><input type="text" placeholder="School fees, business, etc."></div>
-         <div style="background:rgba(27,107,75,0.08);padding:0.75rem;border-radius:0.5rem;font-size:0.8125rem;">
-           <strong>Eligibility:</strong> 3+ months active membership, 3+ paid contributions. Max loan = 3× total contributions.
-         </div>`,
-        [{ label: 'Cancel' }, { label: 'Submit application', primary: true, onClick: "showToast('Loan application submitted','success');document.getElementById('__detailsModal').style.display='none';" }]);
-    }
-    function viewLoan(name, amount, repaid, status) {
-      const balance = amount - repaid;
-      const pct = amount ? Math.round((repaid / amount) * 100) : 0;
-      showDetails('Loan · ' + name,
-        `<table class="table" style="margin:0;"><tbody>
-           <tr><td>Loan amount</td><td style="text-align:right;font-weight:600;">KES ${amount.toLocaleString()}</td></tr>
-           <tr><td>Interest</td><td style="text-align:right;">10% p.a.</td></tr>
-           <tr><td>Repaid</td><td style="text-align:right;">KES ${repaid.toLocaleString()} (${pct}%)</td></tr>
-           <tr><td>Outstanding</td><td style="text-align:right;font-weight:600;">KES ${balance.toLocaleString()}</td></tr>
-           <tr><td>Status</td><td style="text-align:right;">${status}</td></tr>
-           <tr><td>Applied</td><td style="text-align:right;">3 Apr 2026</td></tr>
-         </tbody></table>
-         <h4 style="margin:1rem 0 0.5rem;font-size:0.875rem;">Repayment history</h4>
-         <table class="table" style="margin:0;"><tbody>
-           <tr><td>5 May 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
-           <tr><td>5 Apr 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
-           <tr><td>5 Mar 2026</td><td>Instalment</td><td style="text-align:right;">KES ${(repaid/3).toFixed(0)}</td></tr>
-         </tbody></table>`);
-    }
-  </script>
-</body>
-</html>
+  <div class="card"><h3 class="card-title">My loans</h3><div id="list">Loading…</div></div>
+</div></main>
+<script src="/assets/js/api.js"></script><script src="/assets/js/auth.js"></script>
+<script src="/assets/js/app.js"></script><script src="/assets/js/lib.js"></script>
+<script>
+let chamas = [], loans = [];
+async function refresh() {
+  loans = await API.get("/api/loans");
+  document.getElementById("list").innerHTML = loans.length ? `<table class="table"><thead><tr><th>Date</th><th>Chama</th><th>Amount</th><th>Repaid</th><th>Status</th><th></th></tr></thead><tbody>
+    ${loans.map(l => `<tr><td>${fmtDate(l.created_at)}</td><td>${escapeHtml(l.chama_name||"—")}</td><td>${fmtKES(l.amount)}</td><td>${fmtKES(l.repaid_amount)}</td><td>${badge(l.status)}</td>
+      <td>${l.status==="active"?`<button class="btn btn-outline btn-sm" onclick="openRepay('${l.id}',${l.amount},${l.repaid_amount})">Repay</button>`:""}</td></tr>`).join("")}
+    </tbody></table>` : "<p style='color:var(--muted-foreground)'>No loans yet.</p>";
+}
+function openApply() {
+  showDetails("Apply for loan", `
+    <div class="form-group"><label class="form-label">Chama</label>
+      <select id="lc" class="form-input">${chamas.filter(c=>c.is_member).map(c=>`<option value="${c.id}">${escapeHtml(c.name)}</option>`).join("")}</select></div>
+    <div class="form-group"><label class="form-label">Amount (KES)</label><input id="la" type="number" class="form-input" /></div>
+    <p style="font-size:.75rem;color:var(--muted-foreground)">Default interest rate: 10%. Subject to admin approval.</p>
+  `, [{ label: "Cancel" }, { label: "Submit", primary: true, onClick: "submitApply()" }]);
+}
+async function submitApply() {
+  const rl = checkRate("loanApply", 3, 5*60_000); if (!rl.ok) return showToast(`Wait ${rl.retry}s`, "error");
+  try {
+    await API.post("/api/loans", { chama_id: document.getElementById("lc").value, amount: parseFloat(document.getElementById("la").value) });
+    document.getElementById("__detailsModal").style.display = "none";
+    showToast("Application submitted", "success"); refresh();
+  } catch (e) { showToast(e.message, "error"); }
+}
+function openRepay(id, total, repaid) {
+  const balance = total - repaid;
+  showDetails("Repay loan", `
+    <p style="margin-bottom:1rem">Outstanding: <strong>${fmtKES(balance)}</strong></p>
+    <div class="form-group"><label class="form-label">Amount</label><input id="ra" type="number" class="form-input" max="${balance}" /></div>
+  `, [{ label: "Cancel" }, { label: "Pay", primary: true, onClick: `submitRepay('${id}')` }]);
+}
+async function submitRepay(id) {
+  const amount = parseFloat(document.getElementById("ra").value);
+  document.getElementById("__detailsModal").style.display = "none";
+  const pin = await askPin(); if (!pin) return;
+  try { await API.post(`/api/loans/${id}/repay`, { amount, pin }); showToast("Repayment recorded", "success"); refresh(); }
+  catch (e) { showToast(e.message, "error"); }
+}
+(async () => {
+  await Auth.requireAuth(); await mountShell("loans");
+  chamas = await API.get("/api/chamas");
+  refresh();
+})();
+</script>
+</body></html>

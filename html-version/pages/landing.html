@@ -1,178 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M-Chama - Grow Together, Save Smarter</title>
-  <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="stylesheet" href="../assets/css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>M-Chama — Group Savings & Investments</title>
+<link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body>
-  <!-- Navigation -->
-  <nav>
-    <div class="nav-container">
-      <a href="/" class="nav-brand">
-        <img src="../logo.png" alt="M-Chama" style="height: 3.5rem; width: 3.5rem; border-radius: var(--radius); object-fit: contain;">
-        <span>M-Chama</span>
-      </a>
-      <div class="nav-links">
-        <a href="auth.html" class="btn btn-ghost btn-sm">Sign In</a>
-        <a href="auth.html?mode=signup" class="btn btn-primary btn-sm">Get Started</a>
-      </div>
-    </div>
-  </nav>
+<nav class="nav-container">
+  <a href="/" class="nav-brand"><div class="nav-brand-icon">M</div><span>M-Chama</span></a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How it works</a>
+    <a href="/auth.html" class="btn btn-primary btn-sm">Get started</a>
+  </div>
+</nav>
 
-  <!-- Hero Section -->
-  <section class="hero" style="background: linear-gradient(135deg, rgba(27, 107, 75, 0.05) 0%, transparent 50%, rgba(217, 157, 92, 0.05) 100%);">
-    <div class="container container-lg" style="padding: 6rem 1.5rem; text-align: center;">
-      <div style="max-width: 50rem; margin: 0 auto;">
-        <!-- Badge -->
-        <div style="display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.625rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(27, 107, 75, 0.2); background-color: rgba(27, 107, 75, 0.1); font-size: 0.85rem; font-weight: 600; color: var(--primary); margin-bottom: 1.5rem;">
-          <span style="width: 0.375rem; height: 0.375rem; border-radius: 50%; background-color: var(--primary); animation: pulse 2s infinite;"></span>
-          Kenya's #1 Chama Platform
-        </div>
+<section class="container container-lg" style="padding:4rem 1.5rem;text-align:center">
+  <h1 style="font-size:3rem;font-weight:800;margin-bottom:1rem">Save together. Grow together.</h1>
+  <p style="font-size:1.125rem;color:var(--muted-foreground);max-width:640px;margin:0 auto 2rem">
+    M-Chama digitizes Kenyan group savings (Chamas) — contributions, merry-go-round payouts, loans and investments, all in one place.
+  </p>
+  <div class="flex justify-center gap-3">
+    <a href="/auth.html" class="btn btn-primary btn-lg">Create account</a>
+    <a href="/auth.html" class="btn btn-outline btn-lg">Sign in</a>
+  </div>
+</section>
 
-        <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1.5rem; line-height: 1.1;">
-          Grow Together,
-          <span style="background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Save Smarter</span>
-        </h1>
+<section id="features" class="container container-lg" style="padding:3rem 1.5rem">
+  <div class="grid grid-cols-3 gap-4">
+    <div class="card"><h3 class="card-title">💰 Contributions</h3><p>Pay via M-Pesa, bank, or cash. Admin-verified for transparency.</p></div>
+    <div class="card"><h3 class="card-title">🏦 Loans</h3><p>Borrow from your group at fair interest. Track repayments easily.</p></div>
+    <div class="card"><h3 class="card-title">📈 Investments</h3><p>Pool funds into chama-scoped projects with progress tracking.</p></div>
+    <div class="card"><h3 class="card-title">🔄 Merry-Go-Round</h3><p>Automated cycle scheduling and payout management.</p></div>
+    <div class="card"><h3 class="card-title">🛡️ Security</h3><p>Transaction PIN, audit logs, login lockout, session control.</p></div>
+    <div class="card"><h3 class="card-title">📊 Reports</h3><p>Real-time insights and CSV exports for your group.</p></div>
+  </div>
+</section>
 
-        <p style="font-size: 1.15rem; color: var(--muted-foreground); margin-bottom: 2rem; line-height: 1.6;">
-          M-Chama brings your savings group online. Track contributions, manage loans, invest together, and build wealth — all from one secure platform.
-        </p>
-
-        <div style="display: flex; flex-direction: column; gap: 0.75rem; align-items: center;">
-          <a href="auth.html?mode=signup" class="btn btn-primary btn-lg" style="gap: 0.5rem;">
-            Start Your Chama
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a href="auth.html" class="btn btn-outline btn-lg">Sign In</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Stats Section -->
-  <section style="padding: 3rem 1.5rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background-color: rgba(255,255,255,0.5);">
-    <div class="container container-lg">
-      <div class="grid grid-cols-4" style="gap: 2rem;">
-        <div class="text-center">
-          <div style="font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-bottom: 0.5rem;">10K+</div>
-          <div style="color: var(--muted-foreground);">Active Members</div>
-        </div>
-        <div class="text-center">
-          <div style="font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem;">500+</div>
-          <div style="color: var(--muted-foreground);">Chama Groups</div>
-        </div>
-        <div class="text-center">
-          <div style="font-size: 2.5rem; font-weight: 800; color: var(--success); margin-bottom: 0.5rem;">KSh 50M+</div>
-          <div style="color: var(--muted-foreground);">Funds Managed</div>
-        </div>
-        <div class="text-center">
-          <div style="font-size: 2.5rem; font-weight: 800; color: var(--info); margin-bottom: 0.5rem;">99.9%</div>
-          <div style="color: var(--muted-foreground);">Uptime</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section style="padding: 5rem 1.5rem;">
-    <div class="container container-lg">
-      <div style="text-align: center; margin-bottom: 3rem; max-width: 36rem; margin-left: auto; margin-right: auto;">
-        <h2 style="margin-bottom: 1rem;">Everything Your Chama Needs</h2>
-        <p style="color: var(--muted-foreground); font-size: 1.1rem;">From contributions to investments — manage it all in one place.</p>
-      </div>
-
-      <div class="grid grid-cols-3" style="gap: 1.5rem;">
-        <!-- Feature 1 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(27, 107, 75, 0.1); border-radius: 0.75rem; color: var(--primary);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-          </div>
-          <h3>Group Management</h3>
-          <p style="color: var(--muted-foreground);">Create and manage Chamas with ease. Invite members, assign roles, and track activity.</p>
-        </div>
-
-        <!-- Feature 2 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: 0.75rem; color: var(--accent);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
-          </div>
-          <h3>Contributions</h3>
-          <p style="color: var(--muted-foreground);">Automate monthly contributions with M-Pesa integration and real-time tracking.</p>
-        </div>
-
-        <!-- Feature 3 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(45, 143, 94, 0.1); border-radius: 0.75rem; color: var(--success);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><path d="M1 10h22"></path></svg>
-          </div>
-          <h3>Digital Wallet</h3>
-          <p style="color: var(--muted-foreground);">Manage group funds transparently with a shared digital wallet and transaction history.</p>
-        </div>
-
-        <!-- Feature 4 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(27, 107, 75, 0.1); border-radius: 0.75rem; color: var(--primary);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.46 15.89 8.41 10.88 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-          </div>
-          <h3>Investments</h3>
-          <p style="color: var(--muted-foreground);">Pool resources and invest in projects. Track returns and grow your wealth together.</p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(217, 157, 92, 0.1); border-radius: 0.75rem; color: var(--accent);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-          </div>
-          <h3>Reports & Analytics</h3>
-          <p style="color: var(--muted-foreground);">Detailed financial reports, contribution trends, and investment performance dashboards.</p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="card" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(27,107,75,0.08)'" onmouseout="this.style.boxShadow='none'">
-          <div style="width: 2.75rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; background-color: rgba(45, 143, 94, 0.1); border-radius: 0.75rem; color: var(--success);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          </div>
-          <h3>Role-Based Access</h3>
-          <p style="color: var(--muted-foreground);">Admin, Treasurer, and Member roles with fine-grained permissions and audit trails.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section style="padding: 5rem 1.5rem;">
-    <div class="container container-lg">
-      <div style="position: relative; overflow: hidden; border-radius: 1.5rem; background-color: var(--primary); padding: 3.5rem 3rem; text-align: center;">
-        <div style="position: absolute; inset: 0; background: radial-gradient(circle at top right, rgba(217,157,92,0.15), transparent 60%);"></div>
-        <div style="position: relative;">
-          <h2 style="color: var(--primary-foreground); margin-bottom: 1rem;">Ready to Digitize Your Chama?</h2>
-          <p style="color: rgba(247,243,235,0.8); margin-bottom: 2rem; font-size: 1.1rem; max-width: 28rem; margin-left: auto; margin-right: auto;">Join thousands of groups already saving, investing, and growing together on M-Chama.</p>
-          <a href="auth.html?mode=signup" class="btn btn-lg" style="background-color: var(--secondary); color: var(--foreground); font-weight: 600; gap: 0.5rem;">
-            Create Free Account
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer style="padding: 2rem 1.5rem; border-top: 1px solid var(--border); background-color: rgba(255,255,255,0.3);">
-    <div class="container container-lg" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <img src="../logo.png" alt="M-Chama" style="height: 2.5rem; width: 2.5rem; border-radius: 0.375rem; object-fit: contain;">
-        <span style="font-weight: 600;">M-Chama</span>
-      </div>
-      <p style="color: var(--muted-foreground); font-size: 0.85rem; margin: 0;">&copy; 2026 M-Chama. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="../assets/js/app.js"></script>
+<footer style="text-align:center;padding:2rem;color:var(--muted-foreground);font-size:.875rem">
+  © M-Chama · Built for Kenyan savings groups
+</footer>
 </body>
 </html>
