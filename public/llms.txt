@@ -1,0 +1,19 @@
+# M-Chama
+
+> M-Chama is Kenya's leading digital platform for group savings and investment groups (Chamas). It digitizes contributions, merry-go-round payouts, loans, and investments with role-based access, transaction PIN security, audit logs, and real-time notifications.
+
+## Pages
+
+- [/](/): Landing page — overview of features, stats, and CTAs to sign up or sign in.
+- [/auth](/auth): Authentication — email/password and phone OTP (Twilio) sign-up and sign-in.
+- [/reset-password](/reset-password): Password recovery via email token.
+- [/dashboard](/dashboard): Member dashboard — overview of contributions, loans, wallet, investments, and recent activity.
+- [/dashboard/chamas](/dashboard/chamas): Chama management — join, create, and manage savings groups.
+- [/dashboard/contributions](/dashboard/contributions): Contributions — track monthly payments, penalties, and cash contribution requests.
+- [/dashboard/loans](/dashboard/loans): Loans — apply for group loans, view eligibility, track repayments.
+- [/dashboard/wallet](/dashboard/wallet): Wallet — multi-wallet view (Main, Savings, Emergency), withdrawals, and transaction history.
+- [/dashboard/investments](/dashboard/investments): Investments — chama-scoped projects, funding, and returns tracking.
+- [/dashboard/reports](/dashboard/reports): Reports — financial insights, CSV exports, and analytics.
+- [/dashboard/admin](/dashboard/admin): Admin panel — member approvals, role management, chama approvals, loan approvals, payment approvals, penalties, projects, merry-go-round cycles, audit tracker, system settings, and activity logs.
+- [/dashboard/notifications](/dashboard/notifications): Notifications — real-time alerts for group activities, loans, and events.
+- [/dashboard/settings](/dashboard/settings): Settings — profile, security (transaction PIN, active sessions), and preferences.
