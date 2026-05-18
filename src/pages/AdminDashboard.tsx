@@ -16,12 +16,14 @@ import { PaymentApprovals } from "@/components/admin/PaymentApprovals";
 import { AuditTracker } from "@/components/admin/AuditTracker";
 import { ActivityLogs } from "@/components/admin/ActivityLogs";
 import { PenaltiesManager } from "@/components/admin/PenaltiesManager";
+import { SEO } from "@/components/SEO";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
     <AnimatedPage>
+      <SEO title="Admin Dashboard" description="Approve members, chamas, payments and loans, manage projects, cycles, penalties and view audit logs." path="/dashboard/admin" noindex />
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Admin Dashboard</h1>

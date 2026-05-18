@@ -27,6 +27,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/contexts/AuthContext";
 import { useChamaMembership } from "@/hooks/use-chama-membership";
 import { toast } from "sonner";
+import { SEO } from "@/components/SEO";
 
 export default function Investments() {
   const { user, role } = useAuth();
@@ -117,6 +118,7 @@ export default function Investments() {
 
   return (
     <AnimatedPage>
+      <SEO title="Investments" description="Fund Chama-scoped investment projects, track progress and watch returns grow as a group." path="/dashboard/investments" noindex />
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Investments</h1>

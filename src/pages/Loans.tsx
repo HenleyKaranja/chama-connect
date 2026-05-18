@@ -19,6 +19,7 @@ import { logAuditEvent } from "@/lib/auditLog";
 import { sanitizeNumber } from "@/lib/sanitize";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
+import { SEO } from "@/components/SEO";
 
 const statusColors: Record<string, string> = {
   active: "text-info bg-info/10",
@@ -135,6 +136,7 @@ export default function Loans() {
 
   return (
     <AnimatedPage>
+      <SEO title="Loans" description="Apply for group loans, check eligibility, vote on requests and track repayments." path="/dashboard/loans" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

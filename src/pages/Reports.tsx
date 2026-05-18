@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { BarChart3, Download, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import { SEO } from "@/components/SEO";
 
 const pieData = [
   { name: "Contributions", value: 478200, color: "hsl(152, 45%, 28%)" },
@@ -23,6 +24,7 @@ const monthlyData = [
 export default function Reports() {
   return (
     <AnimatedPage>
+      <SEO title="Reports" description="Financial summaries, contribution trends and investment performance analytics for your Chama." path="/dashboard/reports" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
