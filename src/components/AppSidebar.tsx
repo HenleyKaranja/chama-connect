@@ -84,9 +84,9 @@ export function AppSidebar() {
           <img src={logoImg} alt="M-Chama" className="h-12 w-12 shrink-0 rounded-lg object-contain brightness-0 invert" />
           {!collapsed && (
             <div>
-              <h1 className="text-base font-bold tracking-tight text-sidebar-foreground">
+              <div className="text-base font-bold tracking-tight text-sidebar-foreground">
                 M-Chama
-              </h1>
+              </div>
               <p className="text-xs text-sidebar-foreground/60">Group Savings</p>
             </div>
           )}
@@ -168,6 +168,7 @@ export function AppSidebar() {
           {!collapsed && (
             <button
               onClick={signOut}
+              aria-label="Sign out"
               className="text-sidebar-foreground/40 hover:text-sidebar-foreground transition-colors"
             >
               <LogOut className="h-4 w-4" />

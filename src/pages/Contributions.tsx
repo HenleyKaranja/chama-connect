@@ -17,6 +17,7 @@ import { format } from "date-fns";
 import { TransactionPinGate } from "@/components/security/TransactionPinGate";
 import { logAuditEvent } from "@/lib/auditLog";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
+import { SEO } from "@/components/SEO";
 
 const statusConfig = {
   paid: { color: "text-success bg-success/10", icon: CheckCircle2, label: "Paid" },
@@ -87,6 +88,7 @@ export default function Contributions() {
 
   return (
     <AnimatedPage>
+      <SEO title="Contributions" description="Track Chama contributions, request cash payments, view penalties and contribution history." path="/dashboard/contributions" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import {
@@ -70,6 +71,11 @@ const floatTransition = { duration: 4, repeat: Infinity, ease: "easeInOut" as co
 export default function Landing() {
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="M-Chama — Group Savings & Investment Platform for Kenya"
+        description="Kenya's #1 Chama platform. Digitize group savings, contributions, loans and investments with M-Pesa, role-based access and real-time reports."
+        path="/"
+      />
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-lg">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">

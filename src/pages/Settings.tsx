@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { PinSetupCard } from "@/components/security/PinSetupCard";
 import { ActiveSessions } from "@/components/security/ActiveSessions";
+import { SEO } from "@/components/SEO";
 
 export default function SettingsPage() {
   const { user, profile } = useAuth();
@@ -66,6 +67,7 @@ export default function SettingsPage() {
 
   return (
     <AnimatedPage>
+      <SEO title="Settings" description="Manage your M-Chama profile, transaction PIN, active sessions and notification preferences." path="/dashboard/settings" noindex />
       <div className="space-y-6 max-w-2xl">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Settings</h1>

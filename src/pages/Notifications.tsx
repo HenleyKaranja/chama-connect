@@ -5,6 +5,7 @@ import { Bell, CheckCheck, HandCoins, Landmark, Users, ThumbsUp, Info, AlertCirc
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { SEO } from "@/components/SEO";
 
 const iconMap: Record<string, typeof Bell> = {
   info: Info,
@@ -80,6 +81,7 @@ export default function Notifications() {
 
   return (
     <AnimatedPage>
+      <SEO title="Notifications" description="Stay updated on Chama activity — contributions, loan approvals, cycle payouts and group events." path="/dashboard/notifications" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

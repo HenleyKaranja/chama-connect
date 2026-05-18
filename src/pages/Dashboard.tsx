@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import { format, subMonths, startOfMonth } from "date-fns";
+import { SEO } from "@/components/SEO";
 
 interface RecentTransaction {
   id: string;
@@ -190,6 +191,7 @@ export default function Dashboard() {
 
   return (
     <AnimatedPage>
+      <SEO title="Dashboard" description="Your M-Chama overview: balances, recent contributions, loans, investments and chama activity at a glance." path="/dashboard" noindex />
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Habari, {firstName} 👋</h1>

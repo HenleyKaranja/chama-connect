@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { checkLoginLock, recordLoginAttempt } from "@/lib/loginGuard";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
+import { SEO } from "@/components/SEO";
 
 const formatPhone = (raw: string) => {
   let cleaned = raw.replace(/\s+/g, "").replace(/-/g, "");
@@ -180,6 +181,11 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <SEO
+        title="Sign In | M-Chama"
+        description="Sign in or create your M-Chama account to manage Chama contributions, loans, wallets and investments securely."
+        path="/auth"
+      />
       <motion.div
         initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}

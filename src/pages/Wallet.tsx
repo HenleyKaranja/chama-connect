@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rateLimit";
+import { SEO } from "@/components/SEO";
 
 const WALLET_PRESETS = [
   { name: "Savings Wallet", type: "savings" },
@@ -142,6 +143,7 @@ export default function WalletPage() {
 
   return (
     <AnimatedPage>
+      <SEO title="Wallet" description="Manage Main, Savings and Emergency wallets — deposit, withdraw and review transaction history securely." path="/dashboard/wallet" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

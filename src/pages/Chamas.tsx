@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { logAuditEvent } from "@/lib/auditLog";
+import { SEO } from "@/components/SEO";
 
 const colors = [
   "from-primary/20 to-primary/5",
@@ -108,6 +109,7 @@ export default function Chamas() {
 
   return (
     <AnimatedPage>
+      <SEO title="My Chamas" description="Create, join and manage your savings groups (Chamas) — invite members, assign roles and track activity." path="/dashboard/chamas" noindex />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

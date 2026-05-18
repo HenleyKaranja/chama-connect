@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Landmark, Lock } from "lucide-react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { SEO } from "@/components/SEO";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");
@@ -50,6 +51,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <SEO title="Reset Password" description="Set a new password for your M-Chama account." path="/reset-password" noindex />
       <motion.div
         initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
